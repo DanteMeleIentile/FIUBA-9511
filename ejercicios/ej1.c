@@ -1,19 +1,15 @@
 #include <math.h>
 #include <stdio.h>
 
-int main(){
-    double a;
-    int b;
+double calc_montofinal(double a, double b, double c){
     double r;
+    r = 0; //Monto final a cobrar
+    r = a * pow((1 + b/100), c);
+    return (r);
+}
+
+int main(){
     printf("EJERCICIO 1 - GUIA 1\n");
-    printf("Coloque valor de primer variable: \n");
-    scanf("%lf", &a);
-
-    printf("Coloque valor de segunda variable: \n");
-    scanf("%i", &b);
-
-    r= sqrt(a);
-
-    printf("El resultado es: %lf \n", r);
+    printf("El resultado es: %le\n", calc_montofinal(1, 2, 3));
     return 0;
 }
