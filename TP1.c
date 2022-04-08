@@ -1,4 +1,4 @@
-/* TRABAJO PRÁCTICO N°1
+    /* TRABAJO PRÁCTICO N°1
 Link consignas: https://algoritmos9511.gitlab.io/tps/20221_ej1.html */
 
 /* FUNCIONES PLANTEADAS PARA LA EVOLUCIÓN EN EL TIEMPO
@@ -29,43 +29,47 @@ double computar_posicion(double pi, double vi, double dt){
     return angulo_inicial * PI/180;
 } */
 
+double DEG_A_RAD(double grados){
+    return grados * PI / 180;
+}
+
 double velocidad_inicial_x(double vi, double angulo_inicial){
-    return vi * cos(angulo_inicial * PI/180);
+    return vi * cos(DEG_A_RAD(angulo_inicial));
 }
 
 double velocidad_inicial_y(double vi, double angulo_inicial){
-    return vi * sin(angulo_inicial * PI/180);
+    return vi * sin(DEG_A_RAD(angulo_inicial));
 }
 
 double computar_velocidad(double vi, double a, double dt){
-    return (vi - a * dt);
+    return (vi + a * dt);
 }
 
 double computar_posicion(double pi, double vi, double dt){
     return (pi + vi * dt);
 }
 
-
 int main(){
     printf("TRABAJO PRÁCTICO N°1 - DANTE MELE IENTILE\n");
-    float velocidad_x = velocidad_inicial_x(VELOCIDAD_INICIAL, ANGULO_INICIAL);
-    float velocidad_y = velocidad_inicial_y(VELOCIDAD_INICIAL, ANGULO_INICIAL);
-    float posicion_x = X_INICIAL;
-    float posicion_y = Y_INICIAL;
-    float t = 0;
+    double velocidad_x = velocidad_inicial_x(VELOCIDAD_INICIAL, ANGULO_INICIAL);
+    double velocidad_y = velocidad_inicial_y(VELOCIDAD_INICIAL, ANGULO_INICIAL);
+    double posicion_x = X_INICIAL;
+    double posicion_y = Y_INICIAL;
+    double t = 0;
     printf("Posición X: \t\t\tPosición Y: \t\t\tTime: \t\t\t\n");
     
     while (posicion_y >= 0){
-        velocidad_x = computar_velocidad(velocidad_x, 0, t);
-        velocidad_y = computar_velocidad(velocidad_y, G, t);
-
-        posicion_x = computar_posicion(posicion_x, velocidad_x, t);
-        posicion_y = computar_posicion(posicion_y, velocidad_y, t);
-
         printf("%lf\t\t\t", posicion_x);
         printf("%lf\t\t\t", posicion_y);
+        printf("%lf\t\t\t", velocidad_x);
+        printf("%lf\t\t\t", velocidad_y);
         printf("%lf\t\t\t\n", t);
-        t = t + DT;
+        velocidad_y = computar_velocidad(velocidad_y, -G, DT);
+
+        posicion_x = computar_posicion(posicion_x, velocidad_x, DT);
+        posicion_y = computar_posicion(posicion_y, velocidad_y, DT);
+
+        t += DT;
     }
     return 0;
 }
