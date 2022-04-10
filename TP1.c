@@ -46,7 +46,7 @@ int main(){
     printf("T,X,Y\n");
     
     while (posicion_y >= 0){
-        printf("%.4lf,%.4lf,%.4lf\n", t, posicion_x, posicion_y);
+        printf("%lf,%lf,%lf\n", t, posicion_x, posicion_y);
         velocidad_x = computar_velocidad(velocidad_x, 0, DT);
         velocidad_y = computar_velocidad(velocidad_y, -G, DT);
 
