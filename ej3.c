@@ -47,7 +47,7 @@ int main (void){
         {0, 7}
     }; */
 
-    punto[] = {2, 2};
+    double p[] = {0, 0};
 
     size_t n = sizeof (polilinea) / sizeof(polilinea[0]);
     
@@ -58,36 +58,35 @@ int main (void){
         double bx = polilinea[i+1][X];
         double by = polilinea[i+1][Y];
 
-        if (computar_escalar(p, v2, v1, 2) <= 0){
-                norma (p, v1);
-                printf("%f\n", norma(p, v1));
+        if (computar_escalar(p[X], p[Y], ax, ay, bx, by) <= 0){
+            norma (p[X], p[Y], ax, ay);
+            printf("caso menor\n");
+            printf("%f\n\n", norma (p[X], p[Y], ax, ay));
 
-            } else if (computar_escalar(p, v2, v1, 2) >= 1){
-                norma (p, v2);
-                printf("%f\n", norma(p, v2));
+        } else if (computar_escalar(p[X], p[Y], ax, ay, bx, by) >= 1){
+            norma (p[X], p[Y], ax, ay);
+            printf("caso mayor\n");
+            printf("%f\n\n", norma (p[X], p[Y], ax, ay));
 
-            } else{
-                resta_vectores (resta_3, p, v1, 2);
-                double vd[2];
-                vd[0] = v1[0] + computar_escalar(p, v2, v1, 2) * resta_3[0];
-                vd[1] = v1[1] + computar_escalar(p, v2, v1, 2) * resta_3[1];
-                
-                //punto d e recta en condición de que el punto esté en el medio
-                printf("%f, %f\n", vd[0], vd[1]);
+        } else{
+            double vd[2];
+            vd[X] = ax + computar_escalar(p[X], p[Y], ax, ay, bx, by) * (bx - ax);
+            vd[Y] = ay + computar_escalar(p[X], p[Y], ax, ay, bx, by) * (by - ay);
+            printf("caso normal\n");
+            //punto d e recta en condición de que el punto esté en el medio
+            printf("posición vector d\n");
+            printf("%f, %f\n", vd[0], vd[1]);
 
-                //impresión de norma 
-                printf("%f\n", norma(p, vd));
+            //impresión de norma 
+            printf("valor distancia\n");
+            printf("%f\n\n", norma (p[X], p[Y], vd[X], vd[Y]));
             }
 
-
-        computar_escalar ()
-
-        printf("%f\n", ax);
+        /* printf("%f\n", ax);
         printf("%f\n\n", ay);
 
         printf("%f\n", bx);
-        printf("%f\n\n", by);
-
+        printf("%f\n\n", by); */
         
     }
 
