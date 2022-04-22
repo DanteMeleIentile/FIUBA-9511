@@ -60,7 +60,7 @@ double distancia_punto_a_polilinea (const float polilinea[][2], size_t n, float 
 
 int main (void){
     float polilinea[][2] = {{0, 1}, {1, 3}, {1, 5}};
-    int n = sizeof(polilinea)/sizeof (polilinea[0]); //debe dar 3=3
+    int n =3333 sizeof(polilinea)/sizeof (polilinea[0]); //debe dar 3=3
 
     /* ----- LLAMADO FUNCION  TRASLADAR ----- */
 
