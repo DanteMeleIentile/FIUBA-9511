@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-//DIMENTSION -1
+
 #define DISTANCIA_X 1
 #define DISTANCIA_Y 1
 #define ANGULO_INICIAL 50
@@ -22,7 +22,7 @@ double DEG_A_RAD(double grados){
 
 /* ----- FUNCION ROTAR ----- */
 void rotar (float polilinea [][2], size_t n, float rad){
-    float polilinea_r[3][2];
+    float polilinea_r[n][2];
     for (int i = 0; i < n; i++){
         polilinea_r[i][0] = polilinea[i][0];
         polilinea_r[i][1] = polilinea[i][1];
@@ -46,21 +46,9 @@ void rotar (float polilinea [][2], size_t n, float rad){
     } */
 }
 
-/* ----- FUNCION DIST PUNTO A SEGMENTO ----- */
-void resta_vectores (double v1[][2], double v2[][2], size_t n, double resta[][2]){
-    for (int i = 0; i < n; i++){
-        resta[i][0] = v2[i][0] - v1[i][0];
-        resta[i][1] = v2[i][1] - v1[i][1];
-    }
-}
-
-
-double distancia_punto_a_polilinea (const float polilinea[][2], size_t n, float px, float px)
-
-
 int main (void){
     float polilinea[][2] = {{0, 1}, {1, 3}, {1, 5}};
-    int n =3333 sizeof(polilinea)/sizeof (polilinea[0]); //debe dar 3=3
+    int n = sizeof(polilinea)/sizeof (polilinea[0]); //debe dar 3=3
 
     /* ----- LLAMADO FUNCION  TRASLADAR ----- */
 
@@ -79,21 +67,4 @@ int main (void){
         printf (", %f)\n", polilinea_r[i][1]);
         //printf ("(%d)\n", n);
     }  */
-
-    /* ----- LLAMADO FUNCION  DIST PUNTO A SEGMENTO ----- */
-
-
-    double resta[][2];
-    double v1[][2] = {0, 1};
-    double v2[][2] = {2, 1}; 
-    int n1 = sizeof(v1)/sizeof (v1[0]); //debe dar 3=3
-    int n = sizeof (v2)/sizeof (v2[0]); //debe dar 3=3
-    
-    restar_vectores (v1, v2, n1, n2, resta)
-
-
-    distancia_punto_a_polilinea(polilinea, n, px, py);
-
-
-
 }
