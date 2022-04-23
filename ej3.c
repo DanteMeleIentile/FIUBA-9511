@@ -19,6 +19,45 @@ double computar_escalar(double px, double py, double ax, double ay, double bx, d
     return prod_interno(px-ax, py-ay, bx-ax, by-ay) / pow (norma (bx, by, ax, ay),2);
 }
 
+double distancia_punto_a_polilinea(const float polilinea[][2], size_t n, double px, double py){
+    double d_menor = norma (px, py, polilinea[0][X], polilinea[0][Y]);
+    double d_temp = 0;
+    for (int i = 0; i < n-1; i++){
+        double ax = polilinea[i][X];
+        double ay = polilinea[i][Y];
+
+        double bx = polilinea[i+1][X];
+        double by = polilinea[i+1][Y];
+
+        if (computar_escalar(px, py, ax, ay, bx, by) <= 0){
+            d_temp = norma (px, py, ax, ay);
+            
+            //printf("distancia temporal: %f\n\n", d_temp);
+
+        } else if (computar_escalar(px, py, ax, ay, bx, by) >= 1){
+            d_temp = norma (py, px, bx, by);
+
+            //printf("distancia temporal: %f\n\n", d_temp);
+
+        } else{
+            double vd[2];
+            vd[X] = ax + computar_escalar(px, py, ax, ay, bx, by) * (bx - ax);
+            vd[Y] = ay + computar_escalar(px, py, ax, ay, bx, by) * (by - ay);
+
+            d_temp = norma (px, py, vd[X], vd[Y]);
+            //printf("distancia temporal: %f\n\n", d_temp);
+        }
+
+        if (d_menor > d_temp){
+            d_menor = d_temp;
+        }
+    }
+    printf("distancia a polilinea: %f\n\n", d_menor);
+
+    return d_menor;
+
+}
+
 int main (void){
     const float polilinea[][2] = {
         {0, 1}, 
@@ -33,8 +72,8 @@ int main (void){
         {2, 0}
     };
 
-    double p[] = {0, 7};
-    /* double puntos[][2] = {
+    //double p[] = {0, 7};
+    double puntos[][2] = {
         {0, 0},
         {0, 2},
         {6, 1},
@@ -46,84 +85,26 @@ int main (void){
         {3, 3},
         {5, 3},
         {0, 7}
-    }; */
-
+    };
 
     size_t n = sizeof (polilinea) / sizeof(polilinea[0]);
     
-    double d_menor = norma (p[X], p[Y], polilinea[0][X], polilinea[0][Y]);
-    printf("d_menor inicial es: %f\n\n", d_menor);
-    
-    double d_temp = 0;
+    //distancia_punto_a_polilinea (polilinea, n, p[X], p[Y]);
 
-    for (int i = 0; i < n-1; i++){
-        double ax = polilinea[i][X];
-        double ay = polilinea[i][Y];
+    size_t p = sizeof (puntos) / sizeof(puntos[0]);
 
-        double bx = polilinea[i+1][X];
-        double by = polilinea[i+1][Y];
+    for (int i = 0; i < p; i++){
+        double px = puntos[i][X];
+        double py = puntos[i][Y];
+        distancia_punto_a_polilinea (polilinea, n, px, py);
 
-        if (computar_escalar(p[X], p[Y], ax, ay, bx, by) <= 0){
-            d_temp = norma (p[X], p[Y], ax, ay);
-            
-            printf("distancia temporal: %f\n\n", d_temp);
-
-        } else if (computar_escalar(p[X], p[Y], ax, ay, bx, by) >= 1){
-            d_temp = norma (p[X], p[Y], bx, by);
-
-            printf("distancia temporal: %f\n\n", d_temp);
-
-        } else{
-            double vd[2];
-            vd[X] = ax + computar_escalar(p[X], p[Y], ax, ay, bx, by) * (bx - ax);
-            vd[Y] = ay + computar_escalar(p[X], p[Y], ax, ay, bx, by) * (by - ay);
-
-            d_temp = norma (p[X], p[Y], vd[X], vd[Y]);
-            printf("distancia temporal: %f\n\n", d_temp);
-
-        }
-
-        if (d_menor > d_temp){
-            d_menor = d_temp;
-
-            printf("DE MENOR:%f\n\n", d_menor);
-        }
-        printf("DE MENOR:%f\n\n", d_menor);
-        
-
-
-        /* printf("%f\n", ax);
-        printf("%f\n\n", ay);
-
-        printf("%f\n", bx);
-        printf("%f\n\n", by); */
-        
     }
 
     return 0;
 }
 
-
-    /*double resta_3[2];
-    if (computar_escalar(p, v2, v1, 2) <= 0){
-        norma (p, v1);
-        printf("%f\n", norma(p, v1));
-
-    } else if (computar_escalar(p, v2, v1, 2) >= 1){
-        norma (p, v2);
-        printf("%f\n", norma(p, v2));
-
-    } else{
-        resta_vectores (resta_3, p, v1, 2);
-        double vd[2];
-        vd[0] = v1[0] + computar_escalar(p, v2, v1, 2) * resta_3[0];
-        vd[1] = v1[1] + computar_escalar(p, v2, v1, 2) * resta_3[1];
-        
-        //punto d e recta en condición de que el punto esté en el medio
-        printf("%f, %f\n", vd[0], vd[1]);
-
-        //impresión de norma 
-        printf("%f\n", norma(p, vd));
-    }
-} */
-
+/* COMENTARIOS */
+// Falta mensaje de error!!!
+//Cambié la función de santisi (tipo de dato!
+// Que onda el cost float
+// compitibilidad con "rotar" y "trasladar"
