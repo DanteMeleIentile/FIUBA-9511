@@ -11,7 +11,7 @@ double prod_interno (double ax, double ay, double bx, double by){
 
 double norma(double ax, double ay, double bx, double by){
     double resta_x = ax - bx;
-    double resta_y = bx - by;;
+    double resta_y = ay - by;
     return sqrt(pow(resta_x, 2) + pow(resta_y, 2));
 }
 
@@ -33,6 +33,7 @@ int main (void){
         {2, 0}
     };
 
+    double p[] = {0, 7};
     /* double puntos[][2] = {
         {0, 0},
         {0, 2},
@@ -47,14 +48,14 @@ int main (void){
         {0, 7}
     }; */
 
-    double p[] = {0, 0};
 
     size_t n = sizeof (polilinea) / sizeof(polilinea[0]);
     
     double d_menor = norma (p[X], p[Y], polilinea[0][X], polilinea[0][Y]);
+    printf("d_menor inicial es: %f\n\n", d_menor);
+    
     double d_temp = 0;
 
-    
     for (int i = 0; i < n-1; i++){
         double ax = polilinea[i][X];
         double ay = polilinea[i][Y];
@@ -65,35 +66,29 @@ int main (void){
         if (computar_escalar(p[X], p[Y], ax, ay, bx, by) <= 0){
             d_temp = norma (p[X], p[Y], ax, ay);
             
-            //printf("caso menor\n");
-            //printf("%f\n\n", norma (p[X], p[Y], ax, ay));
+            printf("distancia temporal: %f\n\n", d_temp);
 
         } else if (computar_escalar(p[X], p[Y], ax, ay, bx, by) >= 1){
-            d_temp = norma (p[X], p[Y], ax, ay);
-            
-            //printf("caso mayor\n");
-            //printf("%f\n\n", norma (p[X], p[Y], ax, ay));
+            d_temp = norma (p[X], p[Y], bx, by);
+
+            printf("distancia temporal: %f\n\n", d_temp);
 
         } else{
             double vd[2];
             vd[X] = ax + computar_escalar(p[X], p[Y], ax, ay, bx, by) * (bx - ax);
             vd[Y] = ay + computar_escalar(p[X], p[Y], ax, ay, bx, by) * (by - ay);
-            //printf("caso normal\n");
-            //punto d e recta en condición de que el punto esté en el medio
-            //printf("posición vector d\n");
-            //printf("%f, %f\n", vd[0], vd[1]);
 
-            //impresión de norma 
-            //printf("valor distancia\n");
-            //printf("%f\n\n", norma (p[X], p[Y], vd[X], vd[Y]));
-            
             d_temp = norma (p[X], p[Y], vd[X], vd[Y]);
+            printf("distancia temporal: %f\n\n", d_temp);
 
         }
 
         if (d_menor > d_temp){
             d_menor = d_temp;
+
+            printf("DE MENOR:%f\n\n", d_menor);
         }
+        printf("DE MENOR:%f\n\n", d_menor);
         
 
 
@@ -104,7 +99,6 @@ int main (void){
         printf("%f\n\n", by); */
         
     }
-        printf("%f\n", d_menor);
 
     return 0;
 }
