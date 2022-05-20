@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+
 
 
 
@@ -48,7 +50,6 @@ bool alumno_son_iguales(const alumno_t *a, const alumno_t *b){
 
     return true;
 }
-//asdsad
 
 
 /* EJERCICIO 2 */
@@ -56,10 +57,33 @@ bool alumno_son_iguales(const alumno_t *a, const alumno_t *b){
 typedef struct{
     float *v;
     size_t n;
-} vector_t
+} vector_t;
+
+
+void vector_destruir(vector_t *v){
+    free(v->v);
+    free(v);
+}
+
 
 vector_t *vector_crear(const float vals[], size_t n){
-    vector_t *vector = malloc (size_t vector_t);
+    vector_t *vector = malloc (sizeof(vector_t));
+    if (vector == NULL){
+        return NULL;
+    }
+
+    vector->n = n;
+
+    vector->v = malloc (sizeof(float) * vector->n);
+    if (vector->v == NULL){
+        vector_destruir(vector);
+    }
+
+    for (size_t i = 0; i < vector->n; i++){
+        vector->v[i] = vals[i];
+    }
+
+    return vector;
 }
 
 
