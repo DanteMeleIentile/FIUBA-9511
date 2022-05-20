@@ -59,7 +59,6 @@ typedef struct{
 
 vector_t *vector_crear(const float vals[], size_t n){
     vector_t *vector = malloc (size_t vector_t);
-    
 }
 
 
