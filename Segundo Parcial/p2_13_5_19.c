@@ -48,6 +48,7 @@ bool alumno_son_iguales(const alumno_t *a, const alumno_t *b){
 
     return true;
 }
+//asdsad
 
 
 /* EJERCICIO 2 */
