@@ -6,7 +6,8 @@
 
 #define ANGULO_INICIAL 90
 
-#define PI 3.14159265359
+//CORRECCIÓN
+#define PI 3.141592653589793116
 
 #define X 0
 #define Y 1
