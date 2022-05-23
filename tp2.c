@@ -27,7 +27,12 @@ double prod_interno (double ax, double ay, double bx, double by){
 double norma(double ax, double ay, double bx, double by){
     double resta_x = ax - bx;
     double resta_y = ay - by;
-    return sqrt(pow(resta_x, 2) + pow(resta_y, 2));
+    return sqrt((resta_x * resta_x) + (resta_y * resta_x));
+}
+
+
+double norma_2(double x, double y){
+    return sqrt((x * x) + (y * x));
 }
 
 
@@ -35,9 +40,14 @@ double computar_escalar(float px, float py, double ax, double ay, double bx, dou
     return prod_interno(px-ax, py-ay, bx-ax, by-ay) / pow (norma (bx, by, ax, ay),2);
 }
 
+double distancia_punto_a_segmento(float polilinea[][2], size_t n, float px, float py){
+
+
+}
+
 
 double distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py){
-    double d_menor = norma (px, py, polilinea[0][X], polilinea[0][Y]);
+    double d_menor = norma (px, py, polilinea[0][X], polilinea[0][Y]); //dist punto a segmento
     
     double d_temp = 0;
 
@@ -132,17 +142,17 @@ int main (void){
     size_t n = sizeof (polilinea) / sizeof(polilinea[0]);
     size_t p = sizeof (puntos) / sizeof(puntos[0]);
 
-    /* trasladar(polilinea, n, DISTANCIA_X, DISTANCIA_Y);
+    trasladar(polilinea, n, DISTANCIA_X, DISTANCIA_Y);
     printf ("\nPolilinea trasladada x = _; y = _: \n");
     for (int i = 0; i < n; i++){
-        //printf ("(%f, %f)\n", polilinea[i][0], polilinea[i][1]); //Descomentar para validar traslación
-    } */
+        printf ("(%f, %f)\n", polilinea[i][0], polilinea[i][1]); //Descomentar para validar traslación
+    }
 
-    /* rotar(polilinea, n, DEG_A_RAD(ANGULO_INICIAL));
+    rotar(polilinea, n, DEG_A_RAD(ANGULO_INICIAL));
     printf ("\nPolilinea rotada _°: \n");
     for (int i = 0; i < n; i++){
-        //printf ("(%f, %f)\n", polilinea[i][0], polilinea[i][1]); //Descomentar para validar rotación
-    } */
+        printf ("(%f, %f)\n", polilinea[i][0], polilinea[i][1]); //Descomentar para validar rotación
+    }
 
     for (int i = 0; i < p; i++){
         double d_menor = distancia_punto_a_polilinea (polilinea, n, puntos[i][X], puntos[i][Y]);
