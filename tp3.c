@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <string.h>
 
 
 #define DIMENSION 2
@@ -11,8 +12,8 @@
 
 /*
 Para ver salida Vangrid:
- - compilar con -g
- - valgrind --leak-check=full --track-origins=yes --show-reachable=yes ./tp3
+- compilar con -g
+- valgrind --leak-check=full --track-origins=yes --show-reachable=yes ./tp3
 */
 
 
@@ -41,18 +42,12 @@ polilinea_t *polilinea_crear_vacia(size_t n){
 
 
 polilinea_t *polilinea_crear(const float puntos[][2], size_t n){
-    polilinea_t *p = malloc(sizeof(polilinea_t)); 
+    polilinea_t *p = polilinea_crear_vacia(n);
     if (p == NULL){
         return NULL;
     }
-
-    p->n = n;
-    p->puntos = malloc(n * sizeof(float) * DIMENSION);
-    if (p->puntos == NULL){
-        free(p);
-        return NULL;
-    }
-
+    memcpy (*p->puntos, puntos, n);
+    
     for (size_t i = 0; i < n; i++){
         p->puntos[i][X] = puntos [i][X];
         p->puntos[i][Y] = puntos [i][Y];
@@ -74,39 +69,35 @@ size_t polilinea_cantidad_puntos(const polilinea_t *polilinea){
 
 
 bool polilinea_obtener_punto(const polilinea_t *polilinea, size_t pos, float *x, float *y){
-    if (polilinea->n > pos){ //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL' 
-        *x = polilinea->puntos[pos][X];
-        *y = polilinea->puntos[pos][Y];
-        return true;
+    if (polilinea->n <= pos){ //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL' 
+        return false;
     }
-    return false;
+
+    *x = polilinea->puntos[pos][X];
+    *y = polilinea->puntos[pos][Y];
+    return true;
 }
 
 
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
-    if (polilinea->n > pos){  //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL'
-        polilinea->puntos[pos][X] = x;
-        polilinea->puntos[pos][Y] = y;
-        return true;
+    if (polilinea->n <= pos){  //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL'
+        return false;
     }
-    
-    return false;
+
+    polilinea->puntos[pos][X] = x;
+    polilinea->puntos[pos][Y] = y;
+    return true;
 }
 
 
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
-    polilinea_t *p = malloc(sizeof(polilinea_t));
+    polilinea_t *p = polilinea_crear_vacia(polilinea->n);
     if (p == NULL){
         return NULL;
     }
 
-    p->n = polilinea->n;
-    p->puntos = malloc(polilinea->n * sizeof(float) * DIMENSION);
-    if (p->puntos == NULL){
-        free(p);
-        return NULL;
-    }
-
+    memcpy (*p->puntos, polilinea->puntos, polilinea->n);
+    
     for (size_t i = 0; i < polilinea->n; i++){
         p->puntos[i][X] = polilinea->puntos[i][X];
         p->puntos[i][Y] = polilinea->puntos[i][Y];
