@@ -47,7 +47,7 @@ polilinea_t *polilinea_crear(const float puntos[][2], size_t n){
         return NULL;
     }
     
-    memcpy (*p->puntos, puntos, n * sizeof(float) * DIMENSION);
+    memcpy (*p->puntos, puntos, (n * sizeof(float) * DIMENSION));
     
     /* for (size_t i = 0; i < n; i++){
         p->puntos[i][X] = puntos [i][X];
@@ -97,7 +97,7 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
         return NULL;
     }
 
-    memcpy (*p->puntos, polilinea->puntos, (polilinea->n * sizeof(float) * DIMENSION));
+    memcpy (*p->puntos, polilinea->puntos, (p->n * sizeof(float) * DIMENSION));
     
     /* for (size_t i = 0; i < polilinea->n; i++){
         p->puntos[i][X] = polilinea->puntos[i][X];
