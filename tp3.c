@@ -92,19 +92,7 @@ bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y
 
 
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
-    polilinea_t *p = polilinea_crear_vacia(polilinea->n);
-    if (p == NULL){
-        return NULL;
-    }
-
-    memcpy (*p->puntos, polilinea->puntos, (p->n * sizeof(float) * DIMENSION));
-    
-    /* for (size_t i = 0; i < polilinea->n; i++){
-        p->puntos[i][X] = polilinea->puntos[i][X];
-        p->puntos[i][Y] = polilinea->puntos[i][Y];
-    } */
-
-    return p;
+    return polilinea_crear((const float(*)[DIMENSION])(polilinea->puntos), polilinea->n);
 }
 
 
