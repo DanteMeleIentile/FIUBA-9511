@@ -1,11 +1,10 @@
-#ifndef POLILINEAS_H
-#define POLILINEAS_H
+#ifndef POLILINEA_H
+#define POLILINEA_H
 
 #include "color.h"
 
 #include <stddef.h>
 #include <stdbool.h>
-
 
 
 /*

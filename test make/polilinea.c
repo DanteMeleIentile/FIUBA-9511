@@ -1,4 +1,4 @@
-
+#include "polilinea.h"
 #include "color.h"
 
 #include <stddef.h>
@@ -7,9 +7,8 @@
 #include <stdio.h>
 
 
-
-struct polilinea;
-typedef struct polilinea polilinea_t;
+/* struct polilinea;
+typedef struct polilinea polilinea_t; */
 
 struct polilinea {
     int x;

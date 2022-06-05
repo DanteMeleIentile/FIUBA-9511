@@ -1,12 +1,12 @@
 #ifndef LECTURA_H
 #define LECTURA_H
 
-#include "polilineas.h"
+#include "polilinea.h"
+#include "figura.h"
 
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
-
 
 
 /*

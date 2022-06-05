@@ -3,7 +3,7 @@
 
 #include "color.h"
 #include "figura.h"
-#include "polilineas.h"
+#include "polilinea.h"
 #include "lectura.h"
 
 
