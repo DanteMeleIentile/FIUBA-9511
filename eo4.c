@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define MASK_TIPO 0x07  // 0000 0111
 
 typedef enum{
     ICONO,
@@ -20,18 +19,10 @@ const char* figura_tipo_a_cadena(figura_tipo_t figura){
     return nombre_icono[figura];
 }
 
-
-
-
-
+// ---------------------- COLORES ----------------------
 typedef uint8_t color_t;
 
 color_t color_crear(bool r, bool g, bool b){
-    /* uint8_t aux;
-    aux = (aux | r) << 1;
-    aux = (aux | g) << 1;
-    aux = (aux | b);
-    return aux; */
     return ( (r << 2) | (g << 1) | (b) ); // CAMBIAR A MASCARA
 }
 
@@ -41,6 +32,9 @@ void color_a_rgb(color_t c, uint8_t *r, uint8_t *g, uint8_t *b){
     *b = (c & 1) * 255; // CAMBIAR A MASCARA
 }
 
+// ---------------------- COLORES ---------------------- //
+
+#define MASK_TIPO 0x07  // 0000 0111
 
 bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas){
     if (fread(nombre, 1, 20, f) != 20){

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdbool.h": "c",
+        "types.h": "c",
+        "tipo_fig,h": "c"
+    }
+}
