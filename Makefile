@@ -23,4 +23,4 @@ polilinea.o: polilinea.c color.h
 	$(CC) $(CFLAGS) -c polilinea.c
 
 clean:
-	rm -vf *.o
+	rm -vf *.o main

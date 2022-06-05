@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 
  
 
-	archivo1 = fopen("salida_make.txt","r");
+	archivo1 = fopen("EJ4.txt","r");
 
    archivo2 = fopen("figuras_out.txt","r");
 
