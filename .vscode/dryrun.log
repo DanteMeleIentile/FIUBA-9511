@@ -1,0 +1,7 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/dmeleientile/Trabajo Práctico 9511'
+gcc main.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+gcc polilinea.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+gcc main.o color.o figura.o polilinea.o -o tp -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+make: Leaving directory '/home/dmeleientile/Trabajo Práctico 9511'
+ 
