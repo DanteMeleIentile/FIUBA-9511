@@ -59,8 +59,8 @@ void polilinea_destruir(polilinea_t *polilinea){
 
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
     if(polilinea != NULL && pos < polilinea->n){
-        polilinea->puntos[pos][0] = p[0];
-        polilinea->puntos[pos][1] = p[1];
+        polilinea->puntos[pos][0] = x;
+        polilinea->puntos[pos][1] = y;
         return true;
     }
     return false;
