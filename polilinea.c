@@ -57,7 +57,7 @@ void polilinea_destruir(polilinea_t *polilinea){
 
 //Setters:
 
-bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, punto p){
+bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
     if(polilinea != NULL && pos < polilinea->n){
         polilinea->puntos[pos][0] = p[0];
         polilinea->puntos[pos][1] = p[1];
@@ -135,12 +135,8 @@ polilinea_t *leer_polilinea(FILE *f){
         return NULL;
     }
 
-    punto punto;
-
     for(size_t i = 0; i < cant; i++){
-        punto[0] = pol[i][0];
-        punto[1] = pol[i][1];
-        polilinea_setear_punto(p, i, punto);
+        polilinea_setear_punto(p, i, pol[i][0], pol[i][1]);
     }
 
     return p;

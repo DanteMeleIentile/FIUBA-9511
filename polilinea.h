@@ -25,7 +25,7 @@ void polilinea_destruir(polilinea_t *polilinea);
 
 //Setters:
 
-bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, punto p);
+bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y);
 
 bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
 
