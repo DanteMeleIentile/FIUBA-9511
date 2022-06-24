@@ -1,6 +1,9 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511'
+gcc text.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
+gcc color.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
+gcc figura.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
+gcc polilinea.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
+gcc text.o color.o figura.o polilinea.o -o tp -Wall -Werror -std=c99 -pedantic -lSDL2
 make: Leaving directory '/mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511'
  
-make: *** No targets specified and no makefile found.  Stop.
-

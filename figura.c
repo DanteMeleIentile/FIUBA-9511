@@ -5,10 +5,15 @@
 #define IN 0x40 //0100 0000s
 #define TYPE 0x0E //0000 1110
 
-const char figura_tipo_s[3][7] = {
+const char figura_tipo_s[8][7] = {
     [ICONO] = "Icono", 
     [NIVEL] = "Nivel", 
-    [SPRITE] = "Sprite"
+    [SPRITE] = "Sprite",
+    [PLANETA] = "Planeta",
+    [BASE] = "Base",
+    [COMBUSTIBLE] = "Combustible",
+    [TORRETA] = "Torreta",
+    [REACTOR] = "Reactor",
 };
 
 bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas){

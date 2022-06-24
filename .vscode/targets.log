@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 23 22:33:49 2022
+# Make data base, printed on Fri Jun 24 11:21:03 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ make: *** No rule to make target 'all'.  Stop.
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = VSCODE_WSL_EXT_LOCATION/up:VSCODE_SERVER_TAR/up
+WSLENV = VSCODE_WSL_EXT_LOCATION/up
 # default
 .SHELLFLAGS := -c
 # environment
@@ -36,8 +36,10 @@ SHELL = /bin/sh
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /home/leanshiza/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/node
-# makefile
-MAKEFILE_LIST := 
+# makefile (from 'Makefile', line 2)
+CFLAGS = -Wall -Werror -std=c99 -pedantic -lSDL2
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
@@ -55,9 +57,7 @@ PATH = /home/leanshiza/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f3736
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-a1b95690-842a-442f-9edb-4f8be2b62bcf.sock
-# environment
-VSCODE_SERVER_TAR = /mnt/c/Users/Lean/AppData/Local/Temp/vscode-remote-wsl/30d9c6cd9483b2cc586687151bcbcd635f373630/vscode-server-stable-linux-x64.tar.gz
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-20825897-2c1b-4edb-b7aa-05e3818a5974.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -71,7 +71,7 @@ PWD = /mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/21_interop
+WSL_INTEROP = /run/WSL/14_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -81,7 +81,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = leanshiza
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -94,12 +94,14 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 0
+# makefile (from 'Makefile', line 1)
+CC = gcc
 # default
 MAKE_VERSION := 4.2.1
 # environment
 USER = leanshiza
 # makefile
-.DEFAULT_GOAL := 
+.DEFAULT_GOAL := tp
 # environment
 NAME = DESKTOP-8CVCUI9
 # automatic
@@ -149,7 +151,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=68/1024=7%, Rehash=0, Collisions=4/90=4%
+# Load=69/1024=7%, Rehash=0, Collisions=4/94=4%
 
 # Pattern-specific Variable Values
 
@@ -157,9 +159,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 47, inode 16888498602945550): 12 files, no impossibilities.
+# . (device 47, inode 16888498602945550): 25 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 25 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -168,25 +170,77 @@ WSL_DISTRO_NAME = Ubuntu
 # Files
 
 # Not a target:
+color.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+polilinea.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+exe:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 20):
+	valgrind ./tp figuras_in.bin > figuras_out2.txt
+
+# Not a target:
 all:
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
 
+figura.o: figura.c figura.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	$(CC) figura.c -c $(CFLAGS)
+
+# Not a target:
+text.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+tp: text.o color.o figura.o polilinea.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 5):
+	$(CC) text.o color.o figura.o polilinea.o -o tp $(CFLAGS)
+	
+
+# Not a target:
+polilinea.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  File does not exist.
+#  Last modified 2022-06-24 01:04:35.9184628
 #  File has been updated.
-#  Failed to be updated.
+#  Successfully updated.
 
 # Not a target:
-makefile:
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Failed to be updated.
+figura.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+color.o: color.c color.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 11):
+	$(CC) color.c -c $(CFLAGS)
 
 # Not a target:
 .DEFAULT:
@@ -195,26 +249,53 @@ makefile:
 #  File has not been updated.
 
 # Not a target:
-GNUmakefile:
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Failed to be updated.
+figura.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 23):
+	rm -vf *o
+
+polilinea.o: polilinea.c polilinea.h color.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
+	$(CC) polilinea.c -c $(CFLAGS)
+
+text.o: text.c color.h figura.h polilinea.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 8):
+	$(CC) text.c -c $(CFLAGS)
+
+ 
+# Not a target:
+color.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
+# Load=18/1024=2%, Rehash=0, Collisions=1/47=2%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 173 B / avg = 8 B
-# current buf: size = 8162 B / used = 173 B / count = 20 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 32 / storage = 276 B / avg = 8 B
+# current buf: size = 8162 B / used = 276 B / count = 32 / avg = 8 B
 
-# strcache performance: lookups = 23 / hit rate = 13%
+# strcache performance: lookups = 63 / hit rate = 49%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=1/23=4%
-# Finished Make data base on Thu Jun 23 22:33:49 2022
+# Load=32/8192=0%, Rehash=0, Collisions=1/63=2%
+# Finished Make data base on Fri Jun 24 11:21:03 2022
 
  
