@@ -15,8 +15,10 @@
 ** |   N    | -> Cantidad de puntos de la polilinea
 ** +--------+
 */
-typedef struct polilinea polilinea_t;
-
+typedef struct {
+    float (*puntos)[2];
+    size_t n;
+} polilinea_t;
 /*
 ** Crea una polilinea de n sin inicializar las coordenadas
 */
@@ -42,5 +44,10 @@ bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y
 Devuelve una copia de una polilinea dada en memoria nueva.
 */
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
+
+/*
+Devuelve una copia de una polilinea dada en memoria nueva.
+*/
+polilinea_t *polilinea_crear_vector(const polilinea_t *polilinea);
 
 #endif

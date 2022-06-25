@@ -1,23 +1,32 @@
 #ifndef FIGURA_H
 #define FIGURA_H
 
+#include "polilinea.h"
+
+#include <stdbool.h>
+#include <stdlib.h>
 
 /* 
 ** Etiquetas para cada tipo de figura
 */
-typedef enum{
-    ICONO,
-    NIVEL,
-    SPRITE,
+typedef enum {
+    ICONO = 0,
+    NIVEL = 1,
+    SPRITE = 2,
+    PLANETA = 3,
+    BASE = 4,
+    COMBUSTIBLE = 5,
+    TORRETA = 6,
+    REACTOR = 7,
 } figura_tipo_t;
 
 
-typedef struct {
+typedef struct{
     char nombre[20];
     figura_tipo_t tipo;
     bool infinito;
-    size_t cantidad_polilineas;
-    polilinea_t *polilineas;
+    size_t cant_polilineas;
+    polilinea_t **polilineas;
 } figura_t;
 
 /* 
@@ -33,7 +42,7 @@ figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, s
 /*
 ** Apunta el puntero "polilineas" de la "figura" a un arreglo de "cant_polilineas" polilineas. Si no puede retorna false
 */
-bool figura_settear_polilinea(figura_t *figura, polilinea_t polilinea);
+bool figura_settear_polilinea(figura_t *figura, polilinea_t **polilineas);
 
 /*
 ** Destruye figuras

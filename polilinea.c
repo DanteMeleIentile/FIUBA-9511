@@ -15,10 +15,6 @@
 
 
 /* Estructura de las polilineas */
-typedef struct {
-    float (*puntos)[2];
-    size_t n;
-} polilinea_t;
 
 
 polilinea_t *polilinea_crear_vacia(size_t n){
