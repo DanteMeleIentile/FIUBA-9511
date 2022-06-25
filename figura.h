@@ -40,13 +40,15 @@ const char* figura_tipo_a_cadena(figura_tipo_t figura);
 figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, size_t cant_polilineas);
 
 /*
-** Apunta el puntero "polilineas" de la "figura" a un arreglo de "cant_polilineas" polilineas. Si no puede retorna false
+** Apunta el puntero "polilineas" de la "figura" a un arreglo de cant_polilineas "polilineas". Si no puede retorna false
 */
-bool figura_settear_polilinea(figura_t *figura, polilinea_t **polilineas);
+bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 
 /*
 ** Destruye figuras
 */
 void figura_destruir(figura_t *figura);
+
+
 
 #endif
