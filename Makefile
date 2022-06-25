@@ -1,13 +1,13 @@
-PROGRAM = EJ4
+PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -Werror -std=c99 -pedantic -g
+CFLAGS = -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
 
 all: $(PROGRAM)
 
 $(PROGRAM): main.o color.o figura.o lectura.o polilinea.o
 	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o -o $(PROGRAM)
 
-main.o: main.c color.h figura.h polilinea.h lectura.h
+main.o: main.c color.h figura.h polilinea.h lectura.h config.h
 	$(CC) $(CFLAGS) -c main.c
 	
 color.o: color.c color.h 
