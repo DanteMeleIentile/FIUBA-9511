@@ -1,35 +1,72 @@
 #include "polilinea.h"
 #include "color.h"
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <stdbool.h>
+#include <string.h>
 
 
-/* struct polilinea;
-typedef struct polilinea polilinea_t; */
+#define DIMENSION 2
+#define X 0
+#define Y 1
 
-struct polilinea {
-    int x;
-};
 
-polilinea_t *polilinea_crear_vacia(size_t n) {
-    printf("POLILINEA N=%zd\n", n);
-    static polilinea_t x;
-    return &x;
+
+/* Estructura de las polilineas */
+typedef struct {
+    float (*puntos)[2];
+    size_t n;
+} polilinea_t;
+
+
+polilinea_t *polilinea_crear_vacia(size_t n){
+    polilinea_t *p = malloc(sizeof(polilinea_t)); 
+    if (p == NULL){
+        return NULL;
+    }
+
+    p->n = n;
+    p->puntos = malloc(n * sizeof(float) * DIMENSION);
+    if (p->puntos == NULL){
+        free(p);
+        return NULL;
+    }
+
+    return p;
 }
 
-void polilinea_destruir(polilinea_t *polilinea) {}
 
-bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y) {
-    printf("POLILINEA[%zd] = (%.2f, %.2f)\n", pos, x, y);
+polilinea_t *polilinea_crear(const float puntos[][2], size_t n){
+    polilinea_t *p = polilinea_crear_vacia(n);
+    if (p == NULL){
+        return NULL;
+    }
+    
+    memcpy (*p->puntos, puntos, (n * sizeof(float) * DIMENSION));
+    
+    return p;
+}
+
+
+void polilinea_destruir(polilinea_t *polilinea){
+    free(polilinea->puntos);
+    free(polilinea);
+}
+
+
+bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
+    if (polilinea->n <= pos){  //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL'
+        return false;
+    }
+
+    polilinea->puntos[pos][X] = x;
+    polilinea->puntos[pos][Y] = y;
     return true;
 }
 
-bool polilinea_setear_color(polilinea_t *polilinea, color_t color) {
-    uint8_t r, g, b;
-    color_a_rgb(color, &r, &g, &b);
-    printf("POLILINEA COLOR: (%d, %d, %d)\n", r, g, b);
-    return true;
+
+polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
+    return polilinea_crear((const float(*)[DIMENSION])(polilinea->puntos), polilinea->n);
 }
