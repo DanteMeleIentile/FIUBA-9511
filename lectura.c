@@ -37,12 +37,12 @@ bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *i
 }
 
 polilinea_t *leer_polilinea(FILE *f){
-    static polilinea_t *p;
+    polilinea_t *p;
     
-    static size_t aux; 
+    size_t aux; 
 
-    static size_t n; // Cant. puntos polilinea
-    static color_t c; // 3 bits del color de la polilinea
+    size_t n; // Cant. puntos polilinea
+    color_t c; // 3 bits del color de la polilinea
 
     fread(&aux, sizeof(uint16_t), 1, f);
     
@@ -58,8 +58,8 @@ polilinea_t *leer_polilinea(FILE *f){
         return NULL;
     }
 
-    static float x; // Corresponde a la coordenada x de cada punto
-    static float y; // Corresponde a la coordenada y de cada punto
+    float x; // Corresponde a la coordenada x de cada punto
+    float y; // Corresponde a la coordenada y de cada punto
 
     for (size_t i = 0; i < n; i++){
         fread(&x, sizeof(float), 1, f);

@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'color.h', needed by 'main.o'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 25 14:32:14 2022
+# Make data base, printed on Sat Jun 25 16:39:40 2022
 
 # Variables
 
@@ -19,7 +21,7 @@ NO_AT_BRIDGE = 1
 # environment
 WSLENV = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /mnt/wslg/runtime-dir/vscode-ipc-d3438d15-a1e5-427a-b344-1a5d51837f3a.sock
+VSCODE_IPC_HOOK_EXTHOST = /mnt/wslg/runtime-dir/vscode-ipc-b182a0cf-3411-433b-8e72-bc63b90aae13.sock
 # environment
 VSCODE_CWD = /home/dmeleientile
 # environment
@@ -91,7 +93,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 947
+VSCODE_PID = 938
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -103,7 +105,7 @@ SESSION_MANAGER = local/DESKTOP-OO3QT7D:@/tmp/.ICE-unix/38,unix/DESKTOP-OO3QT7D:
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-teniEFh4cI,guid=80e5d4572d1e59f55f5f011862b721c7
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-HSJCBl0eWX,guid=c8cea0099d0f53d28483d46962b76441
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -199,7 +201,7 @@ CC = gcc
 # environment
 XDG_MENU_PREFIX = xfce-
 # variable set hash-table stats:
-# Load=94/1024=9%, Rehash=0, Collisions=12/132=9%
+# Load=94/1024=9%, Rehash=0, Collisions=12/126=10%
 
 # Pattern-specific Variable Values
 
@@ -207,9 +209,9 @@ XDG_MENU_PREFIX = xfce-
 
 # Directories
 
-# . (device 2080, inode 169273): 24 files, no impossibilities.
+# . (device 2080, inode 169273): 17 files, no impossibilities.
 
-# 24 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -219,24 +221,21 @@ XDG_MENU_PREFIX = xfce-
 
 # Not a target:
 lectura.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 14:25:07.835658191
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 color.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-25 13:21:09.375686767
-#  File has been updated.
-#  Successfully updated.
+#  File does not exist.
+#  File has not been updated.
 
 # Not a target:
 figura.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 14:24:05.305658656
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 Makefile:
@@ -247,63 +246,56 @@ Makefile:
 
 lectura.o: lectura.c polilinea.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-25 14:31:12.715655474
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 20):
 	$(CC) $(CFLAGS) -c lectura.c
 
 # Not a target:
 lectura.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 14:25:22.545658081
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 figura.o: figura.c figura.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-25 14:31:12.685655474
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 17):
 	$(CC) $(CFLAGS) -c figura.c
 
 polilinea.o: polilinea.c color.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-25 14:31:12.755655474
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 23):
 	$(CC) $(CFLAGS) -c polilinea.c
 
 clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 26):
 	rm -vf *.o main
 
+ 
 # Not a target:
 polilinea.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 14:27:48.655656993
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 color.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 13:21:09.375686767
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 polilinea.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 14:28:06.845656858
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .DEFAULT:
@@ -315,10 +307,7 @@ all: Gravitar
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/6=0%
+#  File has not been updated.
 
 # Not a target:
 main.c:
@@ -329,70 +318,40 @@ main.c:
 
 main.o: main.c color.h figura.h polilinea.h lectura.h config.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-25 14:31:12.645655475
-#  File has been updated.
-#  Successfully updated.
+#  File does not exist.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 11):
 	$(CC) $(CFLAGS) -c main.c
 	
 
 # Not a target:
 config.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 13:21:09.375686767
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 Gravitar: main.o color.o figura.o lectura.o polilinea.o
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := Gravitar
-# automatic
-# * := 
-# automatic
-# < := main.o
-# automatic
-# + := main.o color.o figura.o lectura.o polilinea.o
-# automatic
-# % := 
-# automatic
-# ^ := main.o color.o figura.o lectura.o polilinea.o
-# automatic
-# ? := main.o color.o figura.o lectura.o polilinea.o
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=2/14=14%
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 8):
 	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o -o $(PROGRAM)
 
 # Not a target:
 figura.h:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-25 14:24:20.525658543
-#  File has been updated.
-#  Successfully updated.
-
-color.o: color.c color.h
-#  Implicit rule search has not been done.
-#  Last modified 2022-06-25 14:31:12.665655475
-#  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 14):
-	$(CC) $(CFLAGS) -c color.c
-
-# Not a target:
-.SUFFIXES:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
+color.o: color.c color.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	$(CC) $(CFLAGS) -c color.c
+
 # files hash-table stats:
-# Load=21/1024=2%, Rehash=0, Collisions=0/59=0%
+# Load=21/1024=2%, Rehash=0, Collisions=0/58=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
@@ -402,9 +361,9 @@ color.o: color.c color.h
 # strcache buffers: 1 (0) / strings = 31 / storage = 287 B / avg = 9 B
 # current buf: size = 8162 B / used = 287 B / count = 31 / avg = 9 B
 
-# strcache performance: lookups = 70 / hit rate = 55%
+# strcache performance: lookups = 62 / hit rate = 50%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=0/70=0%
-# Finished Make data base on Sat Jun 25 14:32:14 2022
+# Load=31/8192=0%, Rehash=0, Collisions=0/62=0%
+# Finished Make data base on Sat Jun 25 16:39:40 2022
 
  
