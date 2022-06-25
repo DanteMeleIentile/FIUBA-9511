@@ -1,157 +1,209 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
 
-# GNU Make 4.2.1
+# GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
-# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun 24 11:21:03 2022
+# Make data base, printed on Sat Jun 25 14:54:11 2022
 
 # Variables
 
-# automatic
-<D = $(patsubst %/,%,$(dir $<))
-# automatic
-?F = $(notdir $?)
 # environment
-WSLENV = VSCODE_WSL_EXT_LOCATION/up
+GDK_BACKEND = x11
+# environment
+LC_ALL = C
+# environment
+NO_AT_BRIDGE = 1
+# environment
+PULSE_SERVER = tcp:172.30.16.1
+# environment
+WSLENV = WT_SESSION::WT_PROFILE_ID
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-f682e280-67ee-45fd-a559-12c1b3150f09.sock
+# environment
+VSCODE_CWD = /home/leanshiza
+# environment
+LESS_TERMCAP_me = [0m
+# environment
+VNCDESKTOP = LAPTOP-KTC9LICC.localdomain:1 (leanshiza)
 # default
-.SHELLFLAGS := -c
-# environment
-VSCODE_LOG_NATIVE = false
-# automatic
-?D = $(patsubst %/,%,$(dir $?))
+MAKE_COMMAND := make
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
-# automatic
-@F = $(notdir $@)
-# makefile
-CURDIR := /mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511
-# makefile
-SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
-# environment
-_ = /home/leanshiza/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/node
-# makefile (from 'Makefile', line 2)
-CFLAGS = -Wall -Werror -std=c99 -pedantic -lSDL2
-# makefile (from 'Makefile', line 1)
-MAKEFILE_LIST :=  Makefile
-# 'override' directive
-GNUMAKEFLAGS := 
-# environment
-XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
-# environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
-LESSOPEN = | /usr/bin/lesspipe %s
-# environment
-VSCODE_CWD = /mnt/c/Users/Lean/AppData/Local/Programs/Microsoft VS Code
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
-MAKE_HOST := x86_64-pc-linux-gnu
+.VARIABLES := 
 # environment
-PATH = /home/leanshiza/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/c/ProgramData/Oracle/Java/javapath:/mnt/c/Python39/Scripts/:/mnt/c/Python39/:/mnt/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64_win/compiler:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Common Files/Autodesk Shared/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files (x86)/GtkSharp/2.12/bin:/mnt/c/Users/Lean/AppData/Local/Microsoft/WindowsApps:/mnt/c/AppServ/Apache24/bin:/mnt/c/AppServ/php5:/mnt/c/AppServ/MySQL/bin:/mnt/c/Program Files (x86)/Java/jre1.8.0_221/bin:/mnt/c/adb:/mnt/c/Program Files (x86)/Microchip/MPLAB C32 Suite/bin:/mnt/c/PROGRA~2/PICC:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/PuTTY/:/mnt/c/Program Files/Java/jdk-12.0.2/bin:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Users/Lean/FFMPEG:/mnt/c/Program Files (x86)/dotnet/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/nodejs/:/mnt/c/Users/Lean/AppData/Local/Microsoft/WindowsApps:/mnt/c/AppServ/Apache24/bin:/mnt/c/AppServ/php5:/mnt/c/AppServ/MySQL/bin:/mnt/c/Program Files (x86)/Java/jre1.8.0_221/bin:/mnt/c/Users/Lean/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/Lean/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/Lean/.dotnet/tools:/mnt/c/Users/Lean/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Lean/AppData/Roaming/npm:/snap/bin
+PWD = /home/leanshiza/Documents/GitHub/FIUBA-9511
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# environment
+XDG_DATA_DIRS = /usr/local/share:/usr/share
+# environment
+OLDPWD = /home/leanshiza
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
 # environment
 VSCODE_LOG_STACK = false
-# environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-20825897-2c1b-4edb-b7aa-05e3818a5974.sock
-# default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
-# environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_PIPE_LOGGING = true
+VSCODE_CODE_CACHE_PATH = /home/leanshiza/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
-PWD = /mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511
+LANG = C
+# environment
+XAUTHORITY = /home/leanshiza/.Xauthority
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/14_interop
+LESS_TERMCAP_md = [1;36m
+# default
+.INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
+# makefile
+MAKEFLAGS = pqrR
+# environment
+LESS_TERMCAP_so = [01;33m
+# makefile
+CURDIR := /home/leanshiza/Documents/GitHub/FIUBA-9511
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+LESS_TERMCAP_ue = [0m
+# environment
+MFLAGS = -pqrR
+# default
+.SHELLFLAGS := -c
+# environment
+XDG_CONFIG_DIRS = /etc/xdg
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_PID = 14224
+# environment
+XDG_SESSION_TYPE = x11
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+WT_PROFILE_ID = {46ca431a-3a87-5fb3-83cd-11ececc031d2}
+# environment
+SESSION_MANAGER = local/LAPTOP-KTC9LICC:@/tmp/.ICE-unix/189,unix/LAPTOP-KTC9LICC:/tmp/.ICE-unix/189
+# automatic
+*F = $(notdir $*)
+# environment
+CHROME_DESKTOP = code-url-handler.desktop
+# environment
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-z6N9dHzRze,guid=037bc1b712da4f0e72c73cec62b7127c
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# makefile
+SHELL = /bin/sh
+# environment
+LESS_TERMCAP_us = [1;32m
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 2
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.13.11431.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Users/leand/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/leand/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/AppServ/Apache24/bin:/mnt/c/AppServ/php7:/mnt/c/AppServ/MySQL/bin:/mnt/c/Users/leand/AppData/Local/GitHubDesktop/bin
+# environment
+LESS_TERMCAP_se = [0m
+# default
+MAKEFILES := 
+# automatic
+^F = $(notdir $^)
+# environment
+LESS_TERMCAP_mb = [1;31m
+# environment
+WT_SESSION = ef52d6aa-2e33-426a-9aa7-94be01347f03
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?F = $(notdir $?)
+# environment
+NAME = LAPTOP-KTC9LICC
+# environment
+XDG_CURRENT_DESKTOP = XFCE
+# environment
+HOSTTYPE = x86_64
+# environment
+LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36::ow=30;44:
+# automatic
++F = $(notdir $+)
+# environment
+DESKTOP_SESSION = xfce
+# environment
+WSL_INTEROP = /run/WSL/10_interop
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = XFCE
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+LOGNAME = leanshiza
+# makefile
+.DEFAULT_GOAL := tp
+# environment
+DISPLAY = :1.0
+# environment
+USER = leanshiza
+# default
+MAKE_VERSION := 4.3
+# environment
+_ = /usr/share/code/code
+# makefile (from 'Makefile', line 2)
+CFLAGS = -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+# environment
+XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /home/leanshiza
 # environment
-LESSCLOSE = /usr/bin/lesspipe %s %s
+ELECTRON_RUN_AS_NODE = 1
 # environment
-LOGNAME = leanshiza
-# environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# environment
-VSCODE_HANDLES_UNCAUGHT_ERRORS = true
-# automatic
-^D = $(patsubst %/,%,$(dir $^))
-# environment
-MAKELEVEL := 0
-# default
-MAKE = $(MAKE_COMMAND)
-# default
-MAKECMDGOALS := all
-# environment
-SHLVL = 0
-# makefile (from 'Makefile', line 1)
-CC = gcc
-# default
-MAKE_VERSION := 4.2.1
-# environment
-USER = leanshiza
-# makefile
-.DEFAULT_GOAL := tp
-# environment
-NAME = DESKTOP-8CVCUI9
-# automatic
-%D = $(patsubst %/,%,$(dir $%))
-# environment
-VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/Lean/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
-# default
-MAKE_COMMAND := make
-# default
-.VARIABLES := 
-# automatic
-*F = $(notdir $*)
-# makefile
-MAKEFLAGS = pqrR
-# environment
-MFLAGS = -pqrR
-# automatic
-*D = $(patsubst %/,%,$(dir $*))
-# automatic
-+D = $(patsubst %/,%,$(dir $+))
-# automatic
-+F = $(notdir $+)
-# environment
-VSCODE_HANDLES_SIGPIPE = true
-# default
-MAKEFILES := 
-# automatic
-<F = $(notdir $<)
-# environment
-LC_ALL = C
-# environment
-HOSTTYPE = x86_64
-# automatic
-^F = $(notdir $^)
-# default
-SUFFIXES := 
-# default
-.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
-# default
-.RECIPEPREFIX := 
-# environment
-LANG = C
+VSCODE_IPC_HOOK = /home/leanshiza/.config/Code/1.68.1-main.sock
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_EXTHOST_WILL_SEND_SOCKET = true
+PANEL_GDK_CORE_DEVICE_EVENTS = 0
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
 # environment
-WSL_DISTRO_NAME = Ubuntu
+WSL_DISTRO_NAME = kali-linux
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+# makefile (from 'Makefile', line 1)
+CC = gcc
+# environment
+XDG_MENU_PREFIX = xfce-
 # variable set hash-table stats:
-# Load=69/1024=7%, Rehash=0, Collisions=4/94=4%
+# Load=95/1024=9%, Rehash=0, Collisions=12/125=10%
 
 # Pattern-specific Variable Values
 
@@ -159,9 +211,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 47, inode 16888498602945550): 25 files, no impossibilities.
+# . (device 2064, inode 156240): 21 files, no impossibilities.
 
-# 25 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -170,10 +222,64 @@ WSL_DISTRO_NAME = Ubuntu
 # Files
 
 # Not a target:
+lectura.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 color.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+figura.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-25 14:54:02.18261664
+#  File has been updated.
+#  Successfully updated.
+
+lectura.o: lectura.c lectura.h polilinea.h figura.h color.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 20):
+	$(CC) lectura.c -c $(CFLAGS)
+
+# Not a target:
+lectura.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+figura.o: figura.c figura.h polilinea.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	$(CC) figura.c -c $(CFLAGS)
+
+polilinea.o: polilinea.c polilinea.h color.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
+	$(CC) polilinea.c -c $(CFLAGS)
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 26):
+	rm -vf *o
+ 
 
 # Not a target:
 polilinea.c:
@@ -185,35 +291,21 @@ exe:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 20):
+#  recipe to execute (from 'Makefile', line 23):
 	valgrind ./tp figuras_in.bin > figuras_out2.txt
 
 # Not a target:
-all:
-#  Command line target.
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has not been updated.
-
-figura.o: figura.c figura.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 14):
-	$(CC) figura.c -c $(CFLAGS)
-
-# Not a target:
-text.c:
+color.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-tp: text.o color.o figura.o polilinea.o
+tp: main.o color.o figura.o polilinea.o lectura.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 5):
-	$(CC) text.o color.o figura.o polilinea.o -o tp $(CFLAGS)
+	$(CC) main.o color.o figura.o polilinea.o lectura.o -o tp $(CFLAGS)
 	
 
 # Not a target:
@@ -223,14 +315,33 @@ polilinea.h:
 #  File has not been updated.
 
 # Not a target:
-Makefile:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-24 01:04:35.9184628
-#  File has been updated.
-#  Successfully updated.
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
-figura.c:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+main.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+main.o: main.c color.h figura.h polilinea.h lectura.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 8):
+	$(CC) main.c -c $(CFLAGS)
+
+# Not a target:
+figura.h:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -242,60 +353,20 @@ color.o: color.c color.h
 #  recipe to execute (from 'Makefile', line 11):
 	$(CC) color.c -c $(CFLAGS)
 
-# Not a target:
-.DEFAULT:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-figura.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-clean:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 23):
-	rm -vf *o
-
-polilinea.o: polilinea.c polilinea.h color.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 17):
-	$(CC) polilinea.c -c $(CFLAGS)
-
-text.o: text.c color.h figura.h polilinea.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'Makefile', line 8):
-	$(CC) text.c -c $(CFLAGS)
-
- 
-# Not a target:
-color.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 # files hash-table stats:
-# Load=18/1024=2%, Rehash=0, Collisions=1/47=2%
+# Load=21/1024=2%, Rehash=0, Collisions=0/59=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 32 / storage = 276 B / avg = 8 B
-# current buf: size = 8162 B / used = 276 B / count = 32 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 293 B / avg = 8 B
+# current buf: size = 8162 B / used = 293 B / count = 33 / avg = 8 B
 
-# strcache performance: lookups = 63 / hit rate = 49%
+# strcache performance: lookups = 69 / hit rate = 52%
 # hash-table stats:
-# Load=32/8192=0%, Rehash=0, Collisions=1/63=2%
-# Finished Make data base on Fri Jun 24 11:21:03 2022
+# Load=33/8192=0%, Rehash=0, Collisions=0/69=0%
+# Finished Make data base on Sat Jun 25 14:54:11 2022
 
  

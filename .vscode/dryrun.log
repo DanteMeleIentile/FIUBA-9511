@@ -1,9 +1,11 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511'
-gcc text.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
-gcc color.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
-gcc figura.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
-gcc polilinea.c -c -Wall -Werror -std=c99 -pedantic -lSDL2
-gcc text.o color.o figura.o polilinea.o -o tp -Wall -Werror -std=c99 -pedantic -lSDL2
-make: Leaving directory '/mnt/c/Users/Lean/Documents/GitHub/FIUBA-9511'
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
+gcc main.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+ 
+gcc color.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+gcc figura.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+gcc polilinea.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+gcc lectura.c -c -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+gcc main.o color.o figura.o polilinea.o lectura.o -o tp -Wall -Werror -std=c99 -pedantic -lSDL2 -lm
+make: Leaving directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
  
