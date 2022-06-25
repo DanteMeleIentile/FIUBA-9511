@@ -2,14 +2,8 @@
 #include <stdbool.h>
 
 #include "config.h"
-#include "polilinea.h"
-#include "color.h"
-#include "figura.h"
-
 
 int main() {
-    FILE *file1 = fopen("/figuras.bin", "rb");
-
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window;
@@ -20,45 +14,11 @@ int main() {
     SDL_SetWindowTitle(window, "Gravitar");
 
     int dormir = 0;
-    char nombre[20];
-    bool infinito;
-    figura_tipo_t tipo;
-    size_t cantidad_polilineas;
-
-    // Queremos que todo se dibuje escalado por f:
-    float f = 10;
 
     // BEGIN código del alumno
     // Mi nave:
     const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
-
-    // TEST:
-    if(! leer_encabezado_figura(file1, nombre, &tipo, &infinito, &cantidad_polilineas))
-        return 1;
-
-    for(size_t i = 0; i < cantidad_polilineas; i++) {
-        polilinea_t *p = leer_polilinea(file1);
-        if(p == NULL) {
-            fprintf(stderr, "Error en el archivo");
-            fclose(file1);
-            return 1;
-        }
-
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-
-        for(size_t j = 0; j < p->n - 1; j++)
-            SDL_RenderDrawLine(
-                renderer,
-                p->puntos[j][0] * f + VENTANA_ANCHO / 2,
-                -p->puntos[j][1] * f + VENTANA_ALTO / 2,
-                p->puntos[j+1][0] * f + VENTANA_ANCHO / 2,
-                -p->puntos[j+1][1] * f + VENTANA_ALTO / 2
-            );
-
-        polilinea_destruir(p);
-    }
-
 
     // El chorro de la nave:
     const float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
@@ -66,6 +26,8 @@ int main() {
 
     bool chorro_prendido = false;
 
+    // Queremos que todo se dibuje escalado por f:
+    float f = 10;
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -149,9 +111,6 @@ int main() {
     SDL_DestroyWindow(window);
 
     SDL_Quit();
-
-    fclose(file1);
-
     return 0;
 }
 

@@ -1,10 +1,10 @@
 #ifndef FIGURA_H
 #define FIGURA_H
 
-#include <stdbool.h>
-#include <stdio.h>
+#include "polilinea.h"
 
-typedef enum figura_tipo_t {
+
+typedef enum {
     ICONO = 0,
     NIVEL = 1,
     SPRITE = 2,
@@ -15,8 +15,14 @@ typedef enum figura_tipo_t {
     REACTOR = 7,
 } figura_tipo_t;
 
-const char* figura_tipo_a_cadena(figura_tipo_t figura);
+typedef struct {
+    char nombre[20];
+    figura_tipo_t tipo;
+    bool infinito;
+    size_t cantidad_polilineas;
+    polilinea_t *polilineas;
+} figura_t;
 
-bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *infinito, size_t *cantidad_polilineas);
+const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
 #endif

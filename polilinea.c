@@ -1,15 +1,12 @@
-#include "polilinea.h"
-#include "color.h"
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-
-
+#include "polilinea.h"
+#include "color.h"
 
 #define DIM 2
 
-#define CANT 0xFC00 //1111 1100
 
 //Creacion y destruccion:
 
@@ -113,35 +110,3 @@ double calcular_parametro(const punto a, const punto b, const punto p){
 
 //FILE:
 
-polilinea_t *leer_polilinea(FILE *f){
-
-    uint16_t encabezado;
-    if(fread(&encabezado, sizeof(uint16_t), 1, f) != 1){
-        return NULL;
-    } 
-
-    color_t color = encabezado >> 13;
-    uint16_t cant = encabezado & (~CANT);
-
-    polilinea_t *p = polilinea_crear_vacia(cant);
-
-    p->c = color;
-
-    if(!polilinea_setear_color(p, color)){
-        polilinea_destruir(p);
-        return NULL;
-    }
-
-    float pol[cant][2];
-
-    if(fread(pol, sizeof(float) * cant * 2, 1, f) != 1){
-        polilinea_destruir(p);
-        return NULL;
-    }
-
-    for(size_t i = 0; i < cant; i++){
-        polilinea_setear_punto(p, i, pol[i][0], pol[i][1]);
-    }
-
-    return p;
-}

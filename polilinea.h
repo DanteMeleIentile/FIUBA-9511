@@ -2,10 +2,11 @@
 #define POLILINEA_H
 
 #include <stdio.h>
+
 #include "figura.h"
 #include "color.h"
 
-typedef struct {
+typedef struct{
     float (*puntos)[2];
     size_t n;
     color_t c;
@@ -46,9 +47,5 @@ double polilinea_distancia_punto_a_polilinea(polilinea_t polilinea, const punto 
 //otra funcion que calcule distancia entre polilineas:
 
 double polilinea_distancia_a_polilinea(polilinea_t polilinea1, polilinea_t polilinea2);
-
-//FILE:
-
-polilinea_t *leer_polilinea(FILE *f);
 
 #endif
