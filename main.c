@@ -1,10 +1,13 @@
+#include "polilinea.h"
+#include "figura.h"
+#include "lectura.h"
+#include "config.h"
+
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
-#include "config.h"
-
-
 int main() {
+    
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_Window *window;
@@ -17,6 +20,62 @@ int main() {
     int dormir = 0;
 
     // BEGIN código del alumno
+
+//----------------------------------------------------------------------------------------------------------------------
+
+    FILE *f1 = fopen("figuras.bin", "rb");
+    if(f1 == NULL) {
+        fprintf(stderr, "No pudo abrirse figuras.bin\n");
+        return 1;
+    }
+
+//Creamos un puntero que apunta a un vector "vector_figuras" de una (1) figura_t
+
+
+    figura_t **vector_figuras = malloc(sizeof(figura_t*));
+    if(vector_figuras == NULL){
+        fprintf(stderr, "Error de memoria");
+        return 1;
+    }
+
+    char nombre[20];
+    bool infinito;
+    figura_tipo_t tipo;
+    size_t cant_polilineas;
+
+    size_t cant_figuras = 0;
+
+    for(size_t i = 0; !leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
+        if(i != 0)
+            vector_figuras = realloc(vector_figuras, (i + 1) * sizeof(figura_t*)); //Agrega una componente a "vector_figuras" hasta que no pueda leer mas figuras
+            //CHEQUEAR ESTO
+        vector_figuras[i] = figura_crear(nombre, tipo, infinito, cant_polilineas); //Iguala cada componente a la figura leida del archivo
+
+        polilinea_t **vector_polilineas = malloc(sizeof(polilinea_t*) * cant_polilineas); //Creamos un puntero que apunta a un vector "vector_polilineas" de "cant_polilineas"z polilinea_t
+
+        if(vector_polilineas == NULL){
+            fprintf(stderr, "Error de memoria");
+            return 1;
+        }
+
+        for(size_t j = 0; j < cant_polilineas; j++){
+            vector_polilineas[j] = leer_polilinea(f1); //Iguala cada componente de las polilineas de cada figura leida del archivo
+        }
+
+        if(!figura_setear_polilinea(vector_figuras[i], vector_polilineas)){
+            fprintf(stderr, "ERROR");
+            return 1; // ERROR 
+        }
+
+        cant_figuras = i + 1; //EVALUAR
+    }
+
+    printf("%zd/n", cant_figuras);
+  
+    fclose(f1);
+
+
+//----------------------------------------------------------------------------------------------------------------------
     // Mi nave:
     const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;

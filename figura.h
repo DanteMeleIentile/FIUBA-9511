@@ -41,6 +41,8 @@ figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, s
 
 /*
 ** Apunta el puntero "polilineas" de la "figura" a un arreglo de cant_polilineas "polilineas". Si no puede retorna false
+** PRE: figura_t->cant_polilineas debe ser igual a la longitud de polilineas;
+** POST: El puntero "polilineas" de la figura apunta al vector "polilineas" 
 */
 bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 

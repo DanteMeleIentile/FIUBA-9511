@@ -4,6 +4,9 @@
         "config.h": "c",
         "sdl.h": "c",
         "polilinea.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "color.h": "c",
+        "lectura.h": "c",
+        "figura.h": "c"
     }
 }

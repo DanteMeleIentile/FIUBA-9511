@@ -62,6 +62,13 @@ bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y
     return true;
 }
 
+bool polilinea_setear_color(polilinea_t *polilinea, color_t color) {
+    uint8_t r, g, b;
+    color_a_rgb(color, &r, &g, &b);
+    printf("POLILINEA COLOR: (%d, %d, %d)\n", r, g, b);
+    return true;
+}
+
 
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
     return polilinea_crear((const float(*)[DIMENSION])(polilinea->puntos), polilinea->n);

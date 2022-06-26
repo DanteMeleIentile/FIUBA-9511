@@ -1,10 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
-gcc -Wall -Werror -std=c99 -pedantic -lSDL2 -lm -c figura.c
-gcc -Wall -Werror -std=c99 -pedantic -lSDL2 -lm -c lectura.c
- 
-make: *** No rule to make target 'color.h', needed by 'main.o'.
-make: *** No rule to make target 'color.c', needed by 'color.o'.
-
-make: Leaving directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
+gcc -Wall -Werror -std=c99 -pedantic -lm main.o color.o figura.o lectura.o polilinea.o -lSDL2 -o Gravitar
+make: Leaving directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
  

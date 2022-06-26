@@ -40,7 +40,7 @@ figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, s
     return fig;
 }
 
-bool figura_settear_polilinea(figura_t *figura, polilinea_t **polilineas){
+bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
     if((figura->polilineas = polilineas) == NULL)
         return false;
     

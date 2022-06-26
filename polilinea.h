@@ -1,11 +1,10 @@
 #ifndef POLILINEA_H
 #define POLILINEA_H
 
+#include "color.h"
 
 #include <stddef.h>
 #include <stdbool.h>
-
-
 /*
 ** La estructura que se define para las polilineas es de tipo:
 **
@@ -46,8 +45,13 @@ Devuelve una copia de una polilinea dada en memoria nueva.
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
 
 /*
-Devuelve una copia de una polilinea dada en memoria nueva.
+** Devuelve una copia de una polilinea dada en memoria nueva.
 */
 polilinea_t *polilinea_crear_vector(const polilinea_t *polilinea);
+
+/*
+** SETEA EL COLOR DE LA POLILINEA (CAMBIAR)
+*/
+bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
 
 #endif

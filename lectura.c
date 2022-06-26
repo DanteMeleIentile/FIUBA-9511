@@ -1,6 +1,7 @@
 #include "lectura.h"
 #include "polilinea.h"
 #include "figura.h"
+#include "color.h"
 
 #include <stdbool.h> 
 #include <stdint.h> 
