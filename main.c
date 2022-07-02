@@ -83,9 +83,10 @@ int main() {
 //----------------------------------------------------------------------------------------------------------------------
 //CREACIÓN DE "LISTA ACTIVA"
     lista_t *lista_activa = lista_crear();
-    figura_agregar_en_lista("ESTRELLA", lista_activa);
 
-
+    figura_agregar_en_lista("BASE", lista_activa);
+    figura_agregar_en_lista("PLANETA3", lista_activa);
+    figura_eliminar_en_lista("BASE", lista_activa);
 
 
 //----------------------------------------------------------------------------------------------------------------------

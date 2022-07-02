@@ -61,4 +61,12 @@ void figura_destruir(figura_t *figura);
 */
 void figura_agregar_en_lista(char *nombre, lista_t *lista);
 
+/*
+** Dada una figura de nombre "nombre" y una lista_t "lista", ELIMINA de "lista" EL PRIMER nodo con dato = "nombre".
+** PRE: Lista creada utilizando funciones del TDA lista.
+** POST: El último elemento de la lista apunta a NULL 
+*/
+//EVALIUAR FUNCION PARA ELIMINAR TODAS LAS ENTIDADES CON "NOMBRE"
+void figura_eliminar_en_lista(char *nombre, lista_t *lista);
+
 #endif
