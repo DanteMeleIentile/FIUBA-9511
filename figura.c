@@ -1,9 +1,11 @@
-#include "figura.h"
-#include "polilinea.h"
-
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "polilinea.h"
+#include "polilinea.h"
+#include "figura.h"
+#include "lista.h"
 
 
 
@@ -55,4 +57,8 @@ void figura_destruir(figura_t *figura){
     free(figura->polilineas);
 
     free(figura);
+}
+
+void figura_agregar_en_lista(char *nombre, lista_t *lista){
+    lista_insertar_ultimo(lista, nombre);
 }

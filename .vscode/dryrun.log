@@ -1,5 +1,12 @@
 make --dry-run --keep-going --print-directory
-make: Entering directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
-gcc -Wall -Werror -std=c99 -pedantic -lm main.o color.o figura.o lectura.o polilinea.o -lSDL2 -o Gravitar
-make: Leaving directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
+make: Entering directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
+gcc -Wall -Werror -std=c99 -pedantic -lm -c main.c
+gcc -Wall -Werror -std=c99 -pedantic -lm -c color.c
+ 
+gcc -Wall -Werror -std=c99 -pedantic -lm -c figura.c
+gcc -Wall -Werror -std=c99 -pedantic -lm -c lectura.c
+gcc -Wall -Werror -std=c99 -pedantic -lm -c polilinea.c
+gcc -Wall -Werror -std=c99 -pedantic -lm -c lista.c
+gcc -Wall -Werror -std=c99 -pedantic -lm main.o color.o figura.o lectura.o polilinea.o lista.o -lSDL2 -o Gravitar
+make: Leaving directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
  

@@ -1,10 +1,12 @@
+#include <SDL2/SDL.h>
+#include <stdbool.h>
+
 #include "polilinea.h"
+#include "lista.h"
 #include "figura.h"
 #include "lectura.h"
 #include "config.h"
-
-#include <SDL2/SDL.h>
-#include <stdbool.h>
+#include "config.h"
 
 int main() {
     
@@ -22,6 +24,8 @@ int main() {
     // BEGIN código del alumno
 
 //----------------------------------------------------------------------------------------------------------------------
+//CREACIÓN DE ESTRUCTURA DE LECTURA
+
 
     FILE *f1 = fopen("figuras.bin", "rb");
     if(f1 == NULL) {
@@ -45,7 +49,7 @@ int main() {
 
     size_t cant_figuras = 0;
 
-    for(size_t i = 0; !leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
+    for(size_t i = 0; leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
         if(i != 0)
             vector_figuras = realloc(vector_figuras, (i + 1) * sizeof(figura_t*)); //Agrega una componente a "vector_figuras" hasta que no pueda leer mas figuras
             //CHEQUEAR ESTO
@@ -67,15 +71,26 @@ int main() {
             return 1; // ERROR 
         }
 
-        cant_figuras = i + 1; //EVALUAR
+        cant_figuras++; //EVALUAR
     }
 
-    printf("%zd/n", cant_figuras);
-  
+    printf("CANT FIGURAS = %zd\n", cant_figuras);
+
     fclose(f1);
 
 
 //----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+//CREACIÓN DE "LISTA ACTIVA"
+    lista_t *lista_activa = lista_crear();
+    figura_agregar_en_lista("ESTRELLA", lista_activa);
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------
+    
+    
     // Mi nave:
     const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
@@ -150,6 +165,30 @@ int main() {
                     -chorro[i+1][1] * f + VENTANA_ALTO / 2
                 );
         }
+//---------------------------------------------------------------
+    lista_iter_t *iter = lista_iter_crear(lista_activa);
+    size_t i = 0;
+    
+    while(i < lista_largo(lista_activa)){
+        for (size_t j = 0; j < cant_figuras; j++){
+            if(strcmp(lista_iter_ver_actual(iter), vector_figuras[j]->nombre) == 0){
+                for(size_t k = 0; k < vector_figuras[j]->cant_polilineas; k++){
+                    SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
+                    for(int z = 0; z < vector_figuras[j]->polilineas[k]->n - 1; z++)
+                        SDL_RenderDrawLine(
+                        renderer,
+                        vector_figuras[j]->polilineas[k]->puntos[z][0] * f + VENTANA_ANCHO / 2,
+                        -vector_figuras[j]->polilineas[k]->puntos[z][1] * f + VENTANA_ALTO / 2,
+                        vector_figuras[j]->polilineas[k]->puntos[z+1][0] * f + VENTANA_ANCHO / 2,
+                        -vector_figuras[j]->polilineas[k]->puntos[z+1][1] * f + VENTANA_ALTO / 2
+                        );
+                }
+            }  
+        } 
+        i++;  
+        lista_iter_avanzar(iter);   
+    }
+//---------------------------------------------------------------
         // END código del alumno
 
         SDL_RenderPresent(renderer);

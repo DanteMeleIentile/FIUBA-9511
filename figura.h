@@ -1,10 +1,11 @@
 #ifndef FIGURA_H
 #define FIGURA_H
 
-#include "polilinea.h"
-
 #include <stdbool.h>
 #include <stdlib.h>
+
+#include "polilinea.h"
+#include "lista.h"
 
 /* 
 ** Etiquetas para cada tipo de figura
@@ -29,6 +30,8 @@ typedef struct{
     polilinea_t **polilineas;
 } figura_t;
 
+
+
 /* 
 ** Devuelve el nombre de la figura
 */
@@ -51,6 +54,11 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 */
 void figura_destruir(figura_t *figura);
 
-
+/*
+** Dada una figura de nombre "nombre" y una lista_t "lista", agrega a "lista" un nodo con dato = "nombre".
+** PRE: Lista creada utilizando funciones del TDA lista.
+** POST: El último elemento de la lista apunta a NULL 
+*/
+void figura_agregar_en_lista(char *nombre, lista_t *lista);
 
 #endif
