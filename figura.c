@@ -61,6 +61,8 @@ void figura_destruir(figura_t *figura){
     free(figura);
 }
 
+
+
 void figura_agregar_en_lista(char *nombre, lista_t *lista){
     lista_insertar_ultimo(lista, nombre);
 }
@@ -71,6 +73,20 @@ void figura_eliminar_en_lista(char *nombre, lista_t *lista){
         if(strcmp(lista_iter_ver_actual(iter), nombre) == 0){
             lista_iter_borrar(iter);
             break;
+            //continue;
+        }
+        lista_iter_avanzar(iter);
+    }
+    
+    lista_iter_destruir(iter);
+}
+
+void figura_eliminar_todos_nombre(char *nombre, lista_t *lista){
+    lista_iter_t *iter = lista_iter_crear(lista);
+    for(size_t i = 0; i < lista_largo(lista); i++){
+        if(strcmp(lista_iter_ver_actual(iter), nombre) == 0){
+            lista_iter_borrar(iter);
+            //break;
             //continue;
         }
         lista_iter_avanzar(iter);
