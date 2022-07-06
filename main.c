@@ -24,7 +24,6 @@ void imprimir_figura(polilinea_t **polilineas, size_t cant_polilineas, float esc
     }
 }
 
-
 int main() {
     
     SDL_Init(SDL_INIT_VIDEO);
@@ -88,6 +87,17 @@ int main() {
 
         for(size_t j = 0; j < cant_polilineas; j++){
             vector_polilineas[j] = leer_polilinea(f1); //Iguala cada componente de las polilineas de cada figura leida del archivo
+            if(vector_polilineas[j] == NULL){
+                if(j >= 1){
+                    for(size_t l = 0; l < j; l++){
+                        polilinea_destruir(vector_polilineas[l]);
+                    }
+                }
+                free(vector_polilineas);
+                free(vector_figuras);
+                fclose(f1);
+                return 1;
+            }
         }
 
         if(!figura_setear_polilinea(vector_figuras[i], vector_polilineas)){
@@ -108,12 +118,6 @@ int main() {
 //----------------------------------------------------------------------------------------------------------------------
 //CREACIÓN DE "LISTA ACTIVA"
     lista_t *lista_activa = lista_crear();
-
-    
-    figura_agregar_en_lista("PLANETA1", lista_activa);
-
-
-
 //----------------------------------------------------------------------------------------------------------------------
     
     
@@ -128,7 +132,7 @@ int main() {
     bool chorro_prendido = false;
 
     // Queremos que todo se dibuje escalado por f:
-    float f = 10;
+    float f = 1;
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -168,7 +172,39 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
+
+        //if(nivel = 1)
+
+        figura_agregar_en_lista("BASE", lista_activa);
+        figura_agregar_en_lista("PLANETA1", lista_activa);
+        figura_agregar_en_lista("PLANETA2", lista_activa);
+        figura_agregar_en_lista("PLANETA3", lista_activa);
+        figura_agregar_en_lista("PLANETA4", lista_activa);
+        figura_agregar_en_lista("PLANETA5", lista_activa);
+    
+        lista_iter_t *iter = lista_iter_crear(lista_activa);
+//IMPLEMENTAR FUNCION ROTOTRASLACION.
+        for(size_t i = 0; i < lista_largo(lista_activa); i++){
+            for (size_t j = 0; j < cant_figuras; j++){
+                if(strcmp("BASE", vector_figuras[j]->nombre) == 0){
+                    figura_t *fig = figura_clonar(vector_figuras[j]);
+
+                    for(size_t k = 0; k < fig->cant_polilineas; k++){
+                        trasladar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 388, -218);
+                        rotar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 0);
+                    }
+                    printf("CANT POLILINEAS: %zd\n", fig->cant_polilineas);
+                    imprimir_figura(fig->polilineas, fig->cant_polilineas, f, renderer);
+                    figura_destruir(fig);
+                }
+            } 
+            lista_iter_avanzar(iter);
+        }
+
         // Dibujamos la nave escalada por f en el centro de la pantalla:
+
+        
+        
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
         for(int i = 0; i < nave_tam - 1; i++)
             SDL_RenderDrawLine(
@@ -192,30 +228,18 @@ int main() {
                 );
         }
 //---------------------------------------------------------------
-    lista_iter_t *iter = lista_iter_crear(lista_activa);
+/*     lista_iter_t *iter = lista_iter_crear(lista_activa);
     size_t i = 0;
     
     while(i < lista_largo(lista_activa)){
         for (size_t j = 0; j < cant_figuras; j++){
             if(strcmp(lista_iter_ver_actual(iter), vector_figuras[j]->nombre) == 0){
-                /* for(size_t k = 0; k < vector_figuras[j]->cant_polilineas; k++){
-                    SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
-                    for(int z = 0; z < vector_figuras[j]->polilineas[k]->n - 1; z++)
-                        SDL_RenderDrawLine(
-                        renderer,
-                        vector_figuras[j]->polilineas[k]->puntos[z][0] * f + VENTANA_ANCHO / 2,
-                        -vector_figuras[j]->polilineas[k]->puntos[z][1] * f + VENTANA_ALTO / 2,
-                        vector_figuras[j]->polilineas[k]->puntos[z+1][0] * f + VENTANA_ANCHO / 2,
-                        -vector_figuras[j]->polilineas[k]->puntos[z+1][1] * f + VENTANA_ALTO / 2
-                        );
-                } */
-
                 imprimir_figura(vector_figuras[j]->polilineas, vector_figuras[j]->cant_polilineas, f, renderer);
             }  
         } 
         i++;  
         lista_iter_avanzar(iter);   
-    }
+    } */
 //---------------------------------------------------------------
         // END código del alumno
 

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 
 #include "polilinea.h"
@@ -44,10 +45,43 @@ figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, s
     return fig;
 }
 
+figura_t *figura_clonar(const figura_t *figura){
+    figura_t *fig = figura_crear(figura->nombre, figura->tipo, figura->infinito, figura->cant_polilineas);
+    if(fig == NULL){
+        return NULL;
+    }
+
+    polilinea_t **vector_polilineas = malloc(sizeof(polilinea_t*) * figura->cant_polilineas);
+
+    if(vector_polilineas == NULL){
+        figura_destruir(fig);
+        return NULL;
+    }
+
+    for(size_t j = 0; j < fig->cant_polilineas; j++){
+        color_t c = color_crear_valor(figura->polilineas[j]->r, figura->polilineas[j]->g, figura->polilineas[j]->b);
+        vector_polilineas[j] = polilinea_crear((const float(*)[2])figura->polilineas[j]->puntos, figura->polilineas[j]->n, c); //Iguala cada componente de las polilineas de cada figura leida del archivo
+        polilinea_printf(vector_polilineas[j]);
+        printf("...\n");
+        if(vector_polilineas[j] == NULL){
+            if(j >= 1){
+                for(size_t l = 0; l < j; l++){
+                    polilinea_destruir(vector_polilineas[l]);
+                }
+            }
+            free(vector_polilineas);
+            figura_destruir(fig);
+            return NULL;
+        }
+    }
+    
+    figura_setear_polilinea(fig, vector_polilineas);
+    return fig;
+}
+
 bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
     if((figura->polilineas = polilineas) == NULL)
         return false;
-    
     return true;
 }
 

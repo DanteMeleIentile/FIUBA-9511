@@ -27,7 +27,7 @@ polilinea_t *polilinea_crear_vacia(size_t n);
 /*
 Crea una nueva polilínea según los n puntos recibidos. Devuelve la polilínea creada en memoria nueva o NULL en caso de falla.
 */
-polilinea_t *polilinea_crear(const float puntos[][2], size_t n);
+polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c);
 
 /*
 ** Destruye una polilinea creada mediante "polilinea_crear_vacia". Devuelve NULL en caso de falla.
@@ -54,5 +54,11 @@ polilinea_t *polilinea_crear_vector(const polilinea_t *polilinea);
 ** SETEA EL COLOR DE LA POLILINEA (CAMBIAR)
 */
 bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
+
+void trasladar(float polilinea[][2], size_t n, float dx, float dy);
+
+void rotar(float polilinea[][2], size_t n, double rad);
+
+void polilinea_printf(polilinea_t *polilinea);
 
 #endif

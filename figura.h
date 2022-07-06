@@ -42,6 +42,11 @@ const char* figura_tipo_a_cadena(figura_tipo_t figura);
 */
 figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, size_t cant_polilineas);
 
+/*  
+** Devuelve una copia de figura en memoria nueva
+*/
+figura_t *figura_clonar(const figura_t *figura);
+
 /*
 ** Apunta el puntero "polilineas" de la "figura" a un arreglo de cant_polilineas "polilineas". Si no puede retorna false
 ** PRE: figura_t->cant_polilineas debe ser igual a la longitud de polilineas;
