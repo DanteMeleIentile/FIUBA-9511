@@ -5,23 +5,20 @@
 #include "lista.h"
 #include "figura.h"
 #include "lectura.h"
-#include "config.h"
+#include "fisicas.h"
 #include "config.h"
 
 //Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado con su respectivo color
 
-void imprimir_figura(polilinea_t **polilineas, size_t cant_polilineas, float escala, SDL_Renderer *renderer){
-    for(size_t k = 0; k < cant_polilineas; k++){
-        SDL_SetRenderDrawColor(renderer, polilineas[k]->r, polilineas[k]->g, polilineas[k]->b, 0xFF);
-        for(int z = 0; z < polilineas[k]->n - 1; z++)
-            SDL_RenderDrawLine(
-            renderer,
-            polilineas[k]->puntos[z][0] * escala + VENTANA_ANCHO / 2,
-            -polilineas[k]->puntos[z][1] * escala + VENTANA_ALTO / 2,
-            polilineas[k]->puntos[z+1][0] * escala + VENTANA_ANCHO / 2,
-            -polilineas[k]->puntos[z+1][1] * escala + VENTANA_ALTO / 2
-            );
-    }
+figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){
+    figura_t *fig;
+    for (size_t i = 0; i < n; i++){
+        if(strcmp("BASE", vector_figuras[i]->nombre) == 0){
+            fig = vector_figuras[i];
+            break;
+        }
+    } 
+    return fig;
 }
 
 int main() {
@@ -64,7 +61,7 @@ int main() {
     figura_tipo_t tipo;
     size_t cant_polilineas;
 
-    size_t cant_figuras = 0;
+    size_t cant = 0;
 
     for(size_t i = 0; leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
         if(i != 0){
@@ -75,6 +72,16 @@ int main() {
             }
         }
         vector_figuras[i] = figura_crear(nombre, tipo, infinito, cant_polilineas); //Iguala cada componente a la figura leida del archivo
+
+        if(vector_figuras[i] == NULL){
+            if(i >= 1){
+                for(size_t m = 0; m < i; m++){
+                    figura_destruir(vector_figuras[m]);
+                }
+                fclose(f1);
+                return 1;
+            }
+        }
 
         polilinea_t **vector_polilineas = malloc(sizeof(polilinea_t*) * cant_polilineas); //Creamos un puntero que apunta a un vector "vector_polilineas" de "cant_polilineas"z polilinea_t
 
@@ -105,34 +112,78 @@ int main() {
             return 1; // ERROR 
         }
 
-        cant_figuras++; //EVALUAR
+        cant++; //EVALUAR
     }
 
-    printf("CANT FIGURAS = %zd\n", cant_figuras);
+    const size_t cant_figuras = cant;
     //cant_figuras es una constante, ver después cómo la manejamos
 
     fclose(f1);
+//QUEDAN FIJAS:
+
+    float escala_planeta = 1;
+
+    figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
+
+    figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
+    figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
+    figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
+    figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
+    figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
+
+    figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
+
+    figura_t *nave1 = encontrar_figura("NAVE", vector_figuras, cant_figuras);
+    figura_t *nave_mas_chorro = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
+    figura_t *disparo = encontrar_figura("DISPARO", vector_figuras, cant_figuras);  
+
+    figura_t *combustible = encontrar_figura("COMBUSTIBLE", vector_figuras, cant_figuras);
+    
+    figura_t *torreta = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
+    figura_t *torreta_mas_disparo = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
+
+    figura_t *reactor = encontrar_figura("REACTOR", vector_figuras, cant_figuras);
+    figura_t *nivel1 = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
+    figura_t *nivel2 = encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras);
+    figura_t *nivel3 = encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras);
+    figura_t *nivel4 = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
+    figura_t *nivel5 = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+
+    figura_t *escudo = encontrar_figura("ESCUDO", vector_figuras, cant_figuras);
+    figura_t *escudo2 = encontrar_figura("ESCUDO2", vector_figuras, cant_figuras);
+
+    figura_t *enemigo1 = encontrar_figura("ENEMIGO1", vector_figuras, cant_figuras);
+    figura_t *enemigo2 = encontrar_figura("ENEMIGO2", vector_figuras, cant_figuras);
+    figura_t *enemigo3 = encontrar_figura("ENEMIGO3", vector_figuras, cant_figuras);
+
 
 
 //----------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------
 //CREACIÓN DE "LISTA ACTIVA"
-    lista_t *lista_activa = lista_crear();
+    //lista_t *lista_activa = lista_crear();
 //----------------------------------------------------------------------------------------------------------------------
     
     
     // Mi nave:
-    const float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
+    float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
 
     // El chorro de la nave:
-    const float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
+    float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
     size_t chorro_tam = 3;
 
+    double rotacion_nave = 0;
+    double velocidad_nave = 0;
+
     bool chorro_prendido = false;
+    bool rotacion_derecha = false;
+    bool rotacion_izquierda = false;
+    
 
     // Queremos que todo se dibuje escalado por f:
     float f = 1;
+    
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -148,9 +199,13 @@ int main() {
                         // Prendemos el chorro:
                         chorro_prendido = true;
                         break;
-                    case SDLK_DOWN:
                     case SDLK_RIGHT:
+                        // Rota hacia la derecha:
+                        rotacion_derecha = true;
+                        break;
                     case SDLK_LEFT:
+                        // Rota hacia la izquierda:
+                        rotacion_izquierda = true;
                         break;
                 }
             }
@@ -160,6 +215,14 @@ int main() {
                     case SDLK_UP:
                         // Apagamos el chorro:
                         chorro_prendido = false;
+                        break;
+                    case SDLK_RIGHT:
+                        // Deja de rotar hacia la derecha:
+                        rotacion_derecha = false;
+                        break;
+                    case SDLK_LEFT:
+                        // Deja de rotar hacia la izquierda:
+                        rotacion_izquierda = false;
                         break;
                 }
             }
@@ -173,9 +236,15 @@ int main() {
 
         // BEGIN código del alumno
 
-        //if(nivel = 1)
 
+        imprimir_figura(base, escala_planeta, renderer);
+
+
+
+        //if(nivel = 1)
+/*
         figura_agregar_en_lista("BASE", lista_activa);
+        figura_agregar_en_lista("ESTRELLA", lista_activa);
         figura_agregar_en_lista("PLANETA1", lista_activa);
         figura_agregar_en_lista("PLANETA2", lista_activa);
         figura_agregar_en_lista("PLANETA3", lista_activa);
@@ -183,24 +252,24 @@ int main() {
         figura_agregar_en_lista("PLANETA5", lista_activa);
     
         lista_iter_t *iter = lista_iter_crear(lista_activa);
-//IMPLEMENTAR FUNCION ROTOTRASLACION.
-        for(size_t i = 0; i < lista_largo(lista_activa); i++){
-            for (size_t j = 0; j < cant_figuras; j++){
-                if(strcmp("BASE", vector_figuras[j]->nombre) == 0){
-                    figura_t *fig = figura_clonar(vector_figuras[j]);
 
-                    for(size_t k = 0; k < fig->cant_polilineas; k++){
-                        trasladar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 388, -218);
-                        rotar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 0);
-                    }
-                    printf("CANT POLILINEAS: %zd\n", fig->cant_polilineas);
-                    imprimir_figura(fig->polilineas, fig->cant_polilineas, f, renderer);
-                    figura_destruir(fig);
+//IMPLEMENTAR FUNCION ROTOTRASLACION.
+
+        
+        for(size_t i = 0; i < lista_largo(lista_activa); i++){
+            figura_t *fig = encontrar_figura("BASE", vector_figuras, cant_figuras);
+            //ROTAR Y TRASLADAR FIGURA
+                for(size_t k = 0; k < fig->cant_polilineas; k++){
+                    rotar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 0);
+                    trasladar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 388, 218);
                 }
-            } 
+                imprimir_figura(fig, f, renderer);
+                figura_destruir(fig);
             lista_iter_avanzar(iter);
         }
 
+        lista_iter_destruir(iter);
+*/
         // Dibujamos la nave escalada por f en el centro de la pantalla:
 
         
@@ -226,6 +295,22 @@ int main() {
                     chorro[i+1][0] * f + VENTANA_ANCHO / 2,
                     -chorro[i+1][1] * f + VENTANA_ALTO / 2
                 );
+            
+            velocidad_nave = computar_velocidad(velocidad_nave, NAVE_ACELERACION, 1.0/JUEGO_FPS);
+            movimiento_p(nave, nave_tam, rotacion_nave, velocidad_nave);
+            movimiento_p(chorro, chorro_tam, rotacion_nave, velocidad_nave);
+        }
+        
+        if(rotacion_izquierda) {
+            rotar(nave, nave_tam, NAVE_ROTACION_PASO);
+            rotar(chorro, chorro_tam, NAVE_ROTACION_PASO);
+            rotacion_nave += NAVE_ROTACION_PASO;
+        }
+
+        if(rotacion_derecha) {
+            rotar(nave, nave_tam, -NAVE_ROTACION_PASO);
+            rotar(chorro, chorro_tam, -NAVE_ROTACION_PASO);
+            rotacion_nave -= NAVE_ROTACION_PASO;
         }
 //---------------------------------------------------------------
 /*     lista_iter_t *iter = lista_iter_crear(lista_activa);
@@ -255,6 +340,7 @@ int main() {
     }
 
     // BEGIN código del alumno
+
     // No tengo nada que destruir.
     // END código del alumno
 

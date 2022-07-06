@@ -3,12 +3,14 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
+#include <SDL2/SDL.h>
 
 
 #include "polilinea.h"
 #include "polilinea.h"
 #include "figura.h"
 #include "lista.h"
+#include "config.h"
 
 
 
@@ -61,8 +63,7 @@ figura_t *figura_clonar(const figura_t *figura){
     for(size_t j = 0; j < fig->cant_polilineas; j++){
         color_t c = color_crear_valor(figura->polilineas[j]->r, figura->polilineas[j]->g, figura->polilineas[j]->b);
         vector_polilineas[j] = polilinea_crear((const float(*)[2])figura->polilineas[j]->puntos, figura->polilineas[j]->n, c); //Iguala cada componente de las polilineas de cada figura leida del archivo
-        polilinea_printf(vector_polilineas[j]);
-        printf("...\n");
+
         if(vector_polilineas[j] == NULL){
             if(j >= 1){
                 for(size_t l = 0; l < j; l++){
@@ -108,7 +109,6 @@ void figura_eliminar_en_lista(char *nombre, lista_t *lista){
         }
         lista_iter_avanzar(iter);
     }
-    printf("LARGO LISTA: %zd \n", lista_largo(lista));
     lista_iter_destruir(iter);
 }
 
@@ -122,6 +122,30 @@ void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista){
         }
         lista_iter_avanzar(iter);
     }
-    printf("LARGO LISTA: %zd \n", lista_largo(lista));
     lista_iter_destruir(iter);
 }
+
+//AGREGAR CENTRO CUANDO USE INFINITOS
+
+void imprimir_figura(figura_t *figura, float escala, SDL_Renderer *renderer){
+    for(size_t k = 0; k < figura->cant_polilineas; k++){
+        SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
+        for(int z = 0; z < figura->polilineas[k]->n - 1; z++)
+            SDL_RenderDrawLine(
+            renderer,
+            figura->polilineas[k]->puntos[z][0] * escala,
+            -figura->polilineas[k]->puntos[z][1] * escala + VENTANA_ALTO,
+            figura->polilineas[k]->puntos[z+1][0] * escala,
+            -figura->polilineas[k]->puntos[z+1][1] * escala + VENTANA_ALTO
+            );
+    }
+}
+
+/*
+void posicionar_figura(figura_t *figura, float x, float y, float rad){
+    for(size_t i = 0; i < figura->cant_polilineas; i++){
+        rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
+        trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, x, y);
+    }
+}
+*/

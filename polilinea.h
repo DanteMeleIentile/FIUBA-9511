@@ -51,10 +51,13 @@ polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
 polilinea_t *polilinea_crear_vector(const polilinea_t *polilinea);
 
 /*
-** SETEA EL COLOR DE LA POLILINEA (CAMBIAR)
+** Setea el color de la polilinea al determinado por "color"
 */
 bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
 
+/*
+** Traslada la polilinea en "x" dx unidades y en "y" dy unidades
+*/
 void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 
 void rotar(float polilinea[][2], size_t n, double rad);

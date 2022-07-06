@@ -1,12 +1,13 @@
 #include "polilinea.h"
 #include "color.h"
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-
+#include <math.h>
 
 #define DIMENSION 2
 #define X 0

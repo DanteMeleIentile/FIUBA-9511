@@ -1,14 +1,14 @@
 PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -Werror -std=c99 -pedantic -lm -g
-SDLFLAGS = -lSDL2
+CFLAGS = -Wall -std=c99 -pedantic -g
+SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)
 
-$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o
-	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o $(SDLFLAGS) -o $(PROGRAM)
+$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o
+	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o $(SDLFLAGS) -o $(PROGRAM)
 
-main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h
+main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
 	$(CC) $(CFLAGS) -c main.c
 	
 color.o: color.c color.h 
@@ -26,6 +26,9 @@ figura.o: figura.c figura.h polilinea.h lista.h
 lista.o: lista.c lista.h
 	$(CC) $(CFLAGS) -c lista.c
 
+fisicas.o: fisicas.h polilinea.h
+	$(CC) $(CFLAGS) -c fisicas.c
+
 clean:
 	rm -vf *.o main
 
@@ -33,4 +36,4 @@ exe:
 	./$(PROGRAM)
 
 valgrind:
-	valgrind --suppressions=suppressions_20221_tp1.supp --leak-check=full ./$(PROGRAM)
+	valgrind --suppressions=suppressions_20221_tp1.supp --track-origins=yes ./$(PROGRAM)

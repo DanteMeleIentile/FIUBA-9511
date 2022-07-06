@@ -1,6 +1,7 @@
 #ifndef FIGURA_H
 #define FIGURA_H
 
+#include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -75,5 +76,14 @@ void figura_agregar_en_lista(char *nombre, lista_t *lista);
 void figura_eliminar_en_lista(char *nombre, lista_t *lista);
 
 void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
+
+void imprimir_figura(figura_t *figura, float escala, SDL_Renderer *renderer);
+
+/*
+** Dada una figura, la setea en unas coordenadas "x" e "y" rotada un angulo "rad".
+** PRE: Lista creada utilizando funciones del TDA lista.
+** POST: El último elemento de la lista apunta a NULL 
+*/
+void posicionar_figura(figura_t *figura, float x, float y, float rad);
 
 #endif
