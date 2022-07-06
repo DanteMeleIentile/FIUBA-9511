@@ -56,7 +56,7 @@ polilinea_t *polilinea_crear_vector(const polilinea_t *polilinea);
 bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
 
 /*
-** Traslada la polilinea en "x" dx unidades y en "y" dy unidades
+** Traslada la polilinea "polilinea" de longitud "n" en "x" dx unidades y en "y" dy unidades
 */
 void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 

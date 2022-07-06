@@ -8,9 +8,17 @@
 #include "fisicas.h"
 #include "config.h"
 
-//Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado con su respectivo color
+#define X 0
+#define Y 1
 
-figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){
+#define POS_BASE_X 388
+#define POS_BASE_Y 218
+
+
+
+
+
+figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
     for (size_t i = 0; i < n; i++){
         if(strcmp("BASE", vector_figuras[i]->nombre) == 0){
@@ -20,6 +28,7 @@ figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){
     } 
     return fig;
 }
+
 
 int main() {
     
@@ -125,36 +134,36 @@ int main() {
 
     figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
 
-    figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
-    figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
-    figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
-    figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
-    figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
+    //figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
+    //figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
+    //figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
+    //figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
+    //figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
 
-    figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
+    //figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
 
-    figura_t *nave1 = encontrar_figura("NAVE", vector_figuras, cant_figuras);
-    figura_t *nave_mas_chorro = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
-    figura_t *disparo = encontrar_figura("DISPARO", vector_figuras, cant_figuras);  
+    //figura_t *nave1 = encontrar_figura("NAVE", vector_figuras, cant_figuras);
+    //figura_t *nave_mas_chorro = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
+    //figura_t *disparo = encontrar_figura("DISPARO", vector_figuras, cant_figuras);  
 
-    figura_t *combustible = encontrar_figura("COMBUSTIBLE", vector_figuras, cant_figuras);
+    //figura_t *combustible = encontrar_figura("COMBUSTIBLE", vector_figuras, cant_figuras);
     
-    figura_t *torreta = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
-    figura_t *torreta_mas_disparo = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
+    //figura_t *torreta = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
+    //figura_t *torreta_mas_disparo = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
 
-    figura_t *reactor = encontrar_figura("REACTOR", vector_figuras, cant_figuras);
-    figura_t *nivel1 = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
-    figura_t *nivel2 = encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras);
-    figura_t *nivel3 = encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras);
-    figura_t *nivel4 = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
-    figura_t *nivel5 = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+    //figura_t *reactor = encontrar_figura("REACTOR", vector_figuras, cant_figuras);
+    //figura_t *nivel1 = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
+    //figura_t *nivel2 = encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras);
+    //figura_t *nivel3 = encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras);
+    //figura_t *nivel4 = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
+    //figura_t *nivel5 = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
 
-    figura_t *escudo = encontrar_figura("ESCUDO", vector_figuras, cant_figuras);
-    figura_t *escudo2 = encontrar_figura("ESCUDO2", vector_figuras, cant_figuras);
+    //figura_t *escudo = encontrar_figura("ESCUDO", vector_figuras, cant_figuras);
+    //figura_t *escudo2 = encontrar_figura("ESCUDO2", vector_figuras, cant_figuras);
 
-    figura_t *enemigo1 = encontrar_figura("ENEMIGO1", vector_figuras, cant_figuras);
-    figura_t *enemigo2 = encontrar_figura("ENEMIGO2", vector_figuras, cant_figuras);
-    figura_t *enemigo3 = encontrar_figura("ENEMIGO3", vector_figuras, cant_figuras);
+    //figura_t *enemigo1 = encontrar_figura("ENEMIGO1", vector_figuras, cant_figuras);
+    //figura_t *enemigo2 = encontrar_figura("ENEMIGO2", vector_figuras, cant_figuras);
+    //figura_t *enemigo3 = encontrar_figura("ENEMIGO3", vector_figuras, cant_figuras);
 
 
 
@@ -236,9 +245,15 @@ int main() {
 
         // BEGIN código del alumno
 
-
-        imprimir_figura(base, escala_planeta, renderer);
-
+        figura_t *base_2 = figura_clonar(base);
+        //imprimir_figura(base_2, 1, renderer);
+        
+        for(size_t i = 0; i < base_2->cant_polilineas; i++){
+            for(size_t j = 0; j < base_2->polilineas[i]->n - 1; j++){
+                trasladar(base_2->polilineas[i]->puntos, base_2->polilineas[i]->n, 1 , 0);
+            }
+        }
+        imprimir_figura(base_2, 1, renderer); //ojo! se modifica la polilinea clonada, luego de trasladar "base_2" nunca va a ser como antes
 
 
         //if(nivel = 1)

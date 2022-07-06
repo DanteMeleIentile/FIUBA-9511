@@ -133,10 +133,11 @@ void imprimir_figura(figura_t *figura, float escala, SDL_Renderer *renderer){
         for(int z = 0; z < figura->polilineas[k]->n - 1; z++)
             SDL_RenderDrawLine(
             renderer,
-            figura->polilineas[k]->puntos[z][0] * escala,
+            (figura->polilineas[k]->puntos[z][0] + VENTANA_ANCHO/2/escala) * escala,
             -figura->polilineas[k]->puntos[z][1] * escala + VENTANA_ALTO,
-            figura->polilineas[k]->puntos[z+1][0] * escala,
+            (figura->polilineas[k]->puntos[z+1][0] + VENTANA_ANCHO/2/escala) * escala,
             -figura->polilineas[k]->puntos[z+1][1] * escala + VENTANA_ALTO
+            // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
             );
     }
 }
