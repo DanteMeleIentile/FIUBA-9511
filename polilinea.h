@@ -17,6 +17,7 @@
 typedef struct {
     float (*puntos)[2];
     size_t n;
+    uint8_t r,g,b; 
 } polilinea_t;
 /*
 ** Crea una polilinea de n sin inicializar las coordenadas

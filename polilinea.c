@@ -65,7 +65,10 @@ bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y
 bool polilinea_setear_color(polilinea_t *polilinea, color_t color) {
     uint8_t r, g, b;
     color_a_rgb(color, &r, &g, &b);
-    printf("POLILINEA COLOR: (%d, %d, %d)\n", r, g, b);
+        polilinea->r = r;
+        polilinea->g = g;
+        polilinea->b = b;
+    //rintf("POLILINEA COLOR: (%d, %d, %d)\n", r, g, b);
     return true;
 }
 

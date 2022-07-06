@@ -1,6 +1,6 @@
 PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -Werror -std=c99 -pedantic -lm
+CFLAGS = -Wall -Werror -std=c99 -pedantic -lm -g
 SDLFLAGS = -lSDL2
 
 all: $(PROGRAM)
@@ -28,3 +28,9 @@ lista.o: lista.c lista.h
 
 clean:
 	rm -vf *.o main
+
+exe:
+	./$(PROGRAM)
+
+valgrind:
+	valgrind --suppressions=suppressions_20221_tp1.supp --leak-check=full ./$(PROGRAM)

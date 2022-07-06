@@ -69,4 +69,6 @@ void figura_agregar_en_lista(char *nombre, lista_t *lista);
 //EVALIUAR FUNCION PARA ELIMINAR TODAS LAS ENTIDADES CON "NOMBRE"
 void figura_eliminar_en_lista(char *nombre, lista_t *lista);
 
+void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
+
 #endif

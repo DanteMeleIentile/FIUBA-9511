@@ -8,6 +8,23 @@
 #include "config.h"
 #include "config.h"
 
+//Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado con su respectivo color
+
+void imprimir_figura(polilinea_t **polilineas, size_t cant_polilineas, float escala, SDL_Renderer *renderer){
+    for(size_t k = 0; k < cant_polilineas; k++){
+        SDL_SetRenderDrawColor(renderer, polilineas[k]->r, polilineas[k]->g, polilineas[k]->b, 0xFF);
+        for(int z = 0; z < polilineas[k]->n - 1; z++)
+            SDL_RenderDrawLine(
+            renderer,
+            polilineas[k]->puntos[z][0] * escala + VENTANA_ANCHO / 2,
+            -polilineas[k]->puntos[z][1] * escala + VENTANA_ALTO / 2,
+            polilineas[k]->puntos[z+1][0] * escala + VENTANA_ANCHO / 2,
+            -polilineas[k]->puntos[z+1][1] * escala + VENTANA_ALTO / 2
+            );
+    }
+}
+
+
 int main() {
     
     SDL_Init(SDL_INIT_VIDEO);
@@ -39,6 +56,7 @@ int main() {
     figura_t **vector_figuras = malloc(sizeof(figura_t*));
     if(vector_figuras == NULL){
         fprintf(stderr, "Error de memoria");
+        fclose(f1);
         return 1;
     }
 
@@ -50,15 +68,21 @@ int main() {
     size_t cant_figuras = 0;
 
     for(size_t i = 0; leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
-        if(i != 0)
+        if(i != 0){
             vector_figuras = realloc(vector_figuras, (i + 1) * sizeof(figura_t*)); //Agrega una componente a "vector_figuras" hasta que no pueda leer mas figuras
-            //CHEQUEAR ESTO
+            if(vector_figuras == NULL){
+                fclose(f1);
+                return 1;
+            }
+        }
         vector_figuras[i] = figura_crear(nombre, tipo, infinito, cant_polilineas); //Iguala cada componente a la figura leida del archivo
 
         polilinea_t **vector_polilineas = malloc(sizeof(polilinea_t*) * cant_polilineas); //Creamos un puntero que apunta a un vector "vector_polilineas" de "cant_polilineas"z polilinea_t
 
         if(vector_polilineas == NULL){
             fprintf(stderr, "Error de memoria");
+            free(vector_figuras);
+            fclose(f1);
             return 1;
         }
 
@@ -75,6 +99,7 @@ int main() {
     }
 
     printf("CANT FIGURAS = %zd\n", cant_figuras);
+    //cant_figuras es una constante, ver después cómo la manejamos
 
     fclose(f1);
 
@@ -84,9 +109,9 @@ int main() {
 //CREACIÓN DE "LISTA ACTIVA"
     lista_t *lista_activa = lista_crear();
 
-    figura_agregar_en_lista("BASE", lista_activa);
-    figura_agregar_en_lista("PLANETA3", lista_activa);
-    figura_eliminar_en_lista("BASE", lista_activa);
+    
+    figura_agregar_en_lista("PLANETA1", lista_activa);
+
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -173,7 +198,7 @@ int main() {
     while(i < lista_largo(lista_activa)){
         for (size_t j = 0; j < cant_figuras; j++){
             if(strcmp(lista_iter_ver_actual(iter), vector_figuras[j]->nombre) == 0){
-                for(size_t k = 0; k < vector_figuras[j]->cant_polilineas; k++){
+                /* for(size_t k = 0; k < vector_figuras[j]->cant_polilineas; k++){
                     SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0xFF, 0xFF);
                     for(int z = 0; z < vector_figuras[j]->polilineas[k]->n - 1; z++)
                         SDL_RenderDrawLine(
@@ -183,7 +208,9 @@ int main() {
                         vector_figuras[j]->polilineas[k]->puntos[z+1][0] * f + VENTANA_ANCHO / 2,
                         -vector_figuras[j]->polilineas[k]->puntos[z+1][1] * f + VENTANA_ALTO / 2
                         );
-                }
+                } */
+
+                imprimir_figura(vector_figuras[j]->polilineas, vector_figuras[j]->cant_polilineas, f, renderer);
             }  
         } 
         i++;  
