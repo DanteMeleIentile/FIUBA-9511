@@ -223,10 +223,10 @@ int main() {
             for(size_t z = 0; z < base_2->polilineas[k]->n - 1; z++){
                 SDL_RenderDrawLine(
                 renderer,
-                (base_2->polilineas[k]->puntos[z][X] * f) + VENTANA_ANCHO / 2 -base_2->polilineas[k]->puntos[z][X] * (f-1),
-                -base_2->polilineas[k]->puntos[z][Y] * f + VENTANA_ALTO / 2 - base_2->polilineas[k]->puntos[z][Y] * (f+1),
-                (base_2->polilineas[k]->puntos[z+1][X] * f) + VENTANA_ANCHO / 2 -base_2->polilineas[k]->puntos[z+1][X] * (f-1),
-                -base_2->polilineas[k]->puntos[z+1][Y] * f + VENTANA_ALTO / 2  -base_2->polilineas[k]->puntos[z+1][Y] * (f+1)
+                ((base_2->polilineas[k]->puntos[z][X]-mov_x) * f + VENTANA_ANCHO / 2 + mov_x),
+                (-(base_2->polilineas[k]->puntos[z][Y]-mov_y) * f + VENTANA_ALTO / 2 - mov_y),
+                ((base_2->polilineas[k]->puntos[z+1][X]-mov_x) * f + VENTANA_ANCHO / 2 + mov_x),
+                (-(base_2->polilineas[k]->puntos[z+1][Y]-mov_y) * f + VENTANA_ALTO / 2 - mov_y)
                 // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
                 //]*f*2
                 );
