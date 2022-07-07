@@ -127,26 +127,44 @@ void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista){
 
 //AGREGAR CENTRO CUANDO USE INFINITOS
 
-void imprimir_figura(figura_t *figura, float escala, SDL_Renderer *renderer){
+void imprimir_figura(figura_t *figura, SDL_Renderer *renderer){
     for(size_t k = 0; k < figura->cant_polilineas; k++){
         SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
         for(int z = 0; z < figura->polilineas[k]->n - 1; z++)
             SDL_RenderDrawLine(
             renderer,
-            (figura->polilineas[k]->puntos[z][0] + VENTANA_ANCHO/2/escala) * escala,
-            -figura->polilineas[k]->puntos[z][1] * escala + VENTANA_ALTO,
-            (figura->polilineas[k]->puntos[z+1][0] + VENTANA_ANCHO/2/escala) * escala,
-            -figura->polilineas[k]->puntos[z+1][1] * escala + VENTANA_ALTO
+            figura->polilineas[k]->puntos[z][0],
+            -figura->polilineas[k]->puntos[z][1] + VENTANA_ALTO,
+            figura->polilineas[k]->puntos[z+1][0],
+            -figura->polilineas[k]->puntos[z+1][1] + VENTANA_ALTO
             // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
             );
     }
 }
 
-/*
-void posicionar_figura(figura_t *figura, float x, float y, float rad){
+void rotar_figura(figura_t *figura, float rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
-        trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, x, y);
     }
 }
-*/
+
+void trasladar_figura(figura_t *figura, float dx, float dy){
+    for(size_t i = 0; i < figura->cant_polilineas; i++){
+        trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, dx, dy);
+    }
+}
+
+figura_t *rototrasladar_figura(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y){
+    figura_t *fig = figura_clonar(figura);
+    if(fig == NULL) return NULL;
+    for(size_t i = 0; i < fig->cant_polilineas; i++){
+        if(escala != 1)
+            escalar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, escala);
+        trasladar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, -posicion_x, -posicion_y);
+        if(rad != 0)
+            rotar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, rad);
+        trasladar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, posicion_x + dx, posicion_y + dy);
+    }
+    return fig;
+}
+

@@ -60,7 +60,15 @@ bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
 */
 void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 
+/*
+** Rota la polilinea "polilinea" de longitud "n" un angulo "rad" en radianes
+*/
 void rotar(float polilinea[][2], size_t n, double rad);
+
+/*
+** Escala la polilinea
+*/
+void escalar(float polilinea[][2], size_t n, float escala);
 
 void polilinea_printf(polilinea_t *polilinea);
 

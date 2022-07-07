@@ -103,6 +103,13 @@ void rotar(float polilinea[][2], size_t n, double rad) {
     }
 }
 
+void escalar(float polilinea[][2], size_t n, float escala){
+    for(int i = 0; i < n; i+=1){
+        polilinea[i][X] *= escala;
+        polilinea[i][Y] *= escala;
+    }
+}
+
 void polilinea_printf(polilinea_t *polilinea){
     printf("EL COLOR ES %d  %d  %d\n", polilinea->r, polilinea->g, polilinea->b);
     printf("CANT PUNTOS %zd\n", polilinea->n);

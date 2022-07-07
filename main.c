@@ -14,14 +14,10 @@
 #define POS_BASE_X 388
 #define POS_BASE_Y 218
 
-
-
-
-
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
     for (size_t i = 0; i < n; i++){
-        if(strcmp("BASE", vector_figuras[i]->nombre) == 0){
+        if(strcmp(nombre, vector_figuras[i]->nombre) == 0){
             fig = vector_figuras[i];
             break;
         }
@@ -125,25 +121,27 @@ int main() {
     }
 
     const size_t cant_figuras = cant;
-    //cant_figuras es una constante, ver después cómo la manejamos
 
     fclose(f1);
-//QUEDAN FIJAS:
+    
+    //QUEDAN FIJAS:
 
     float escala_planeta = 1;
+    float escala_nave = 1;
+    size_t nivel_actual = 0;
 
     figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
 
-    //figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
-    //figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
-    //figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
-    //figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
-    //figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
+    figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
+    figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
+    figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
+    figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
+    figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
 
-    //figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
+    figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
 
-    //figura_t *nave1 = encontrar_figura("NAVE", vector_figuras, cant_figuras);
-    //figura_t *nave_mas_chorro = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
+    figura_t *nave = encontrar_figura("NAVE", vector_figuras, cant_figuras);
+    figura_t *nave_mas_chorro = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
     //figura_t *disparo = encontrar_figura("DISPARO", vector_figuras, cant_figuras);  
 
     //figura_t *combustible = encontrar_figura("COMBUSTIBLE", vector_figuras, cant_figuras);
@@ -175,15 +173,19 @@ int main() {
     
     
     // Mi nave:
+/*
     float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
 
     // El chorro de la nave:
     float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
     size_t chorro_tam = 3;
-
+*/
     double rotacion_nave = 0;
     double velocidad_nave = 0;
+    double angulo_velocidad = 0;
+    double pos_x = POS_BASE_X;
+    double pos_y = POS_BASE_Y;
 
     bool chorro_prendido = false;
     bool rotacion_derecha = false;
@@ -245,16 +247,29 @@ int main() {
 
         // BEGIN código del alumno
 
-        figura_t *base_2 = figura_clonar(base);
-        //imprimir_figura(base_2, 1, renderer);
-        
-        for(size_t i = 0; i < base_2->cant_polilineas; i++){
-            for(size_t j = 0; j < base_2->polilineas[i]->n - 1; j++){
-                trasladar(base_2->polilineas[i]->puntos, base_2->polilineas[i]->n, 1 , 0);
-            }
-        }
-        imprimir_figura(base_2, 1, renderer); //ojo! se modifica la polilinea clonada, luego de trasladar "base_2" nunca va a ser como antes
+        figura_t *base_2 = rototrasladar_figura(base, 388, 218, 0, escala_planeta, 0, 0);
+        imprimir_figura(base_2, renderer); //ojo! se modifica la polilinea clonada, luego de trasladar "base_2" nunca va a ser como antes
 
+        figura_t *estrella_2 = rototrasladar_figura(estrella, 457, 364, 0, escala_planeta, 0, 0);
+        imprimir_figura(estrella_2, renderer); 
+
+        figura_t *planeta1_2 = rototrasladar_figura(planeta1, 663, 473, 0, escala_planeta, 0, 0);
+        imprimir_figura(planeta1_2, renderer);
+
+        figura_t *planeta2_2 = rototrasladar_figura(planeta2, 671, 145, 0, escala_planeta, 0, 0);
+        imprimir_figura(planeta2_2, renderer);
+
+        figura_t *planeta3_2 = rototrasladar_figura(planeta3, 110, 79, 0, escala_planeta, 0, 0);
+        imprimir_figura(planeta3_2, renderer);
+
+        figura_t *planeta4_2 = rototrasladar_figura(planeta4, 204, 455, 0, escala_planeta, 0, 0);
+        imprimir_figura(planeta4_2, renderer);
+
+        figura_t *planeta5_2 = rototrasladar_figura(planeta5, 111, 307, 0, escala_planeta, 0, 0);
+        imprimir_figura(planeta5_2, renderer);
+
+        figura_t *nave_2 = rototrasladar_figura(nave, 388, 218, 0, escala_planeta, 0, 0);
+        figura_t *nave_mas_chorro_2 = rototrasladar_figura(nave_mas_chorro, 388, 218, 0, escala_planeta, 0, 0);
 
         //if(nivel = 1)
 /*
@@ -285,62 +300,36 @@ int main() {
 
         lista_iter_destruir(iter);
 */
-        // Dibujamos la nave escalada por f en el centro de la pantalla:
-
+        // Dibujamos la nave escalada por f en el centro de la pantalla:        
         
-        
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-        for(int i = 0; i < nave_tam - 1; i++)
-            SDL_RenderDrawLine(
-                renderer,
-                nave[i][0] * f + VENTANA_ANCHO / 2,
-                -nave[i][1] * f + VENTANA_ALTO / 2,
-                nave[i+1][0] * f + VENTANA_ANCHO / 2,
-                -nave[i+1][1] * f + VENTANA_ALTO / 2
-            );
-
-        if(chorro_prendido) {
-            // Dibujamos el chorro escalado por f en el centro de la pantalla:
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0x00);
-            for(int i = 0; i < chorro_tam - 1; i++)
-                SDL_RenderDrawLine(
-                    renderer,
-                    chorro[i][0] * f + VENTANA_ANCHO / 2,
-                    -chorro[i][1] * f + VENTANA_ALTO / 2,
-                    chorro[i+1][0] * f + VENTANA_ANCHO / 2,
-                    -chorro[i+1][1] * f + VENTANA_ALTO / 2
-                );
-            
-            velocidad_nave = computar_velocidad(velocidad_nave, NAVE_ACELERACION, 1.0/JUEGO_FPS);
-            movimiento_p(nave, nave_tam, rotacion_nave, velocidad_nave);
-            movimiento_p(chorro, chorro_tam, rotacion_nave, velocidad_nave);
-        }
-        
+       
         if(rotacion_izquierda) {
-            rotar(nave, nave_tam, NAVE_ROTACION_PASO);
-            rotar(chorro, chorro_tam, NAVE_ROTACION_PASO);
+            rotar_figura(nave_2, NAVE_ROTACION_PASO);
+            rotar_figura(nave_mas_chorro_2, NAVE_ROTACION_PASO);
             rotacion_nave += NAVE_ROTACION_PASO;
         }
 
         if(rotacion_derecha) {
-            rotar(nave, nave_tam, -NAVE_ROTACION_PASO);
-            rotar(chorro, chorro_tam, -NAVE_ROTACION_PASO);
+            rotar_figura(nave_2, -NAVE_ROTACION_PASO);
+            rotar_figura(nave_mas_chorro_2, -NAVE_ROTACION_PASO);
             rotacion_nave -= NAVE_ROTACION_PASO;
         }
-//---------------------------------------------------------------
-/*     lista_iter_t *iter = lista_iter_crear(lista_activa);
-    size_t i = 0;
-    
-    while(i < lista_largo(lista_activa)){
-        for (size_t j = 0; j < cant_figuras; j++){
-            if(strcmp(lista_iter_ver_actual(iter), vector_figuras[j]->nombre) == 0){
-                imprimir_figura(vector_figuras[j]->polilineas, vector_figuras[j]->cant_polilineas, f, renderer);
-            }  
-        } 
-        i++;  
-        lista_iter_avanzar(iter);   
-    } */
-//---------------------------------------------------------------
+
+        trasladar_figura(nave_2, pos_x, pos_y);
+        trasladar_figura(nave_mas_chorro_2, pos_x, pos_y);
+
+        if(chorro_prendido) {
+            /*computar_velocidad(&velocidad_nave, &angulo_velocidad, NAVE_ACELERACION, 1.0/JUEGO_FPS);
+            movimiento(nave_mas_chorro_2, angulo_velocidad, velocidad_nave);*/
+            imprimir_figura(nave_mas_chorro_2, renderer);
+        }else{
+            //movimiento(nave_2, angulo_velocidad, velocidad_nave);
+            imprimir_figura(nave_2, renderer);
+        }
+        
+        figura_destruir(nave_2);
+        figura_destruir(nave_mas_chorro_2);
+
         // END código del alumno
 
         SDL_RenderPresent(renderer);
