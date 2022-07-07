@@ -136,6 +136,7 @@ int main() {
     planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
 
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
+    figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
     
 //----------------------------------------------------------------------------------------------------------------------
     
@@ -151,7 +152,7 @@ int main() {
 
     //Cración de entidades
     nave_t *nave = nave_crear();
-    
+     
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -187,7 +188,6 @@ int main() {
                     case SDLK_s:
                         mov_y -= 20;
                         break;
-
                     case SDLK_a:
                         mov_x -= 20;
                         break;
@@ -221,10 +221,19 @@ int main() {
 
         // BEGIN código del alumno
         
-        nave_inicializar(nave, nave_leida);
+        nave_inicializar(nave, nave_leida, nave_mas_chorro_leida);
 
+        if(rotacion_antihoraria){
+            nave_rotar(nave, NAVE_ROTACION_PASO);
+        } 
+
+        if(rotacion_horaria){
+            nave_rotar(nave, -NAVE_ROTACION_PASO);
+        } 
+      
         if(nivel == 0){
             //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
+            nave_spawn(nave, base.x, base.y);
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
 
@@ -254,6 +263,20 @@ int main() {
         if(nivel == 5){
             return 1;
         }
+        
+        if(chorro_prendido){
+            //nave_trasladar(nave, mov_x, mov_y);
+            nave_aceleracion(nave, NAVE_ACELERACION, 1/JUEGO_FPS);
+            nave_impulso(nave);
+            printf("X = %f , Y = %f\n", nave->x, nave->y);
+            nave_imprimir(renderer, nave, 1, true);
+        }else{
+            //nave_trasladar(nave, mov_x, mov_y);
+            nave_impulso(nave);
+            printf("X = %f , Y = %f\n", nave->x, nave->y);
+            nave_imprimir(renderer, nave, 1, false);
+        }
+
         // END código del alumno
 
         SDL_RenderPresent(renderer);

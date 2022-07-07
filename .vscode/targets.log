@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jul  7 15:53:42 2022
+# Make data base, printed on Thu Jul  7 17:42:49 2022
 
 # Variables
 
@@ -31,6 +31,7 @@ VNCDESKTOP = DESKTOP-8CVCUI9.localdomain:1 (leanshiza)
 # default
 MAKE_COMMAND := make
 # automatic
+ 
 @D = $(patsubst %/,%,$(dir $@))
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
@@ -224,6 +225,13 @@ XDG_MENU_PREFIX = xfce-
 # Files
 
 # Not a target:
+planeta.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-07 17:01:20.213478435
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 lectura.c:
 #  Implicit rule search has been done.
 #  Last modified 2022-06-26 13:46:26.994032824
@@ -240,14 +248,21 @@ color.h:
 # Not a target:
 figura.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-07 15:51:47.613525148
+#  Last modified 2022-07-07 16:15:25.01350928
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 nave.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-07 15:47:21.743528124
+#  Last modified 2022-07-07 17:42:01.483451105
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+nave.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-07 17:42:02.313451095
 #  File has been updated.
 #  Successfully updated.
 
@@ -268,7 +283,7 @@ planeta.h:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-07 15:53:32.383523975
+#  Last modified 2022-07-07 17:42:48.803450575
 #  File has been updated.
 #  Successfully updated.
 
@@ -277,7 +292,6 @@ lectura.o: lectura.c polilinea.h
 #  Last modified 2022-07-07 15:51:58.693525024
 #  File has been updated.
 #  Successfully updated.
- 
 #  recipe to execute (from 'Makefile', line 21):
 	$(CC) $(CFLAGS) -c lectura.c
 
@@ -290,13 +304,14 @@ lectura.h:
 
 figura.o: figura.c figura.h polilinea.h lista.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 15:51:58.553525025
+#  Last modified 2022-07-07 16:22:38.273504429
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 24):
 	$(CC) $(CFLAGS) -c figura.c
 
 polilinea.o: polilinea.c color.h
+ 
 #  Implicit rule search has not been done.
 #  Last modified 2022-07-07 15:51:58.713525023
 #  File has been updated.
@@ -369,7 +384,7 @@ all: Gravitar
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-07 15:48:21.743527452
+#  Last modified 2022-07-07 17:38:41.023453349
 #  File has been updated.
 #  Successfully updated.
 
@@ -382,7 +397,7 @@ fisicas.h:
 
 main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 15:51:58.393525027
+#  Last modified 2022-07-07 17:42:36.793450709
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 12):
@@ -398,7 +413,7 @@ config.h:
 
 Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 15:53:35.913523935
+#  Last modified 2022-07-07 17:42:37.213450705
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 9):
@@ -435,24 +450,24 @@ color.o: color.c color.h
 #  recipe to execute (from 'Makefile', line 15):
 	$(CC) $(CFLAGS) -c color.c
 
-planeta.o: planeta.h figura.h
+planeta.o: planeta.c planeta.h figura.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 15:49:00.913527014
+#  Last modified 2022-07-07 17:42:36.933450708
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 33):
 	$(CC) $(CFLAGS) -c planeta.c
 
-nave.o: nave.h figura.h
+nave.o: nave.c nave.h figura.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 15:53:35.763523937
+#  Last modified 2022-07-07 17:42:37.073450706
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
 	$(CC) $(CFLAGS) -c nave.c
 
 # files hash-table stats:
-# Load=32/1024=3%, Rehash=0, Collisions=3/91=3%
+# Load=34/1024=3%, Rehash=0, Collisions=3/95=3%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
@@ -462,9 +477,9 @@ nave.o: nave.h figura.h
 # strcache buffers: 1 (0) / strings = 49 / storage = 462 B / avg = 9 B
 # current buf: size = 8162 B / used = 462 B / count = 49 / avg = 9 B
 
-# strcache performance: lookups = 116 / hit rate = 57%
+# strcache performance: lookups = 118 / hit rate = 58%
 # hash-table stats:
-# Load=49/8192=1%, Rehash=0, Collisions=0/116=0%
-# Finished Make data base on Thu Jul  7 15:53:42 2022
+# Load=49/8192=1%, Rehash=0, Collisions=0/118=0%
+# Finished Make data base on Thu Jul  7 17:42:49 2022
 
  

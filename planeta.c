@@ -21,5 +21,5 @@ void planeta_dibujar(SDL_Renderer *renderer, const planeta_t planeta){
 }
 
 double distancia_a_planeta(planeta_t planeta, nave_t *nave){
-    return distancia_punto_a_figura(nave->figura, planeta.x, planeta.y);
+    return distancia_punto_a_figura(nave->nave_fig, planeta.x, planeta.y);
 }

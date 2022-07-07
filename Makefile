@@ -29,10 +29,10 @@ lista.o: lista.c lista.h
 fisicas.o: fisicas.h polilinea.h
 	$(CC) $(CFLAGS) -c fisicas.c
 
-planeta.o: planeta.h figura.h
+planeta.o: planeta.c planeta.h figura.h
 	$(CC) $(CFLAGS) -c planeta.c
 
-nave.o: nave.h figura.h
+nave.o: nave.c nave.h figura.h
 	$(CC) $(CFLAGS) -c nave.c
 
 
