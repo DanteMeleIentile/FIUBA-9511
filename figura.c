@@ -142,7 +142,8 @@ void imprimir_figura(figura_t *figura, SDL_Renderer *renderer){
     }
 }
 
-void rotar_figura(figura_t *figura, float rad){
+void figura_rotar(figura_t *figura, float rad){
+    figura_trasladar(figura, 0, 0);
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
     }

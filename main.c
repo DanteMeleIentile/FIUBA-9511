@@ -7,6 +7,8 @@
 #include "lectura.h"
 #include "fisicas.h"
 #include "config.h"
+#include "nave.h"
+
 
 #define X 0
 #define Y 1
@@ -125,15 +127,13 @@ int main() {
     
     figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
 
+    figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
+
     figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
 
     figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
 
 //----------------------------------------------------------------------------------------------------------------------
-    
-    // Mi nave:
-    float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
-    size_t nave_tam = 9;
 
     //El chorro de la nave:
     float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
@@ -147,11 +147,18 @@ int main() {
     bool chorro_prendido = false;
     bool rotacion_derecha = false;
 
+    //Boleeanos de rotación
+    bool rotacion_horaria = false;
+    bool rotacion_antihoraria = false;
+
+    //Cración de entidades
+    nave_t *nave = nave_crear();
+
+
     // Queremos que todo se dibuje escalado por f:
     float f = 1;
     float mov_x = 0;
     float mov_y = 0;
-    
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -171,10 +178,14 @@ int main() {
 
                     case SDLK_DOWN:
                         // Disminuimos el valor de la escala
-                        f--;
                         break;
+                        
                     case SDLK_RIGHT:
-                        f--;
+                        rotacion_horaria = true;
+                        break;
+
+                    case SDLK_LEFT:
+                        rotacion_antihoraria = true;
                         break;
 
                     case SDLK_w:
@@ -200,8 +211,10 @@ int main() {
                         chorro_prendido = false;
                         break;
                     case SDLK_RIGHT:
-                        // Deja de rotar hacia la derecha:
-                        rotacion_derecha = false;
+                        rotacion_horaria = false;
+                        break;
+                    case SDLK_LEFT:
+                        rotacion_antihoraria = false;
                         break;
                 }
             }
@@ -216,26 +229,28 @@ int main() {
         // BEGIN código del alumno
         
 
-        figura_t *base_2 = figura_clonar(base);
-        figura_trasladar (base_2, mov_x, mov_y);
-        for(size_t k = 0; k < base_2->cant_polilineas; k++){
-            SDL_SetRenderDrawColor(renderer, base_2->polilineas[k]->r, base_2->polilineas[k]->g, base_2->polilineas[k]->b, 0xFF);
-            for(size_t z = 0; z < base_2->polilineas[k]->n - 1; z++){
+        nave_inicializar(nave, nave_leida);
+
+        if(rotacion_horaria){
+            nave_rotar(nave, - NAVE_ROTACION_PASO);
+        }
+
+        if(rotacion_antihoraria){
+            nave_rotar(nave, + NAVE_ROTACION_PASO);
+        }
+
+        figura_trasladar (nave->figura, mov_x, mov_y);
+        for(size_t k = 0; k < nave->figura->cant_polilineas; k++){
+            SDL_SetRenderDrawColor(renderer, nave->figura->polilineas[k]->r, nave->figura->polilineas[k]->g, nave->figura->polilineas[k]->b, 0xFF);
+            for(size_t z = 0; z < nave->figura->polilineas[k]->n - 1; z++){
                 SDL_RenderDrawLine(
                 renderer,
-                (base_2->polilineas[k]->puntos[z][X] * f) + VENTANA_ANCHO / 2 -base_2->polilineas[k]->puntos[z][X] * (f-1),
-                -base_2->polilineas[k]->puntos[z][Y] * f + VENTANA_ALTO / 2 - base_2->polilineas[k]->puntos[z][Y] * (f+1),
-                (base_2->polilineas[k]->puntos[z+1][X] * f) + VENTANA_ANCHO / 2 -base_2->polilineas[k]->puntos[z+1][X] * (f-1),
-                -base_2->polilineas[k]->puntos[z+1][Y] * f + VENTANA_ALTO / 2  -base_2->polilineas[k]->puntos[z+1][Y] * (f+1)
+                (nave->figura->polilineas[k]->puntos[z][X] * f) + VENTANA_ANCHO / 2 ,
+                -nave->figura->polilineas[k]->puntos[z][Y] * f + VENTANA_ALTO / 2 ,
+                (nave->figura->polilineas[k]->puntos[z+1][X] * f) + VENTANA_ANCHO / 2 ,
+                -nave->figura->polilineas[k]->puntos[z+1][Y] * f + VENTANA_ALTO / 2 
                 // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
-                //]*f*2
                 );
-                printf ("POLI EN puntos[z][X](%f)\n", base_2->polilineas[0]->puntos[z][X]);
-                printf ("POLI EN puntos[z][Y](%f)\n", base_2->polilineas[0]->puntos[z][Y]);
-                printf ("POLI EN puntos ESCALADA [z][X](%f)\n", base_2->polilineas[k]->puntos[z][X] * f);
-                printf ("POLI EN puntos ESCALADA [z][Y](%f)\n\n\n", base_2->polilineas[k]->puntos[z][Y] * f);
-
-                printf ("escala %f\n", f);
 
             }
         }
@@ -259,14 +274,6 @@ int main() {
                 -ejes_x[i+1][1] * f + VENTANA_ALTO / 2
             );
 
-        /*//El siguiente for tiene el objetivo de entender en que posición se encuentra alguna de las polilineas de "base_2"
-        for (int i = 0; i < base_2->polilineas[0]->n; i++){
-            printf ("(%f, %f)\n", base_2->polilineas[0]->puntos[i][X], base_2->polilineas[0]->puntos[i][X]);
-        }*/
-        printf ("\t\t\tTERMINO UNA ITERACIÓN\n");
-
-        
-        
         // END código del alumno
 
         SDL_RenderPresent(renderer);
