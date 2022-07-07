@@ -8,6 +8,7 @@
 #include "fisicas.h"
 #include "config.h"
 
+#include "nave.h"
 #include "planeta.h"
 
 #define X 0
@@ -133,16 +134,23 @@ int main() {
     planeta_t planeta3 = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), 110, 79);
     planeta_t planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
     planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
+
+    figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     
 //----------------------------------------------------------------------------------------------------------------------
     
     bool chorro_prendido = false;
-    bool rotacion_derecha = false;
+    
+    //Boleeanos de rotación
+    bool rotacion_horaria = false;
+    bool rotacion_antihoraria = false;
 
-    // Queremos que todo se dibuje escalado por f:
-    float f = 1;
-    float mov_x = 0;
-    float mov_y = 0;
+    double mov_x = 0;
+    double mov_y = 0;
+    double f = 1;
+
+    //Cración de entidades
+    nave_t *nave = nave_crear();
     
     // END código del alumno
 
@@ -163,10 +171,14 @@ int main() {
 
                     case SDLK_DOWN:
                         // Disminuimos el valor de la escala
-                        f--;
                         break;
+                        
                     case SDLK_RIGHT:
-                        f--;
+                        rotacion_horaria = true;
+                        break;
+
+                    case SDLK_LEFT:
+                        rotacion_antihoraria = true;
                         break;
 
                     case SDLK_w:
@@ -192,8 +204,10 @@ int main() {
                         chorro_prendido = false;
                         break;
                     case SDLK_RIGHT:
-                        // Deja de rotar hacia la derecha:
-                        rotacion_derecha = false;
+                        rotacion_horaria = false;
+                        break;
+                    case SDLK_LEFT:
+                        rotacion_antihoraria = false;
                         break;
                 }
             }
@@ -207,18 +221,39 @@ int main() {
 
         // BEGIN código del alumno
         
+        nave_inicializar(nave, nave_leida);
 
         if(nivel == 0){
             //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
+
             planeta_dibujar(renderer, planeta1);
+            if(distancia_a_planeta(planeta1, nave) < 2) nivel = 1;
             planeta_dibujar(renderer, planeta2);
+            //if(distancia_a_planeta(planeta2, nave) < 2) nivel = 2;
             planeta_dibujar(renderer, planeta3);
+            //if(distancia_a_planeta(planeta3, nave) < 2) nivel = 3;
             planeta_dibujar(renderer, planeta4);
+            //if(distancia_a_planeta(planeta4, nave) < 2) nivel = 4;
             planeta_dibujar(renderer, planeta5);
-        }    
-        
+            //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
+        }
+        if(nivel == 1){
+            return 1;
+        }
+        if(nivel == 2){
+            return 1;
+        }
+        if(nivel == 3){
+            return 1;
+        }
+        if(nivel == 4){
+            return 1;
+        }
+        if(nivel == 5){
+            return 1;
+        }
         // END código del alumno
 
         SDL_RenderPresent(renderer);

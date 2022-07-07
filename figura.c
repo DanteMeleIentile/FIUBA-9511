@@ -129,13 +129,13 @@ void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista){
 
 //AGREGAR CENTRO CUANDO USE INFINITOS
 
-void figura_rotar(figura_t *figura, float rad){
+void figura_rotar(figura_t *figura, double rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
     }
 }
 
-void figura_trasladar(figura_t *figura, float dx, float dy){
+void figura_trasladar(figura_t *figura, double dx, double dy){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, dx, dy);
     }
@@ -156,7 +156,7 @@ figura_t *figura_rototrasladar(figura_t *figura, float dx, float dy, float rad, 
 }
 
 
-void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, float x, float y){
+void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y){
 
     for(size_t k = 0; k < figura->cant_polilineas; k++){
         SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
@@ -171,6 +171,20 @@ void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escal
             );
         }
     }
+}
+
+double distancia_punto_a_figura(figura_t *figura, double x, double y){
+    double distancia;
+    double distancia_actual;
+    for(size_t i = 0; i < figura->cant_polilineas; i++){
+        distancia = distancia_punto_a_polilinea(figura->polilineas[i]->puntos, figura->polilineas[i]->n, x, y);
+        if(i == 0){
+            distancia_actual = distancia;
+            continue;
+        }
+        if(distancia < distancia_actual) distancia_actual = distancia;
+    }
+    return distancia;
 }
 
 

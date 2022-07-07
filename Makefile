@@ -5,10 +5,10 @@ SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)
 
-$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o
-	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o $(SDLFLAGS) -o $(PROGRAM)
+$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o
+	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o $(SDLFLAGS) -o $(PROGRAM)
 
-main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h
+main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h
 	$(CC) $(CFLAGS) -c main.c
 	
 color.o: color.c color.h 
@@ -31,6 +31,9 @@ fisicas.o: fisicas.h polilinea.h
 
 planeta.o: planeta.h figura.h
 	$(CC) $(CFLAGS) -c planeta.c
+
+nave.o: nave.h figura.h
+	$(CC) $(CFLAGS) -c nave.c
 
 
 clean:

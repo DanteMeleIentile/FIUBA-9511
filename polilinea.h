@@ -70,6 +70,12 @@ void rotar(float polilinea[][2], size_t n, double rad);
 */
 void escalar(float polilinea[][2], size_t n, float escala);
 
+double calcular_distancia(float px, float py, double qx, double qy);
+
+double calcular_parametro(double ax, double ay, double bx, double by, float px, float py);
+
+double distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py);
+
 void polilinea_printf(polilinea_t *polilinea);
 
 #endif

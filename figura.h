@@ -78,17 +78,22 @@ void figura_eliminar_en_lista(char *nombre, lista_t *lista);
 void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
 
 //Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado.
-void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, float x, float y);
+void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y);
 
-void rotar_figura(figura_t *figura, float rad);
+//Rota la figura dada un angulo "rad"
+void figura_rotar(figura_t *figura, double rad);
 
-void figura_trasladar(figura_t *figura, float dx, float dy);
+//Traslada la figura dada una distancia "dx" en coordenada "x" y una distancia "dy" en coordenada "y"
+void figura_trasladar(figura_t *figura, double dx, double dy);
+
+//Da la distancia más cercana entre el punto y la figura
+double distancia_punto_a_figura(figura_t *figura, double x, double y);
 
 /*
 ** Dada una figura, la setea en unas coordenadas "x" e "y" rotada un angulo "rad" y escalada por "escala".
 ** PRE: Lista creada utilizando funciones del TDA lista.
 ** POST: El último elemento de la lista apunta a NULL 
 */
-figura_t *rototrasladar_figura(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y);
+//figura_t *rototrasladar_figura(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y);
 
 #endif

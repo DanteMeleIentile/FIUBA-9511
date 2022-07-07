@@ -11,6 +11,7 @@
         "string.h": "c",
         "math.h": "c",
         "nivel.h": "c",
-        "planeta.h": "c"
+        "planeta.h": "c",
+        "nave.h": "c"
     }
 }

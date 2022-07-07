@@ -110,6 +110,63 @@ void escalar(float polilinea[][2], size_t n, float escala){
     }
 }
 
+double calcular_distancia(float px, float py, double qx, double qy){
+    return sqrt(pow(px-qx,2) + pow(py-qy,2));
+}
+
+double calcular_parametro(double ax, double ay, double bx, double by, float px, float py) {
+
+    double k = ((px - ax) * (bx - ax) + (py - ay) * (by - ay))/ pow(calcular_distancia(bx, by, ax, ay),2); 
+
+    return k;
+}
+
+double distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py) {
+
+    double punto_cercano_x;
+    double punto_cercano_y;
+    double ax;
+    double ay;
+    double bx;
+    double by;
+    double k;
+    double acc_d;
+    double distancia;
+
+    for(int i = 0; i < n - 1; i++) {
+        ax = polilinea[i][0];
+        ay = polilinea[i][1];
+        
+        bx = polilinea[i+1][0];
+        by = polilinea[i+1][1]; 
+
+        k = calcular_parametro(ax, ay, bx, by, px, py);
+        
+        if(k <= 0) {
+            punto_cercano_x = ax;
+            punto_cercano_y = ay;
+        } 
+        else{
+        if(k >= 1) {
+            punto_cercano_x = bx;
+            punto_cercano_y = by;
+        }
+        else{
+            punto_cercano_x = ax + k * (bx - ax);
+            punto_cercano_y = ay + k * (by - ay);
+        }
+        }
+        distancia = calcular_distancia(px , py , punto_cercano_x, punto_cercano_y);
+
+        if(!i)
+            acc_d = distancia;
+
+        if(distancia < acc_d) 
+            acc_d = distancia;
+    }
+    return acc_d;
+}
+
 void polilinea_printf(polilinea_t *polilinea){
     //printf("EL COLOR ES %d  %d  %d\n", polilinea->r, polilinea->g, polilinea->b);
     //printf("CANT PUNTOS %zd\n", polilinea->n);
