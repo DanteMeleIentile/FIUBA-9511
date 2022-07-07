@@ -17,12 +17,6 @@ typedef struct{
 nave_t *nave_crear(void);
 
 /*  
-** Setear las figuras de la nave según "figura_nave".
-** PRE: La nave fue creada. 
-*/
-//void nave_setear_figura(nave_t *nave, figura_t *fig_nave);
-
-/*  
 ** Iniciliza las parametros de la nave según la "nave" recibida.
 ** PRE: La nave fue creada.
 ** POST: La figura de la nave es igual a "figura" 
@@ -35,15 +29,13 @@ void nave_inicializar(nave_t *nave, figura_t *figura_nave);
 void nave_rotar(nave_t *nave, double angulo);
 
 
-/*
-nave_trasladar(dx, dy);
+//nave_trasladar(dx, dy);
 
+//nave_clonar(dx, dy);
 
-nave_clonar(dx, dy);
+//nave_status(dx, dy);
 
-nave_status(dx, dy);
+//nave_status(dx, dy2);
 
-nave_status(dx, dy2);
-*/
 
 #endif

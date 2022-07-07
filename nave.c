@@ -27,6 +27,10 @@ void nave_rotar(nave_t *nave, double angulo){
         nave->angulo_actual = nave->angulo_actual + (2 * PI);
 }
 
+/*  FUNCION INTERNA
+** Setear las figuras de la nave según "figura_nave".
+** PRE: La nave fue creada. 
+*/
 static void nave_setear_figura(nave_t *nave, figura_t *fig_nave){
     nave->figura = figura_clonar(fig_nave);
 }

@@ -139,6 +139,7 @@ int main() {
     float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
     size_t chorro_tam = 3;
 
+    //Creamos ejes de referencia
     float ejes_y[][2] = {{0, 10}, {0, -10}};
     float ejes_x[][2] = {{10, 0}, {-10, 0}};
     size_t ejes_tam = 2;
@@ -159,8 +160,8 @@ int main() {
     float f = 1;
     float mov_x = 0;
     float mov_y = 0;
-    // END código del alumno
 
+    // END código del alumno
     unsigned int ticks = SDL_GetTicks();
     while(1) {
         if(SDL_PollEvent(&event)) {
@@ -254,6 +255,8 @@ int main() {
 
             }
         }
+
+        //************* CREACION DE EJES DE REFENCIA*************************
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
         for(int i = 0; i < ejes_tam - 1; i++)
             SDL_RenderDrawLine(
@@ -273,6 +276,8 @@ int main() {
                 ejes_x[i+1][0] * f + VENTANA_ANCHO / 2,
                 -ejes_x[i+1][1] * f + VENTANA_ALTO / 2
             );
+
+        //************* CREACION DE EJES DE REFENCIA*************************
 
         // END código del alumno
 
