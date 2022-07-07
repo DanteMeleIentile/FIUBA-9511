@@ -167,7 +167,6 @@ void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escal
             (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y),
             ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x),
             (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO - y)
-            // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
             );
         }
     }

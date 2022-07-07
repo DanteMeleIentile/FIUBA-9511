@@ -40,8 +40,8 @@ void nave_trasladar(nave_t *nave, double dx, double dy){
 void nave_spawn(nave_t *nave, double dx, double dy){
     figura_trasladar(nave->nave_fig, dx, dy);
     figura_trasladar(nave->nave_fig_mas_chorro, dx, dy);
-    //nave->x = dx;
-    //nave->y = dy;
+    nave->x = dx;
+    nave->y = dy;
 }
 
 void nave_impulso(nave_t *nave){
@@ -74,6 +74,8 @@ void nave_inicializar(nave_t *nave, figura_t *figura_nave, figura_t *fig_nave_ma
     nave_setear_figura(nave, figura_nave, fig_nave_mas_chorro);
     figura_rotar(nave->nave_fig, nave->angulo_actual);
     figura_rotar(nave->nave_fig_mas_chorro, nave->angulo_actual);
+    //figura_trasladar(nave->nave_fig, nave->x, nave->y);
+    //figura_trasladar(nave->nave_fig_mas_chorro, nave->x, nave->y);
 }
 
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro){

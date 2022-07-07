@@ -169,7 +169,6 @@ int main() {
                         // Prendemos el chorro:
                         chorro_prendido = true;
                         break;
-
                     case SDLK_DOWN:
                         // Disminuimos el valor de la escala
                         break;
@@ -194,6 +193,8 @@ int main() {
                     case SDLK_d:
                         mov_x += 20;
                         break;
+                    case SDLK_ESCAPE:
+                        return 0;
                 }
             }
             else if (event.type == SDL_KEYUP) {
@@ -238,7 +239,6 @@ int main() {
             planeta_dibujar(renderer, estrella);
 
             planeta_dibujar(renderer, planeta1);
-            if(distancia_a_planeta(planeta1, nave) < 2) nivel = 1;
             planeta_dibujar(renderer, planeta2);
             //if(distancia_a_planeta(planeta2, nave) < 2) nivel = 2;
             planeta_dibujar(renderer, planeta3);
@@ -248,6 +248,7 @@ int main() {
             planeta_dibujar(renderer, planeta5);
             //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
         }
+        /*
         if(nivel == 1){
             return 1;
         }
@@ -263,19 +264,28 @@ int main() {
         if(nivel == 5){
             return 1;
         }
-        
+        */
+        nave_trasladar(nave, mov_x, mov_y);
+
         if(chorro_prendido){
-            //nave_trasladar(nave, mov_x, mov_y);
             nave_aceleracion(nave, NAVE_ACELERACION, 1/JUEGO_FPS);
             nave_impulso(nave);
             printf("X = %f , Y = %f\n", nave->x, nave->y);
             nave_imprimir(renderer, nave, 1, true);
         }else{
-            //nave_trasladar(nave, mov_x, mov_y);
             nave_impulso(nave);
+
             printf("X = %f , Y = %f\n", nave->x, nave->y);
             nave_imprimir(renderer, nave, 1, false);
         }
+
+        if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
+        if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;
+        if(distancia_a_planeta(planeta2, nave) < 15) nivel = 0;
+        if(distancia_a_planeta(planeta3, nave) < 15) nivel = 0;
+        if(distancia_a_planeta(planeta4, nave) < 15) nivel = 0;
+        if(distancia_a_planeta(planeta5, nave) < 15) nivel = 0;
+
 
         // END código del alumno
 
