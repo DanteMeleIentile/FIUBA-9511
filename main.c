@@ -53,7 +53,6 @@ int main() {
 
 //Creamos un puntero que apunta a un vector "vector_figuras" de una (1) figura_t
 
-
     figura_t **vector_figuras = malloc(sizeof(figura_t*));
     if(vector_figuras == NULL){
         fprintf(stderr, "Error de memoria");
@@ -124,76 +123,34 @@ int main() {
 
     fclose(f1);
     
-    //QUEDAN FIJAS:
-
-    float escala_planeta = 1;
-    float escala_nave = 1;
-    size_t nivel_actual = 0;
-
     figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
 
     figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
-    figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
-    figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
-    figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
-    figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
 
     figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
 
-    figura_t *nave = encontrar_figura("NAVE", vector_figuras, cant_figuras);
-    figura_t *nave_mas_chorro = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
-    //figura_t *disparo = encontrar_figura("DISPARO", vector_figuras, cant_figuras);  
-
-    //figura_t *combustible = encontrar_figura("COMBUSTIBLE", vector_figuras, cant_figuras);
-    
-    //figura_t *torreta = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
-    //figura_t *torreta_mas_disparo = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
-
-    //figura_t *reactor = encontrar_figura("REACTOR", vector_figuras, cant_figuras);
-    //figura_t *nivel1 = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
-    //figura_t *nivel2 = encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras);
-    //figura_t *nivel3 = encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras);
-    //figura_t *nivel4 = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
-    //figura_t *nivel5 = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
-
-    //figura_t *escudo = encontrar_figura("ESCUDO", vector_figuras, cant_figuras);
-    //figura_t *escudo2 = encontrar_figura("ESCUDO2", vector_figuras, cant_figuras);
-
-    //figura_t *enemigo1 = encontrar_figura("ENEMIGO1", vector_figuras, cant_figuras);
-    //figura_t *enemigo2 = encontrar_figura("ENEMIGO2", vector_figuras, cant_figuras);
-    //figura_t *enemigo3 = encontrar_figura("ENEMIGO3", vector_figuras, cant_figuras);
-
-
-
 //----------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------
-//CREACIÓN DE "LISTA ACTIVA"
-    //lista_t *lista_activa = lista_crear();
-//----------------------------------------------------------------------------------------------------------------------
-    
     
     // Mi nave:
-/*
     float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
     size_t nave_tam = 9;
 
-    // El chorro de la nave:
+    //El chorro de la nave:
     float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
     size_t chorro_tam = 3;
-*/
-    double rotacion_nave = 0;
-    double velocidad_nave = 0;
-    double angulo_velocidad = 0;
-    double pos_x = POS_BASE_X;
-    double pos_y = POS_BASE_Y;
+
+    float ejes_y[][2] = {{0, 10}, {0, -10}};
+    float ejes_x[][2] = {{10, 0}, {-10, 0}};
+    size_t ejes_tam = 2;
+
 
     bool chorro_prendido = false;
     bool rotacion_derecha = false;
-    bool rotacion_izquierda = false;
-    
 
     // Queremos que todo se dibuje escalado por f:
     float f = 1;
+    float mov_x = 0;
+    float mov_y = 0;
     
     // END código del alumno
 
@@ -207,16 +164,31 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
+                        f++;
                         // Prendemos el chorro:
                         chorro_prendido = true;
                         break;
-                    case SDLK_RIGHT:
-                        // Rota hacia la derecha:
-                        rotacion_derecha = true;
+
+                    case SDLK_DOWN:
+                        // Disminuimos el valor de la escala
+                        f--;
                         break;
-                    case SDLK_LEFT:
-                        // Rota hacia la izquierda:
-                        rotacion_izquierda = true;
+                    case SDLK_RIGHT:
+                        f--;
+                        break;
+
+                    case SDLK_w:
+                        mov_y += 20;
+                        break;
+                    case SDLK_s:
+                        mov_y -= 20;
+                        break;
+
+                    case SDLK_a:
+                        mov_x -= 20;
+                        break;
+                    case SDLK_d:
+                        mov_x += 20;
                         break;
                 }
             }
@@ -231,10 +203,6 @@ int main() {
                         // Deja de rotar hacia la derecha:
                         rotacion_derecha = false;
                         break;
-                    case SDLK_LEFT:
-                        // Deja de rotar hacia la izquierda:
-                        rotacion_izquierda = false;
-                        break;
                 }
             }
             // END código del alumno
@@ -246,90 +214,59 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
+        
 
-        figura_t *base_2 = rototrasladar_figura(base, 388, 218, 0, escala_planeta, 0, 0);
-        imprimir_figura(base_2, renderer); //ojo! se modifica la polilinea clonada, luego de trasladar "base_2" nunca va a ser como antes
+        figura_t *base_2 = figura_clonar(base);
+        figura_trasladar (base_2, mov_x, mov_y);
+        for(size_t k = 0; k < base_2->cant_polilineas; k++){
+            SDL_SetRenderDrawColor(renderer, base_2->polilineas[k]->r, base_2->polilineas[k]->g, base_2->polilineas[k]->b, 0xFF);
+            for(size_t z = 0; z < base_2->polilineas[k]->n - 1; z++){
+                SDL_RenderDrawLine(
+                renderer,
+                (base_2->polilineas[k]->puntos[z][X] * f) + VENTANA_ANCHO / 2 -base_2->polilineas[k]->puntos[z][X] * (f-1),
+                -base_2->polilineas[k]->puntos[z][Y] * f + VENTANA_ALTO / 2 - base_2->polilineas[k]->puntos[z][Y] * (f+1),
+                (base_2->polilineas[k]->puntos[z+1][X] * f) + VENTANA_ANCHO / 2 -base_2->polilineas[k]->puntos[z+1][X] * (f-1),
+                -base_2->polilineas[k]->puntos[z+1][Y] * f + VENTANA_ALTO / 2  -base_2->polilineas[k]->puntos[z+1][Y] * (f+1)
+                // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
+                //]*f*2
+                );
+                printf ("POLI EN puntos[z][X](%f)\n", base_2->polilineas[0]->puntos[z][X]);
+                printf ("POLI EN puntos[z][Y](%f)\n", base_2->polilineas[0]->puntos[z][Y]);
+                printf ("POLI EN puntos ESCALADA [z][X](%f)\n", base_2->polilineas[k]->puntos[z][X] * f);
+                printf ("POLI EN puntos ESCALADA [z][Y](%f)\n\n\n", base_2->polilineas[k]->puntos[z][Y] * f);
 
-        figura_t *estrella_2 = rototrasladar_figura(estrella, 457, 364, 0, escala_planeta, 0, 0);
-        imprimir_figura(estrella_2, renderer); 
+                printf ("escala %f\n", f);
 
-        figura_t *planeta1_2 = rototrasladar_figura(planeta1, 663, 473, 0, escala_planeta, 0, 0);
-        imprimir_figura(planeta1_2, renderer);
+            }
+        }
+        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
+        for(int i = 0; i < ejes_tam - 1; i++)
+            SDL_RenderDrawLine(
+                renderer,
+                ejes_y[i][0] * f + VENTANA_ANCHO / 2,
+                -ejes_y[i][1] * f + VENTANA_ALTO / 2,
+                ejes_y[i+1][0] * f + VENTANA_ANCHO / 2,
+                -ejes_y[i+1][1] * f + VENTANA_ALTO / 2
+            );
+        
+        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
+        for(int i = 0; i < ejes_tam - 1; i++)
+            SDL_RenderDrawLine(
+                renderer,
+                ejes_x[i][0] * f + VENTANA_ANCHO / 2,
+                -ejes_x[i][1] * f + VENTANA_ALTO / 2,
+                ejes_x[i+1][0] * f + VENTANA_ANCHO / 2,
+                -ejes_x[i+1][1] * f + VENTANA_ALTO / 2
+            );
 
-        figura_t *planeta2_2 = rototrasladar_figura(planeta2, 671, 145, 0, escala_planeta, 0, 0);
-        imprimir_figura(planeta2_2, renderer);
-
-        figura_t *planeta3_2 = rototrasladar_figura(planeta3, 110, 79, 0, escala_planeta, 0, 0);
-        imprimir_figura(planeta3_2, renderer);
-
-        figura_t *planeta4_2 = rototrasladar_figura(planeta4, 204, 455, 0, escala_planeta, 0, 0);
-        imprimir_figura(planeta4_2, renderer);
-
-        figura_t *planeta5_2 = rototrasladar_figura(planeta5, 111, 307, 0, escala_planeta, 0, 0);
-        imprimir_figura(planeta5_2, renderer);
-
-        figura_t *nave_2 = rototrasladar_figura(nave, 388, 218, 0, escala_planeta, 0, 0);
-        figura_t *nave_mas_chorro_2 = rototrasladar_figura(nave_mas_chorro, 388, 218, 0, escala_planeta, 0, 0);
-
-        //if(nivel = 1)
-/*
-        figura_agregar_en_lista("BASE", lista_activa);
-        figura_agregar_en_lista("ESTRELLA", lista_activa);
-        figura_agregar_en_lista("PLANETA1", lista_activa);
-        figura_agregar_en_lista("PLANETA2", lista_activa);
-        figura_agregar_en_lista("PLANETA3", lista_activa);
-        figura_agregar_en_lista("PLANETA4", lista_activa);
-        figura_agregar_en_lista("PLANETA5", lista_activa);
-    
-        lista_iter_t *iter = lista_iter_crear(lista_activa);
-
-//IMPLEMENTAR FUNCION ROTOTRASLACION.
+        /*//El siguiente for tiene el objetivo de entender en que posición se encuentra alguna de las polilineas de "base_2"
+        for (int i = 0; i < base_2->polilineas[0]->n; i++){
+            printf ("(%f, %f)\n", base_2->polilineas[0]->puntos[i][X], base_2->polilineas[0]->puntos[i][X]);
+        }*/
+        printf ("\t\t\tTERMINO UNA ITERACIÓN\n");
 
         
-        for(size_t i = 0; i < lista_largo(lista_activa); i++){
-            figura_t *fig = encontrar_figura("BASE", vector_figuras, cant_figuras);
-            //ROTAR Y TRASLADAR FIGURA
-                for(size_t k = 0; k < fig->cant_polilineas; k++){
-                    rotar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 0);
-                    trasladar(fig->polilineas[k]->puntos, fig->polilineas[k]->n, 388, 218);
-                }
-                imprimir_figura(fig, f, renderer);
-                figura_destruir(fig);
-            lista_iter_avanzar(iter);
-        }
-
-        lista_iter_destruir(iter);
-*/
-        // Dibujamos la nave escalada por f en el centro de la pantalla:        
         
-       
-        if(rotacion_izquierda) {
-            rotar_figura(nave_2, NAVE_ROTACION_PASO);
-            rotar_figura(nave_mas_chorro_2, NAVE_ROTACION_PASO);
-            rotacion_nave += NAVE_ROTACION_PASO;
-        }
-
-        if(rotacion_derecha) {
-            rotar_figura(nave_2, -NAVE_ROTACION_PASO);
-            rotar_figura(nave_mas_chorro_2, -NAVE_ROTACION_PASO);
-            rotacion_nave -= NAVE_ROTACION_PASO;
-        }
-
-        trasladar_figura(nave_2, pos_x, pos_y);
-        trasladar_figura(nave_mas_chorro_2, pos_x, pos_y);
-
-        if(chorro_prendido) {
-            /*computar_velocidad(&velocidad_nave, &angulo_velocidad, NAVE_ACELERACION, 1.0/JUEGO_FPS);
-            movimiento(nave_mas_chorro_2, angulo_velocidad, velocidad_nave);*/
-            imprimir_figura(nave_mas_chorro_2, renderer);
-        }else{
-            //movimiento(nave_2, angulo_velocidad, velocidad_nave);
-            imprimir_figura(nave_2, renderer);
-        }
-        
-        figura_destruir(nave_2);
-        figura_destruir(nave_mas_chorro_2);
-
         // END código del alumno
 
         SDL_RenderPresent(renderer);

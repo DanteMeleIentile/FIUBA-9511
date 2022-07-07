@@ -148,7 +148,7 @@ void rotar_figura(figura_t *figura, float rad){
     }
 }
 
-void trasladar_figura(figura_t *figura, float dx, float dy){
+void figura_trasladar(figura_t *figura, float dx, float dy){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, dx, dy);
     }

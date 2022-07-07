@@ -82,7 +82,7 @@ void imprimir_figura(figura_t *figura, SDL_Renderer *renderer);
 
 void rotar_figura(figura_t *figura, float rad);
 
-void trasladar_figura(figura_t *figura, float dx, float dy);
+void figura_trasladar(figura_t *figura, float dx, float dy);
 
 /*
 ** Dada una figura, la setea en unas coordenadas "x" e "y" rotada un angulo "rad" y escalada por "escala".

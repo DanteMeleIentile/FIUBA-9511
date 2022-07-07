@@ -111,8 +111,8 @@ void escalar(float polilinea[][2], size_t n, float escala){
 }
 
 void polilinea_printf(polilinea_t *polilinea){
-    printf("EL COLOR ES %d  %d  %d\n", polilinea->r, polilinea->g, polilinea->b);
-    printf("CANT PUNTOS %zd\n", polilinea->n);
+    //printf("EL COLOR ES %d  %d  %d\n", polilinea->r, polilinea->g, polilinea->b);
+    //printf("CANT PUNTOS %zd\n", polilinea->n);
     for(size_t i = 0; i < polilinea->n; i++){
         printf("POLILINEA %zd ( %.7f , %.7f )\n", polilinea->n, polilinea->puntos[i][X], polilinea->puntos[i][Y]);
     }
