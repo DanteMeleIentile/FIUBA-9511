@@ -12,6 +12,8 @@
 #include "lista.h"
 #include "config.h"
 
+#define X 0
+#define Y 1
 
 
 char *nombre_icono[] = {
@@ -127,22 +129,7 @@ void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista){
 
 //AGREGAR CENTRO CUANDO USE INFINITOS
 
-void imprimir_figura(figura_t *figura, SDL_Renderer *renderer){
-    for(size_t k = 0; k < figura->cant_polilineas; k++){
-        SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
-        for(int z = 0; z < figura->polilineas[k]->n - 1; z++)
-            SDL_RenderDrawLine(
-            renderer,
-            figura->polilineas[k]->puntos[z][0],
-            -figura->polilineas[k]->puntos[z][1] + VENTANA_ALTO,
-            figura->polilineas[k]->puntos[z+1][0],
-            -figura->polilineas[k]->puntos[z+1][1] + VENTANA_ALTO
-            // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
-            );
-    }
-}
-
-void rotar_figura(figura_t *figura, float rad){
+void figura_rotar(figura_t *figura, float rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
     }
@@ -154,7 +141,7 @@ void figura_trasladar(figura_t *figura, float dx, float dy){
     }
 }
 
-figura_t *rototrasladar_figura(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y){
+figura_t *figura_rototrasladar(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y){
     figura_t *fig = figura_clonar(figura);
     if(fig == NULL) return NULL;
     for(size_t i = 0; i < fig->cant_polilineas; i++){
@@ -167,4 +154,23 @@ figura_t *rototrasladar_figura(figura_t *figura, float dx, float dy, float rad, 
     }
     return fig;
 }
+
+
+void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, float x, float y){
+
+    for(size_t k = 0; k < figura->cant_polilineas; k++){
+        SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
+        for(size_t z = 0; z < figura->polilineas[k]->n - 1; z++){
+            SDL_RenderDrawLine(
+            renderer,
+            ((figura->polilineas[k]->puntos[z][X]-x) * escala+ x),
+            (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y),
+            ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x),
+            (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO - y)
+            // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
+            );
+        }
+    }
+}
+
 

@@ -8,6 +8,8 @@
 #include "fisicas.h"
 #include "config.h"
 
+#include "planeta.h"
+
 #define X 0
 #define Y 1
 
@@ -24,7 +26,6 @@ figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ /
     } 
     return fig;
 }
-
 
 int main() {
     
@@ -64,6 +65,8 @@ int main() {
     bool infinito;
     figura_tipo_t tipo;
     size_t cant_polilineas;
+
+    size_t nivel = 0;
 
     size_t cant = 0;
 
@@ -124,26 +127,14 @@ int main() {
     fclose(f1);
     
     figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
-
-    figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
-
     figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
-
+    figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
+    figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
+    figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
+    figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
+    figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
 //----------------------------------------------------------------------------------------------------------------------
     
-    // Mi nave:
-    float nave[][2] = {{8, 0}, {-1, 6}, {-4, 4}, {-4, 2}, {-2, 0}, {-4, -2}, {-4, -4}, {-1, -6}, {8, 0}};
-    size_t nave_tam = 9;
-
-    //El chorro de la nave:
-    float chorro[][2] = {{-4, 2}, {-8, 0}, {-4, -2}};
-    size_t chorro_tam = 3;
-
-    float ejes_y[][2] = {{0, 10}, {0, -10}};
-    float ejes_x[][2] = {{10, 0}, {-10, 0}};
-    size_t ejes_tam = 2;
-
-
     bool chorro_prendido = false;
     bool rotacion_derecha = false;
 
@@ -216,56 +207,16 @@ int main() {
         // BEGIN código del alumno
         
 
-        figura_t *base_2 = figura_clonar(base);
-        figura_trasladar (base_2, mov_x, mov_y);
-        for(size_t k = 0; k < base_2->cant_polilineas; k++){
-            SDL_SetRenderDrawColor(renderer, base_2->polilineas[k]->r, base_2->polilineas[k]->g, base_2->polilineas[k]->b, 0xFF);
-            for(size_t z = 0; z < base_2->polilineas[k]->n - 1; z++){
-                SDL_RenderDrawLine(
-                renderer,
-                ((base_2->polilineas[k]->puntos[z][X]-mov_x) * f + VENTANA_ANCHO / 2 + mov_x),
-                (-(base_2->polilineas[k]->puntos[z][Y]-mov_y) * f + VENTANA_ALTO / 2 - mov_y),
-                ((base_2->polilineas[k]->puntos[z+1][X]-mov_x) * f + VENTANA_ANCHO / 2 + mov_x),
-                (-(base_2->polilineas[k]->puntos[z+1][Y]-mov_y) * f + VENTANA_ALTO / 2 - mov_y)
-                // Al sumar VENTANA_ALTO definimos el origen DE IMPRESIÓN abajo a la izquierda
-                //]*f*2
-                );
-                printf ("POLI EN puntos[z][X](%f)\n", base_2->polilineas[0]->puntos[z][X]);
-                printf ("POLI EN puntos[z][Y](%f)\n", base_2->polilineas[0]->puntos[z][Y]);
-                printf ("POLI EN puntos ESCALADA [z][X](%f)\n", base_2->polilineas[k]->puntos[z][X] * f);
-                printf ("POLI EN puntos ESCALADA [z][Y](%f)\n\n\n", base_2->polilineas[k]->puntos[z][Y] * f);
-
-                printf ("escala %f\n", f);
-
-            }
-        }
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-        for(int i = 0; i < ejes_tam - 1; i++)
-            SDL_RenderDrawLine(
-                renderer,
-                ejes_y[i][0] * f + VENTANA_ANCHO / 2,
-                -ejes_y[i][1] * f + VENTANA_ALTO / 2,
-                ejes_y[i+1][0] * f + VENTANA_ANCHO / 2,
-                -ejes_y[i+1][1] * f + VENTANA_ALTO / 2
-            );
-        
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0x00);
-        for(int i = 0; i < ejes_tam - 1; i++)
-            SDL_RenderDrawLine(
-                renderer,
-                ejes_x[i][0] * f + VENTANA_ANCHO / 2,
-                -ejes_x[i][1] * f + VENTANA_ALTO / 2,
-                ejes_x[i+1][0] * f + VENTANA_ANCHO / 2,
-                -ejes_x[i+1][1] * f + VENTANA_ALTO / 2
-            );
-
-        /*//El siguiente for tiene el objetivo de entender en que posición se encuentra alguna de las polilineas de "base_2"
-        for (int i = 0; i < base_2->polilineas[0]->n; i++){
-            printf ("(%f, %f)\n", base_2->polilineas[0]->puntos[i][X], base_2->polilineas[0]->puntos[i][X]);
-        }*/
-        printf ("\t\t\tTERMINO UNA ITERACIÓN\n");
-
-        
+        if(nivel == 0){
+            //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
+            planeta_t base_print = posicionar_planeta(renderer, base, 388, 218);
+            planeta_t estrella_print = posicionar_planeta(renderer, estrella, 457, 364);
+            planeta_t planeta1_print = posicionar_planeta(renderer, planeta1, 663, 473);
+            planeta_t planeta2_print = posicionar_planeta(renderer, planeta2, 671, 145);
+            planeta_t planeta3_print = posicionar_planeta(renderer, planeta3, 110, 79);
+            planeta_t planeta4_print = posicionar_planeta(renderer, planeta4, 204, 455);
+            planeta_t planeta5_print = posicionar_planeta(renderer, planeta5, 111, 307);
+        }    
         
         // END código del alumno
 

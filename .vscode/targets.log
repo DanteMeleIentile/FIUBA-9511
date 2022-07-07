@@ -6,10 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jul  7 11:08:33 2022
+# Make data base, printed on Thu Jul  7 14:24:03 2022
 
 # Variables
 
+ 
 # environment
 GDK_BACKEND = x11
 # environment
@@ -205,7 +206,7 @@ CC = gcc
 # environment
 XDG_MENU_PREFIX = xfce-
 # variable set hash-table stats:
-# Load=97/1024=9%, Rehash=0, Collisions=13/129=10%
+# Load=97/1024=9%, Rehash=0, Collisions=13/134=10%
 
 # Pattern-specific Variable Values
 
@@ -213,9 +214,9 @@ XDG_MENU_PREFIX = xfce-
 
 # Directories
 
-# . (device 2064, inode 153826): 35 files, no impossibilities.
+# . (device 2064, inode 153826): 38 files, no impossibilities.
 
-# 35 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -225,10 +226,9 @@ XDG_MENU_PREFIX = xfce-
 
 # Not a target:
 lectura.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-06-26 13:46:26.994032824
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 color.h:
@@ -239,10 +239,9 @@ color.h:
 
 # Not a target:
 figura.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-07-07 11:08:11.413715645
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 lista.h:
@@ -252,17 +251,23 @@ lista.h:
 #  Successfully updated.
 
 # Not a target:
+planeta.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-07 14:18:02.173588125
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-06 16:43:21.926740081
+#  Last modified 2022-07-07 14:24:02.55358409
 #  File has been updated.
 #  Successfully updated.
 
 lectura.o: lectura.c polilinea.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 19:37:22.2866232
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 21):
 	$(CC) $(CFLAGS) -c lectura.c
 
@@ -275,18 +280,15 @@ lectura.h:
 
 figura.o: figura.c figura.h polilinea.h lista.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 11:08:11.413715645
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 24):
 	$(CC) $(CFLAGS) -c figura.c
 
- 
 polilinea.o: polilinea.c color.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 11:08:11.413715645
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 18):
 	$(CC) $(CFLAGS) -c polilinea.c
 
@@ -294,43 +296,40 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 33):
+#  recipe to execute (from 'Makefile', line 37):
 	rm -vf *.o main
 
 valgrind:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 39):
+#  recipe to execute (from 'Makefile', line 43):
 	valgrind --suppressions=suppressions_20221_tp1.supp --track-origins=yes ./$(PROGRAM)
 
 # Not a target:
 polilinea.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-07-07 11:08:11.413715645
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 lista.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-07-05 20:23:42.919235182
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 exe:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 36):
+#  recipe to execute (from 'Makefile', line 40):
 	./$(PROGRAM)
 
 # Not a target:
 color.c:
-#  Implicit rule search has been done.
-#  Last modified 2022-07-06 02:02:53.599007355
-#  File has been updated.
-#  Successfully updated.
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 polilinea.h:
@@ -350,27 +349,49 @@ all: Gravitar
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-07 11:08:11.413715645
+#  Last modified 2022-07-07 14:21:09.733586025
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 fisicas.h:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-07-06 22:05:50.916523467
 #  File has been updated.
 #  Successfully updated.
 
-main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
+main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 11:08:11.413715645
+#  Implicit/static pattern stem: ''
+#  Last modified 2022-07-07 14:20:13.05358666
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := main.o
+# automatic
+# * := 
+# automatic
+# < := main.c
+# automatic
+# + := main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h
+# automatic
+# % := 
+# automatic
+# ^ := main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h
+# automatic
+# ? := main.c
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=2/13=15%
 #  recipe to execute (from 'Makefile', line 12):
 	$(CC) $(CFLAGS) -c main.c
 	
@@ -378,63 +399,75 @@ main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
 # Not a target:
 config.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-26 03:12:13.673895973
+#  Last modified 2022-07-07 13:48:26.733608001
 #  File has been updated.
 #  Successfully updated.
 
-Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o
+Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-07 11:08:11.413715645
+#  Last modified 2022-07-07 14:20:13.193586658
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
 #  recipe to execute (from 'Makefile', line 9):
-	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o $(SDLFLAGS) -o $(PROGRAM)
+	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o $(SDLFLAGS) -o $(PROGRAM)
 
 fisicas.o: fisicas.h polilinea.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 22:05:55.12652342
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 30):
 	$(CC) $(CFLAGS) -c fisicas.c
 
 lista.o: lista.c lista.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 19:37:22.3266232
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 27):
 	$(CC) $(CFLAGS) -c lista.c
 
 # Not a target:
 figura.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-07 11:08:11.413715645
+#  Last modified 2022-07-07 14:04:36.983597139
 #  File has been updated.
 #  Successfully updated.
 
 color.o: color.c color.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 19:37:21.976623204
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'Makefile', line 15):
 	$(CC) $(CFLAGS) -c color.c
 
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+planeta.o: planeta.h figura.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 33):
+	$(CC) $(CFLAGS) -c planeta.c
+
 # files hash-table stats:
-# Load=28/1024=3%, Rehash=0, Collisions=3/77=4%
+# Load=30/1024=3%, Rehash=0, Collisions=3/85=4%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 43 / storage = 411 B / avg = 9 B
-# current buf: size = 8162 B / used = 411 B / count = 43 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 46 / storage = 441 B / avg = 9 B
+# current buf: size = 8162 B / used = 441 B / count = 46 / avg = 9 B
 
-# strcache performance: lookups = 98 / hit rate = 56%
+# strcache performance: lookups = 108 / hit rate = 57%
 # hash-table stats:
-# Load=43/8192=1%, Rehash=0, Collisions=0/98=0%
-# Finished Make data base on Thu Jul  7 11:08:33 2022
+# Load=46/8192=1%, Rehash=0, Collisions=0/108=0%
+# Finished Make data base on Thu Jul  7 14:24:03 2022
 
  

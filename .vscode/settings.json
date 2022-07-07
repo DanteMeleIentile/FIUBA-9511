@@ -10,6 +10,7 @@
         "figura.h": "c",
         "string.h": "c",
         "math.h": "c",
-        "nivel.h": "c"
+        "nivel.h": "c",
+        "planeta.h": "c"
     }
 }
