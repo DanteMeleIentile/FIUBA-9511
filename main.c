@@ -126,13 +126,14 @@ int main() {
 
     fclose(f1);
     
-    figura_t *base = encontrar_figura("BASE", vector_figuras, cant_figuras);
-    figura_t *estrella = encontrar_figura("ESTRELLA", vector_figuras, cant_figuras);
-    figura_t *planeta1 = encontrar_figura("PLANETA1", vector_figuras, cant_figuras);
-    figura_t *planeta2 = encontrar_figura("PLANETA2", vector_figuras, cant_figuras);
-    figura_t *planeta3 = encontrar_figura("PLANETA3", vector_figuras, cant_figuras);
-    figura_t *planeta4 = encontrar_figura("PLANETA4", vector_figuras, cant_figuras);
-    figura_t *planeta5 = encontrar_figura("PLANETA5", vector_figuras, cant_figuras);
+    planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
+    planeta_t estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
+    planeta_t planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
+    planeta_t planeta2 = planeta_crear(encontrar_figura("PLANETA2", vector_figuras, cant_figuras), 671, 145);
+    planeta_t planeta3 = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), 110, 79);
+    planeta_t planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
+    planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
+    
 //----------------------------------------------------------------------------------------------------------------------
     
     bool chorro_prendido = false;
@@ -209,13 +210,13 @@ int main() {
 
         if(nivel == 0){
             //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
-            planeta_t base_print = posicionar_planeta(renderer, base, 388, 218);
-            planeta_t estrella_print = posicionar_planeta(renderer, estrella, 457, 364);
-            planeta_t planeta1_print = posicionar_planeta(renderer, planeta1, 663, 473);
-            planeta_t planeta2_print = posicionar_planeta(renderer, planeta2, 671, 145);
-            planeta_t planeta3_print = posicionar_planeta(renderer, planeta3, 110, 79);
-            planeta_t planeta4_print = posicionar_planeta(renderer, planeta4, 204, 455);
-            planeta_t planeta5_print = posicionar_planeta(renderer, planeta5, 111, 307);
+            planeta_dibujar(renderer, base);
+            planeta_dibujar(renderer, estrella);
+            planeta_dibujar(renderer, planeta1);
+            planeta_dibujar(renderer, planeta2);
+            planeta_dibujar(renderer, planeta3);
+            planeta_dibujar(renderer, planeta4);
+            planeta_dibujar(renderer, planeta5);
         }    
         
         // END código del alumno
