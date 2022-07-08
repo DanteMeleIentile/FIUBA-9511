@@ -140,12 +140,13 @@ int main() {
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
     
 //----------------------------------------------------------------------------------------------------------------------
-    
+    //Boleeanos de estado
     bool chorro_prendido = false;
     
-    //Boleeanos de rotación
+    //Boleeanos de movimiento
     bool rotacion_horaria = false;
     bool rotacion_antihoraria = false;
+    bool avanzar = false;
 
     size_t nivel = 0;
 
@@ -167,13 +168,10 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
-                        f++;
-                        // Prendemos el chorro:
+                        avanzar = true;
                         chorro_prendido = true;
                         break;
                     case SDLK_DOWN:
-                        f--;
-                        // Disminuimos el valor de la escala
                         break;
                         
                     case SDLK_RIGHT:
@@ -185,9 +183,11 @@ int main() {
                         break;
 
                     case SDLK_w:
+                        f++;
                         mov_y += 20;
                         break;
                     case SDLK_s:
+                        f--;
                         mov_y -= 20;
                         break;
                     case SDLK_a:
@@ -204,7 +204,7 @@ int main() {
                 // Se soltó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
-                        // Apagamos el chorro:
+                        avanzar = false;
                         chorro_prendido = false;
                         break;
                     case SDLK_RIGHT:
@@ -235,6 +235,11 @@ int main() {
         if(rotacion_horaria){
             nave_rotar(nave, - NAVE_ROTACION_PASO);
         } 
+
+        if(avanzar){
+            nave_avanzar(nave, 10);
+        } 
+
 
         if(nivel == 0){
             /*if(spawn){

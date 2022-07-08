@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <math.h>
+
 
 #include "nave.h"
 #include "figura.h"
@@ -58,6 +60,14 @@ void nave_rotar(nave_t *nave, double angulo){
     while(nave->angulo < 0)
         nave->angulo = nave->angulo + (2 * PI);
 }
+
+
+void nave_avanzar(nave_t *nave, double tasa_avance){
+    nave->pos[X] += tasa_avance * cos(nave->angulo);
+    nave->pos[Y] += tasa_avance * sin(nave->angulo);
+}
+
+
 
 
 
