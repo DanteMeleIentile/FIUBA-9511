@@ -13,7 +13,7 @@
 #define Y 1
 
 
-double DEG_A_RAD(double grados){
+static double DEG_A_RAD(double grados){
     return grados * PI / 180;
 }
 
@@ -76,12 +76,12 @@ void nave_rotar(nave_t *nave, double angulo){
         nave->angulo = nave->angulo + (2 * PI);
 }
 
-void nave_aceleracion(nave_t *nave, double aceleracion, double rad, double dt){
+static void nave_aceleracion(nave_t *nave, double aceleracion, double rad, double dt){
     nave->vel[X] = computar_velocidad(nave->vel[X], aceleracion * cos(rad), dt);
     nave->vel[Y] = computar_velocidad(nave->vel[Y], aceleracion * sin(rad), dt);
 }
 
-void nave_velocidad(nave_t *nave, double dt){
+static void nave_velocidad(nave_t *nave, double dt){
     nave->pos[X] = computar_posicion(nave->pos[X], nave->vel[X], dt);
     nave->pos[Y] = computar_posicion(nave->pos[Y], nave->vel[Y], dt);
 }
@@ -92,10 +92,14 @@ void nave_avanzar(nave_t *nave, double aceleracion, double dt){
 }
 
 void nave_acercar(nave_t *nave, double aceleracion, double centro_x, double centro_y, double dt){
-    double dot = nave->pos[X] * centro_x + nave->pos[Y] * centro_y;
-    double det = nave->pos[X] * centro_y + nave->pos[Y] * centro_x;
-    double angulo = atan2(abs(det), dot);
-    printf("angulo = %f\n", angulo);
+    double angulo = 0;
+    if(nave->pos[X] > centro_x && nave->pos[Y] < centro_y){
+        angulo = atan((-nave->pos[Y] - centro_y)/(nave->pos[X] - centro_x)) + PI;
+    } else if(nave->pos[X] > centro_x && nave->pos[Y] > centro_y){
+        angulo = atan((nave->pos[Y] - centro_y)/(nave->pos[X] - centro_x)) + PI;
+    } else {
+        angulo = atan((nave->pos[Y] - centro_y)/(nave->pos[X] - centro_x));
+    }
     nave_aceleracion(nave, aceleracion, angulo, dt);
     nave_velocidad(nave, dt);
 }

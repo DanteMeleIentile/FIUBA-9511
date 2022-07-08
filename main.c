@@ -125,6 +125,7 @@ int main() {
     //Creación de entidades
 
     nave_t *nave = nave_crear();
+
     planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
     planeta_t estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
     planeta_t planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
@@ -135,6 +136,9 @@ int main() {
 
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
+
+    lista_t *lista_disparos = lista_crear();
+
     
 //----------------------------------------------------------------------------------------------------------------------
     //Boleeanos de estado
@@ -233,13 +237,9 @@ int main() {
             planeta_dibujar(renderer, estrella);
             planeta_dibujar(renderer, planeta1);
             planeta_dibujar(renderer, planeta2);
-            //if(distancia_a_planeta(planeta2, nave) < 2) nivel = 2;
             planeta_dibujar(renderer, planeta3);
-            //if(distancia_a_planeta(planeta3, nave) < 2) nivel = 3;
             planeta_dibujar(renderer, planeta4);
-            //if(distancia_a_planeta(planeta4, nave) < 2) nivel = 4;
             planeta_dibujar(renderer, planeta5);
-            //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
 
             if(nave_get_pos_x(nave) < 0 || nave_get_pos_x(nave) > VENTANA_ANCHO){
                 nave_invertir_vel_x(nave);
