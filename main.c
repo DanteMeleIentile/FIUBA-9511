@@ -67,8 +67,6 @@ int main() {
     figura_tipo_t tipo;
     size_t cant_polilineas;
 
-    size_t nivel = 0;
-
     size_t cant = 0;
 
     for(size_t i = 0; leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
@@ -126,7 +124,10 @@ int main() {
     const size_t cant_figuras = cant;
 
     fclose(f1);
-    
+
+    //Creación de entidades
+
+    nave_t *nave = nave_crear();
     planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
     planeta_t estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
     planeta_t planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
@@ -146,13 +147,14 @@ int main() {
     bool rotacion_horaria = false;
     bool rotacion_antihoraria = false;
 
+    size_t nivel = 0;
+
     double mov_x = 0;
     double mov_y = 0;
     double f = 1;
+    
+    bool spawn = true;
 
-    //Cración de entidades
-    nave_t *nave = nave_crear();
-     
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -233,8 +235,12 @@ int main() {
         } 
       
         if(nivel == 0){
+
             //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
-            nave_spawn(nave, base.x, base.y);
+            if(spawn){
+                nave_setear_posicion(nave, base.x, base.y);
+            }
+
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
 
@@ -247,9 +253,13 @@ int main() {
             //if(distancia_a_planeta(planeta4, nave) < 2) nivel = 4;
             planeta_dibujar(renderer, planeta5);
             //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
+
+            spawn = false;
+
         }
         /*
         if(nivel == 1){
+
             return 1;
         }
         if(nivel == 2){
@@ -265,19 +275,19 @@ int main() {
             return 1;
         }
         */
-        nave_trasladar(nave, mov_x, mov_y);
 
         if(chorro_prendido){
-            nave_aceleracion(nave, NAVE_ACELERACION, 1/JUEGO_FPS);
-            nave_impulso(nave);
-            printf("X = %f , Y = %f\n", nave->x, nave->y);
-            nave_imprimir(renderer, nave, 1, true);
-        }else{
+            //nave_aceleracion(nave, NAVE_ACELERACION, 1/JUEGO_FPS);
+            nave->vel[X] = 0.1;
+            nave->vel[Y] = 0.1;
+
             nave_impulso(nave);
 
-            printf("X = %f , Y = %f\n", nave->x, nave->y);
-            nave_imprimir(renderer, nave, 1, false);
+            nave_imprimir(renderer, nave, 1, true);
         }
+            nave_imprimir(renderer, nave, 1, false);
+
+        printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
         if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
         if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;

@@ -26,7 +26,7 @@ figura.o: figura.c figura.h polilinea.h lista.h
 lista.o: lista.c lista.h
 	$(CC) $(CFLAGS) -c lista.c
 
-fisicas.o: fisicas.h polilinea.h
+fisicas.o: fisicas.c fisicas.h polilinea.h
 	$(CC) $(CFLAGS) -c fisicas.c
 
 planeta.o: planeta.c planeta.h figura.h

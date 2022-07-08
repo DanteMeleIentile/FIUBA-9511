@@ -5,14 +5,18 @@
 #include "figura.h"
 #include "config.h"
 
+#define X 0
+#define Y 1
+
 nave_t *nave_crear(void){
     //Evaluar necesidad de memoría dinámica
     nave_t *nave = malloc(sizeof(nave_t));
     if(nave == NULL) return NULL;
 
     nave->angulo_actual = 0;
-    nave->angulo_velocidad = 0;
-    nave->velocidad = 0;
+
+    nave->vel[X] = 0;
+    nave->vel[Y] = 0;
 
     return nave;
 }
@@ -33,23 +37,22 @@ void nave_rotar(nave_t *nave, double angulo){
 void nave_trasladar(nave_t *nave, double dx, double dy){
     figura_trasladar(nave->nave_fig, dx, dy);
     figura_trasladar(nave->nave_fig_mas_chorro, dx, dy);
-    nave->x += dx;
-    nave->y += dy;
+    nave->pos[X] += dx;
+    nave->pos[Y] += dy;
 }
 
-void nave_spawn(nave_t *nave, double dx, double dy){
+void nave_setear_posicion(nave_t *nave, double dx, double dy){
     figura_trasladar(nave->nave_fig, dx, dy);
     figura_trasladar(nave->nave_fig_mas_chorro, dx, dy);
-    nave->x = dx;
-    nave->y = dy;
+    nave->pos[X] = dx;
+    nave->pos[Y] = dy;
 }
 
 void nave_impulso(nave_t *nave){
-    double vx = nave->velocidad*cos(nave->angulo_velocidad);
-    double vy = nave->velocidad*sin(nave->angulo_velocidad);
-    nave_trasladar(nave, vx, vy);
-}
 
+    nave_trasladar(nave, nave->vel[X], nave->vel[Y]);
+}
+/*
 void nave_aceleracion(nave_t *nave, double a, double dt){
     double vx = nave->velocidad*cos(nave->angulo_velocidad) + dt * a * cos(nave->angulo_actual);
     double vy = nave->velocidad*sin(nave->angulo_velocidad) + dt * a * sin(nave->angulo_actual);
@@ -59,6 +62,13 @@ void nave_aceleracion(nave_t *nave, double a, double dt){
 
 //    nave_trasladar(nave, vx, vy);
 }
+*/
+/*
+void nave_chorro(nave_t *nave, double a, double dt){
+
+}
+*/
+
 
 /*  FUNCION INTERNA
 ** Setear las figuras de la nave según "figura_nave".
@@ -74,15 +84,19 @@ void nave_inicializar(nave_t *nave, figura_t *figura_nave, figura_t *fig_nave_ma
     nave_setear_figura(nave, figura_nave, fig_nave_mas_chorro);
     figura_rotar(nave->nave_fig, nave->angulo_actual);
     figura_rotar(nave->nave_fig_mas_chorro, nave->angulo_actual);
-    //figura_trasladar(nave->nave_fig, nave->x, nave->y);
-    //figura_trasladar(nave->nave_fig_mas_chorro, nave->x, nave->y);
+
+    nave_setear_posicion(nave, nave->pos[X], nave->pos[Y]);
+
+    //figura_trasladar(figura_nave, nave->pos[X], nave->pos[Y]);
+    //figura_trasladar(fig_nave_mas_chorro, nave->pos[X], nave->pos[Y]);
+
 }
 
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro){
     if(chorro){
-        figura_imprimir(renderer, nave->nave_fig_mas_chorro, escala, nave->x, nave->y);
+        figura_imprimir(renderer, nave->nave_fig_mas_chorro, escala, nave->pos[X], nave->pos[Y]);
     }else{
-        figura_imprimir(renderer, nave->nave_fig, escala, nave->x, nave->y);
+        figura_imprimir(renderer, nave->nave_fig, escala, nave->pos[X], nave->pos[Y]);
     }
         
 }

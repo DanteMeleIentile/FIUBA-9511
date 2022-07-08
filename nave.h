@@ -9,9 +9,8 @@ typedef struct{
     figura_t *nave_fig;
     figura_t *nave_fig_mas_chorro;
     double angulo_actual;
-    double velocidad;
-    double angulo_velocidad;
-    double x, y;
+    double vel[2];
+    double pos[2];
     //int cant_combustible;
 } nave_t;
 
@@ -38,16 +37,18 @@ void nave_rotar(nave_t *nave, double angulo);
 void nave_trasladar(nave_t *nave, double dx, double dy);
 
 /*
-** Setea la posicion de la nave a la dada, (debe hacerse solo una vez por iteración)
+** Setea la posicion de la nave a la dada
 */
+void nave_setear_posicion(nave_t *nave, double dx, double dy);
+
 
 //VELOCIDAD
 void nave_impulso(nave_t *nave);
 
 //CHORRO
-void nave_aceleracion(nave_t *nave, double a, double dt);
+void nave_aceleracion(nave_t *nave, double a, double rad);
 
-void nave_spawn(nave_t *nave, double dx, double dy);
+
 
 //nave_clonar(dx, dy);
 

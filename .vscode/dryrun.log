@@ -1,5 +1,6 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
-make: Nothing to be done for 'all'.
+gcc -Wall -std=c99 -pedantic -g -c nave.c
+gcc -Wall -std=c99 -pedantic -g main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o -lSDL2 -lm -o Gravitar
 make: Leaving directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
  
