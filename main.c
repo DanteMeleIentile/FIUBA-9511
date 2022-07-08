@@ -128,13 +128,13 @@ int main() {
     //Creación de entidades
 
     nave_t *nave = nave_crear();
-    planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
+    /*planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
     planeta_t estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
     planeta_t planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
     planeta_t planeta2 = planeta_crear(encontrar_figura("PLANETA2", vector_figuras, cant_figuras), 671, 145);
     planeta_t planeta3 = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), 110, 79);
     planeta_t planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
-    planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
+    planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);*/
 
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
@@ -167,10 +167,12 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
+                        f++;
                         // Prendemos el chorro:
                         chorro_prendido = true;
                         break;
                     case SDLK_DOWN:
+                        f--;
                         // Disminuimos el valor de la escala
                         break;
                         
@@ -222,8 +224,9 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
+
+        nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
-        nave_inicializar(nave, nave_leida, nave_mas_chorro_leida);
 
         if(rotacion_antihoraria){
             nave_rotar(nave, + NAVE_ROTACION_PASO);
@@ -234,14 +237,13 @@ int main() {
         } 
 
         if(nivel == 0){
-            if(spawn){
-                nave_setear_posicion(nave, base.x, base.y);
+            /*if(spawn){
+                //acción de spawn
                 spawn = false;
-            }
-
+            }*/
+/*
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
-
             planeta_dibujar(renderer, planeta1);
             planeta_dibujar(renderer, planeta2);
             //if(distancia_a_planeta(planeta2, nave) < 2) nivel = 2;
@@ -251,47 +253,24 @@ int main() {
             //if(distancia_a_planeta(planeta4, nave) < 2) nivel = 4;
             planeta_dibujar(renderer, planeta5);
             //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
-
+*/
         }
-        /*
-        if(nivel == 1){
-
-            return 1;
-        }
-        if(nivel == 2){
-            return 1;
-        }
-        if(nivel == 3){
-            return 1;
-        }
-        if(nivel == 4){
-            return 1;
-        }
-        if(nivel == 5){
-            return 1;
-        }
-        */
 
         if(chorro_prendido){
-            //nave_aceleracion(nave, NAVE_ACELERACION, 1/JUEGO_FPS);
-            nave->vel[X] = 0.5;
-            nave->vel[Y] = 0.5;
-
-            //nave_impulso(nave);
-
-            nave_imprimir(renderer, nave, 1, true);
+            nave_imprimir(renderer, nave, f, true);
         }
-            nave_imprimir(renderer, nave, 1, false);
+            nave_imprimir(renderer, nave, f, false);
 
-        printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
+        //printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
+/*
         if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
         if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta2, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta3, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta4, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta5, nave) < 15) nivel = 0;
-
+*/
 
         // END código del alumno
 
