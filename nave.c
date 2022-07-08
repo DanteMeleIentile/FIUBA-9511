@@ -92,7 +92,11 @@ void nave_avanzar(nave_t *nave, double aceleracion, double dt){
 }
 
 void nave_acercar(nave_t *nave, double aceleracion, double centro_x, double centro_y, double dt){
-    nave_aceleracion(nave, aceleracion, 2*PI, dt);
+    double dot = nave->pos[X] * centro_x + nave->pos[Y] * centro_y;
+    double det = nave->pos[X] * centro_y + nave->pos[Y] * centro_x;
+    double angulo = atan2(abs(det), dot);
+    printf("angulo = %f\n", angulo);
+    nave_aceleracion(nave, aceleracion, angulo, dt);
     nave_velocidad(nave, dt);
 }
 

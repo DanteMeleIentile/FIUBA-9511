@@ -224,24 +224,9 @@ int main() {
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
-
-        if(rotacion_antihoraria){
-            nave_rotar(nave, + NAVE_ROTACION_PASO);
-        } 
-
-        if(rotacion_horaria){
-            nave_rotar(nave, - NAVE_ROTACION_PASO);
-        } 
-
-        if(avanzar){
-            nave_avanzar(nave, NAVE_ACELERACION, 1.f/JUEGO_FPS);
-        }
-
-        nave_acercar(nave, 0, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
-
         if(nivel == 0){
             if(spawn){
-                nave_setear_posicion(nave, base.x, base.y);
+                nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base));
                 spawn = false;
             }
             planeta_dibujar(renderer, base);
@@ -262,6 +247,22 @@ int main() {
             if(nave_get_pos_y(nave) < 0 || nave_get_pos_y(nave) > VENTANA_ALTO){
                 nave_invertir_vel_y(nave);
             }
+
+            nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
+        }
+
+        if(rotacion_antihoraria){
+            nave_rotar(nave, + NAVE_ROTACION_PASO);
+        } 
+
+        if(rotacion_horaria){
+            nave_rotar(nave, - NAVE_ROTACION_PASO);
+        } 
+
+        if(avanzar){
+            nave_avanzar(nave, NAVE_ACELERACION, 1.f/JUEGO_FPS);
+        }else{
+            nave_avanzar(nave, 0, 1.f/JUEGO_FPS);
         }
 
         if(chorro_prendido){
@@ -272,12 +273,12 @@ int main() {
         printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
 
-        if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
-        if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;
-        if(distancia_a_planeta(planeta2, nave) < 15) nivel = 0;
-        if(distancia_a_planeta(planeta3, nave) < 15) nivel = 0;
-        if(distancia_a_planeta(planeta4, nave) < 15) nivel = 0;
-        if(distancia_a_planeta(planeta5, nave) < 15) nivel = 0;
+        if(distancia_a_planeta(estrella, nave) < 20) printf("AUCH\n");
+        if(distancia_a_planeta(planeta1, nave) < 20) printf("PLANETA1\n");
+        if(distancia_a_planeta(planeta2, nave) < 20) printf("PLANETA2\n");
+        if(distancia_a_planeta(planeta3, nave) < 20) printf("PLANETA3\n");
+        if(distancia_a_planeta(planeta4, nave) < 20) printf("PLANETA4\n");
+        if(distancia_a_planeta(planeta5, nave) < 20) printf("PLANETA5\n");
 
 
         // END código del alumno
