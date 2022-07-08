@@ -155,9 +155,6 @@ int main() {
     
     bool spawn = true;
 
-    bool rothor = true;
-    bool rotanti = true;
-
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -170,7 +167,6 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
-                        f++;
                         // Prendemos el chorro:
                         chorro_prendido = true;
                         break;
@@ -230,18 +226,16 @@ int main() {
         nave_inicializar(nave, nave_leida, nave_mas_chorro_leida);
 
         if(rotacion_antihoraria){
-            nave_rotar(nave, NAVE_ROTACION_PASO);
+            nave_rotar(nave, + NAVE_ROTACION_PASO);
         } 
 
         if(rotacion_horaria){
-            nave_rotar(nave, -NAVE_ROTACION_PASO);
+            nave_rotar(nave, - NAVE_ROTACION_PASO);
         } 
-      
-        if(nivel == 0){
 
-            //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
+        if(nivel == 0){
             if(spawn){
-                //nave_setear_posicion(nave, base.x, base.y);
+                nave_setear_posicion(nave, base.x, base.y);
                 spawn = false;
             }
 
@@ -283,13 +277,13 @@ int main() {
             nave->vel[X] = 0.5;
             nave->vel[Y] = 0.5;
 
-            nave_impulso(nave);
+            //nave_impulso(nave);
 
             nave_imprimir(renderer, nave, 1, true);
         }
             nave_imprimir(renderer, nave, 1, false);
 
-        //printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
+        printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
         if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
         if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;

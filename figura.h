@@ -75,16 +75,22 @@ void figura_agregar_en_lista(char *nombre, lista_t *lista);
 //EVALIUAR FUNCION PARA ELIMINAR TODAS LAS ENTIDADES CON "NOMBRE"
 void figura_eliminar_en_lista(char *nombre, lista_t *lista);
 
+
 void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
+
 
 //Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado.
 void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y);
 
+
 //Rota la figura dada un angulo "rad"
 void figura_rotar(figura_t *figura, double rad);
 
+
 //Traslada la figura dada una distancia "dx" en coordenada "x" y una distancia "dy" en coordenada "y"
 void figura_trasladar(figura_t *figura, double dx, double dy);
+
+
 
 //Da la distancia más cercana entre el punto y la figura
 double distancia_punto_a_figura(figura_t *figura, double x, double y);

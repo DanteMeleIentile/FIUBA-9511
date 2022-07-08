@@ -141,20 +141,6 @@ void figura_trasladar(figura_t *figura, double dx, double dy){
     }
 }
 
-figura_t *figura_rototrasladar(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y){
-    figura_t *fig = figura_clonar(figura);
-    if(fig == NULL) return NULL;
-    for(size_t i = 0; i < fig->cant_polilineas; i++){
-        if(escala != 1)
-            escalar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, escala);
-        trasladar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, -posicion_x, -posicion_y);
-        if(rad != 0)
-            rotar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, rad);
-        trasladar(fig->polilineas[i]->puntos, fig->polilineas[i]->n, posicion_x + dx, posicion_y + dy);
-    }
-    return fig;
-}
-
 
 void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y){
 
@@ -163,7 +149,7 @@ void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escal
         for(size_t z = 0; z < figura->polilineas[k]->n - 1; z++){
             SDL_RenderDrawLine(
             renderer,
-            ((figura->polilineas[k]->puntos[z][X]-x) * escala+ x),
+            ((figura->polilineas[k]->puntos[z][X]-x) * escala + x),
             (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y),
             ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x),
             (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO - y)
@@ -185,5 +171,4 @@ double distancia_punto_a_figura(figura_t *figura, double x, double y){
     }
     return distancia;
 }
-
 
