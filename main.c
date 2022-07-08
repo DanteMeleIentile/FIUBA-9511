@@ -14,9 +14,6 @@
 #define X 0
 #define Y 1
 
-#define POS_BASE_X 388
-#define POS_BASE_Y 218
-
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
     for (size_t i = 0; i < n; i++){
@@ -128,13 +125,13 @@ int main() {
     //Creación de entidades
 
     nave_t *nave = nave_crear();
-    /*planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
+    planeta_t base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
     planeta_t estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
     planeta_t planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
     planeta_t planeta2 = planeta_crear(encontrar_figura("PLANETA2", vector_figuras, cant_figuras), 671, 145);
     planeta_t planeta3 = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), 110, 79);
     planeta_t planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
-    planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);*/
+    planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
 
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
@@ -240,14 +237,13 @@ int main() {
             nave_avanzar(nave, NAVE_ACELERACION, 1.f/JUEGO_FPS);
         }
 
-        nave_acercar(nave, G, 300, 0, 1.f/JUEGO_FPS);
+        nave_acercar(nave, 0, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
 
         if(nivel == 0){
-            /*if(spawn){
-                //acción de spawn
+            if(spawn){
+                nave_setear_posicion(nave, base.x, base.y);
                 spawn = false;
-            }*/
-/*
+            }
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
             planeta_dibujar(renderer, planeta1);
@@ -259,7 +255,13 @@ int main() {
             //if(distancia_a_planeta(planeta4, nave) < 2) nivel = 4;
             planeta_dibujar(renderer, planeta5);
             //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
-*/
+
+            if(nave_get_pos_x(nave) < 0 || nave_get_pos_x(nave) > VENTANA_ANCHO){
+                nave_invertir_vel_x(nave);
+            }
+            if(nave_get_pos_y(nave) < 0 || nave_get_pos_y(nave) > VENTANA_ALTO){
+                nave_invertir_vel_y(nave);
+            }
         }
 
         if(chorro_prendido){
@@ -267,16 +269,16 @@ int main() {
         }
             nave_imprimir(renderer, nave, f, false);
 
-        //printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
+        printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
-/*
+
         if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
         if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta2, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta3, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta4, nave) < 15) nivel = 0;
         if(distancia_a_planeta(planeta5, nave) < 15) nivel = 0;
-*/
+
 
         // END código del alumno
 
