@@ -28,9 +28,16 @@ void nave_act_figura(nave_t *nave, figura_t *figura, figura_t *figura2);
 void nave_rotar(nave_t *nave, double angulo);
 
 /*
-** Avanza nave según la tasa de avance en dirección a la punta de la nave. Actualiza los valores de la nave. 
+** Avanza en dirección a la punta de la nave con acc "aceleracion" en un tiempo dt. Actualiza los valores de velocidad de la nave. 
 */
-void nave_avanzar(nave_t *nave, double tasa_avance);
+void nave_avanzar(nave_t *nave, double aceleracion, double dt);
+
+
+/*
+** Acerca la nave hacia el centro con una aceleración "aceleracion" en un tiempo dt. Actualiza los valores de velocidad de la nave. 
+*/
+void nave_acercar(nave_t *nave, double aceleracion, double centro_x, double centro_y, double dt);
+
 
 
 

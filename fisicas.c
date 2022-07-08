@@ -10,8 +10,12 @@ void posicionar(figura_t *figura, bool posicionado, float x, float y){
     }
 }
 
-double computar_velocidad(double *v, double *rad, double a, double dt){ 
-    return *v + a * dt;
+double computar_velocidad(double vi, double a, double dt){
+    return (vi + a * dt);
+}
+
+double computar_posicion(double pi, double vi, double dt){
+    return (pi + vi * dt);
 }
 /*
 //RAD ES EL ANGULO DE LA VELOCIDAD APLICADA EN EL CUERPO

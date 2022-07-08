@@ -237,9 +237,10 @@ int main() {
         } 
 
         if(avanzar){
-            nave_avanzar(nave, 10);
-        } 
+            nave_avanzar(nave, NAVE_ACELERACION, 1.f/JUEGO_FPS);
+        }
 
+        nave_acercar(nave, G, 300, 0, 1.f/JUEGO_FPS);
 
         if(nivel == 0){
             /*if(spawn){
