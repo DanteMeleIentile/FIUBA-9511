@@ -22,10 +22,17 @@ nave_t *nave_crear(void){
 }
 
 void nave_rotar(nave_t *nave, double angulo){
+    double pos_x = nave->pos[X];
+    double pos_y = nave->pos[Y];
+
+    nave_trasladar(nave, -pos_x, -pos_y);
+
     figura_rotar(nave->nave_fig, angulo);
     figura_rotar(nave->nave_fig_mas_chorro, angulo);
-
+    
     nave->angulo_actual += angulo;
+
+    nave_trasladar(nave, pos_x, pos_y);
 
     while(nave->angulo_actual > 2 * PI)
         nave->angulo_actual = nave->angulo_actual - (2 * PI);
@@ -39,6 +46,30 @@ void nave_trasladar(nave_t *nave, double dx, double dy){
     figura_trasladar(nave->nave_fig_mas_chorro, dx, dy);
     nave->pos[X] += dx;
     nave->pos[Y] += dy;
+}
+
+void nave_setear_angulo(nave_t *nave, double angulo){
+    double pos_x = nave->pos[X];
+    double pos_y = nave->pos[Y];
+
+    nave_trasladar(nave, -pos_x, -pos_y);
+
+    printf("X = %f , Y = %f\n", nave->pos[X], nave->pos[Y]);
+
+    figura_rotar(nave->nave_fig, angulo);
+    figura_rotar(nave->nave_fig_mas_chorro, angulo);
+    
+    nave->angulo_actual = angulo;
+
+    nave_trasladar(nave, pos_x, pos_y);
+
+    printf("X = %f , Y = %f\n", nave->pos[X], nave->pos[Y]);
+
+    while(nave->angulo_actual > 2 * PI)
+        nave->angulo_actual = nave->angulo_actual - (2 * PI);
+
+    while(nave->angulo_actual < 0)
+        nave->angulo_actual = nave->angulo_actual + (2 * PI);
 }
 
 void nave_setear_posicion(nave_t *nave, double dx, double dy){
@@ -82,8 +113,11 @@ static void nave_setear_figura(nave_t *nave, figura_t *fig_nave, figura_t *fig_n
 
 void nave_inicializar(nave_t *nave, figura_t *figura_nave, figura_t *fig_nave_mas_chorro){
     nave_setear_figura(nave, figura_nave, fig_nave_mas_chorro);
-    figura_rotar(nave->nave_fig, nave->angulo_actual);
-    figura_rotar(nave->nave_fig_mas_chorro, nave->angulo_actual);
+
+    nave_setear_angulo(nave, nave->angulo_actual);
+
+    //figura_rotar(nave->nave_fig, nave->angulo_actual);
+    //figura_rotar(nave->nave_fig_mas_chorro, nave->angulo_actual);
 
     nave_setear_posicion(nave, nave->pos[X], nave->pos[Y]);
 

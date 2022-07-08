@@ -155,6 +155,9 @@ int main() {
     
     bool spawn = true;
 
+    bool rothor = true;
+    bool rotanti = true;
+
     // END código del alumno
 
     unsigned int ticks = SDL_GetTicks();
@@ -238,7 +241,8 @@ int main() {
 
             //NECESITO SABER LAS COORDENADAS DE LOS PLANETAS PARA CALCULAR COLISIONES
             if(spawn){
-                nave_setear_posicion(nave, base.x, base.y);
+                //nave_setear_posicion(nave, base.x, base.y);
+                spawn = false;
             }
 
             planeta_dibujar(renderer, base);
@@ -253,8 +257,6 @@ int main() {
             //if(distancia_a_planeta(planeta4, nave) < 2) nivel = 4;
             planeta_dibujar(renderer, planeta5);
             //if(distancia_a_planeta(planeta5, nave) < 2) nivel = 5;
-
-            spawn = false;
 
         }
         /*
@@ -278,8 +280,8 @@ int main() {
 
         if(chorro_prendido){
             //nave_aceleracion(nave, NAVE_ACELERACION, 1/JUEGO_FPS);
-            nave->vel[X] = 0.1;
-            nave->vel[Y] = 0.1;
+            nave->vel[X] = 0.5;
+            nave->vel[Y] = 0.5;
 
             nave_impulso(nave);
 
@@ -287,7 +289,7 @@ int main() {
         }
             nave_imprimir(renderer, nave, 1, false);
 
-        printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
+        //printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
         if(distancia_a_planeta(estrella, nave) < 15) printf("AUCH\n");
         if(distancia_a_planeta(planeta1, nave) < 15) nivel = 0;
