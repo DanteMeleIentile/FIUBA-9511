@@ -10,11 +10,17 @@
 typedef struct{
     figura_t *fig;
     figura_t *fig_chorro;
-    double angulo;
-    double vel[2];
     double pos[2];
+    double vel[2];
+    double angulo;
+
     //int cant_combustible;
 } nave_t;
+
+/*  
+** Crea una nave con sus parámetros en 0 en memoria nueva. Si falla, devuelve null
+*/
+nave_t *nave_crear(void);
 
 /*
 ** Retorna la coordenada "x" de la nave.
@@ -62,11 +68,6 @@ void nave_invertir_vel_x(nave_t *nave);
 ** Invierte el parámetro de velocidad en "y" de la nave.
 */
 void nave_invertir_vel_y(nave_t *nave);
-
-/*  
-** Crea una nave con sus parámetros en 0 en memoria nueva. Si falla, devuelve null
-*/
-nave_t *nave_crear(void);
 
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro);
 

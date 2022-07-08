@@ -8,11 +8,14 @@
 #include "fisicas.h"
 #include "config.h"
 
+#include "disparo.h"
 #include "nave.h"
 #include "planeta.h"
 
 #define X 0
 #define Y 1
+
+#define VEL_DISPARO 10
 
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
@@ -134,15 +137,20 @@ int main() {
     planeta_t planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
     planeta_t planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
 
+    //Creamos referencias a las figuras del vector_figuras para no buscarlas nuevamente por cada dt
+    
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
 
-    lista_t *lista_disparos = lista_crear();
+    figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant);
 
-    
+    //lista_t *lista_disparos = lista_crear();
+
+
 //----------------------------------------------------------------------------------------------------------------------
     //Boleeanos de estado
     bool chorro_prendido = false;
+    bool disparo = false;
     
     //Boleeanos de movimiento
     bool rotacion_horaria = false;
@@ -178,11 +186,12 @@ int main() {
                     case SDLK_RIGHT:
                         rotacion_horaria = true;
                         break;
-
                     case SDLK_LEFT:
                         rotacion_antihoraria = true;
                         break;
-
+                    case SDLK_SPACE:
+                        disparo = true;
+                        break;
                     case SDLK_w:
                         f++;
                         mov_y += 20;
@@ -213,6 +222,9 @@ int main() {
                         break;
                     case SDLK_LEFT:
                         rotacion_antihoraria = false;
+                        break;
+                    case SDLK_SPACE:
+                        disparo = false;
                         break;
                 }
             }
@@ -270,7 +282,16 @@ int main() {
         }
             nave_imprimir(renderer, nave, f, false);
 
-        printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
+        if(disparo){
+            disparo_t *d = disparo_crear(disparo_leido, nave->pos, nave->vel, nave->angulo, 1.f/JUEGO_FPS);
+            disparo_imprimir(renderer, d, 1);
+            if(disparo_get_tiempo(d) > 1000){
+                disparo_destruir(d);
+            }
+        }
+            
+
+        //printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
 
 
         if(distancia_a_planeta(estrella, nave) < 20) printf("AUCH\n");
