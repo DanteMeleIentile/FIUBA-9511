@@ -141,6 +141,10 @@ void figura_trasladar(figura_t *figura, double dx, double dy){
     }
 }
 
+void figura_rototrasladar(figura_t *figura, double dx, double dy, double angulo){
+    figura_rotar(figura, angulo);
+    figura_trasladar(figura, dx, dy);
+}
 
 void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y){
 

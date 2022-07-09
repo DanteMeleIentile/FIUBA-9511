@@ -54,11 +54,8 @@ void nave_act_figura(nave_t *nave, figura_t *figura, figura_t *figura2){
     nave->fig = figura_clonar(figura);
     nave->fig_chorro = figura_clonar(figura2);
 
-    figura_rotar(nave->fig, nave->angulo);
-    figura_rotar(nave->fig_chorro, nave->angulo);
-
-    figura_trasladar(nave->fig, nave->pos[X], nave->pos[Y]);
-    figura_trasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y]);
+    figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
+    figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
 }
 
 void nave_rotar(nave_t *nave, double angulo){

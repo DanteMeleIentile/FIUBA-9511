@@ -5,10 +5,10 @@ SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)
 
-$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o
-	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o $(SDLFLAGS) -o $(PROGRAM)
+$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o torreta.o
+	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o torreta.o $(SDLFLAGS) -o $(PROGRAM)
 
-main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h
+main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h torreta.h
 	$(CC) $(CFLAGS) -c main.c
 	
 color.o: color.c color.h 
@@ -38,6 +38,9 @@ nave.o: nave.c nave.h figura.h fisicas.h
 disparo.o: disparo.c disparo.h figura.h fisicas.h
 	$(CC) $(CFLAGS) -c disparo.c
 
+torreta.o: torreta.c torreta.h figura.h
+	$(CC) $(CFLAGS) -c torreta.c
+
 
 clean:
 	rm -vf *.o main
@@ -45,5 +48,8 @@ clean:
 exe:
 	./$(PROGRAM)
 
+valgrind-log-file:
+	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=error.log --suppressions=suppressions_20221_tp1.supp -s ./$(PROGRAM)
+
 valgrind:
-	valgrind --suppressions=suppressions_20221_tp1.supp --track-origins=yes ./$(PROGRAM)
+	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=suppressions_20221_tp1.supp ./$(PROGRAM)
