@@ -1,33 +1,41 @@
+#include <stdbool.h>
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+
+
 #include "nivel.h"
+#include "config.h"
 
-#define TIEMPO_BALA 2
 
-nivel_t *cargar_nivel(size_t cant_torretas, figura_t *torreta, size_t cant_balas, figura_t *bala){
-    //METER TODO EN LAS LISTAS DE TORRETAS Y DE BALAS
-    return NULL;
+
+struct nivel {
+    figura_t *figura;
+    bool infinito;
+    size_t cant_torretas;
+    size_t cant_combustible;
+};
+
+
+
+
+nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible){
+    nivel_t *nivel = malloc(sizeof(nivel_t));
+    if(nivel == NULL) return NULL;
+
+    nivel->figura = figura_clonar(figura);
+    if(nivel->figura == NULL) return NULL;
+
+    nivel->infinito = figura->infinito;
+
+    nivel->cant_torretas = cant_torretas;
+
+    nivel->cant_combustible = cant_combustible;
+
+    return nivel;
 }
 
-bool nivel(figura_t *torreta, figura_t *nivel, size_t nivel_actual){
-/*
-    if(nivel == 1){
-        
-    }
-
-    if(nivel == 2){
-        
-    }
-
-    if(nivel == 3){
-        
-    }
-
-    if(nivel == 4){
-        
-    }
-
-    if(nivel == 5){
-        
-    }
-*/
-    return false;
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala){
+    figura_imprimir(renderer, nivel->figura, escala, 0, 0);
 }
+
+

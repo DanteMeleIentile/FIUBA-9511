@@ -7,10 +7,10 @@
 #include "lectura.h"
 #include "fisicas.h"
 #include "config.h"
-
 #include "disparo.h"
 #include "nave.h"
 #include "planeta.h"
+#include "nivel.h"
 
 #define X 0
 #define Y 1
@@ -145,7 +145,13 @@ int main() {
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
 
-    figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant);
+    figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant_figuras);
+
+    figura_t *nivel1_leido = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
+
+    figura_t *nivel3_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+
+
 
 
     //Creación de listase e iteradores para elementos repetidos.
@@ -171,6 +177,7 @@ int main() {
     bool spawn = true;
 
     // END código del alumno
+        float a = 1;
 
     unsigned int ticks = SDL_GetTicks();
     while(1) {
@@ -182,11 +189,15 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
+                        a = a + 0.3;
+
                         avanzar = true;
                         chorro_prendido = true;
                         break;
 
                     case SDLK_DOWN:
+                        a = a -  0.3;
+
                         break;
                         
 
@@ -247,6 +258,9 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
+        
+        nivel_t *nivel_3 = nivel_crear(nivel3_leido, 1, 1);
+        nivel_imprimir(renderer, nivel_3, a);
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
@@ -306,7 +320,7 @@ int main() {
             listo_para_disparar = true;
         }
 
-        //creamos iterar para lista disparos
+        //Creamos iterar para lista disparos
         lista_iter_t *iter_disparos = lista_iter_crear(lista_disparos);        
 
 

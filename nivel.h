@@ -1,31 +1,31 @@
 #ifndef NIVEL_H
 #define NIVEL_H
 
+#include <stddef.h>
+#include <SDL2/SDL.h>
+
+
 #include "figura.h"
 
-//VER ENCAPSULAMIENTO
 
-typedef struct {
-    figura_t *torreta;
-    size_t id;
-    bool activo;
-} torreta_t;
+struct nivel;
+typedef struct nivel nivel_t;
 
-typedef struct {
-    figura_t *bala;
-    float velocidad;
-    float tiempo;
-} bala_t;
+/*
+** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
+*/
+nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible);
 
-typedef struct {
-    torreta_t *torretas;
-    bala_t *balas;
-} nivel_t;
 
-nivel_t *cargar_nivel(size_t cant_torretas, figura_t *torreta, size_t cant_balas, figura_t *bala);
+/*
+** Imprime el nivel.
+*/
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);
 
-bool nivel(figura_t *torreta, figura_t *nivel, size_t nivel_actual);
 
+// Crear nivel
+// Posiciona figura del nivel
+// Posiciona figura del nivel
 
 
 #endif
