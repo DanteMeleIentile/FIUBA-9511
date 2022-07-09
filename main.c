@@ -15,8 +15,10 @@
 #define X 0
 #define Y 1
 
-#define TIEMPO_MAX_DISPAROS 1
-#define VEL_DISPARO 100
+#define TIEMPO_MAX_DISPAROS 2
+#define VEL_DISPARO 150
+
+#define COOLDOWN 0.5
 
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
@@ -154,6 +156,8 @@ int main() {
     //Boleeanos de estado
     bool chorro_prendido = false;
     bool disparo = false;
+    double tiempo_para_disparar = 0;
+    bool listo_para_disparar = true;
     
     //Boleeanos de movimiento
     bool rotacion_horaria = false;
@@ -288,13 +292,18 @@ int main() {
         }
             nave_imprimir(renderer, nave, f, false);
         
-
-        if(disparo){
+        
+        if(disparo && listo_para_disparar){
             double a = (VEL_DISPARO * cos(nave_get_angulo(nave)));
             double b = VEL_DISPARO * sin(nave_get_angulo(nave));
-
             lista_insertar_ultimo(lista_disparos, disparo_crear(nave_get_pos_x(nave), nave_get_pos_y(nave), a, b, nave_get_angulo(nave)));
-            
+            listo_para_disparar = false;
+        }
+        tiempo_para_disparar += 1.f/JUEGO_FPS;
+
+        if(tiempo_para_disparar >= COOLDOWN){
+            tiempo_para_disparar = 0;
+            listo_para_disparar = true;
         }
 
         //creamos iterar para lista disparos

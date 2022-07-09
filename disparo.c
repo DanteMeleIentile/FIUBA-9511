@@ -18,6 +18,8 @@ disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y,
 
     disparo->vel[X] = vel_x;
     disparo->vel[Y] = vel_y;
+
+    disparo->angulo = angulo;
     
     disparo->tiempo = 0;
     
@@ -32,6 +34,7 @@ void disparo_avanzar(disparo_t *disparo, double dt){
 
 bool disparo_act_figura(disparo_t *disparo, figura_t *figura){
     disparo->fig = figura_clonar(figura);
+
     if(disparo->fig == NULL){
         free(disparo);
         return false;
