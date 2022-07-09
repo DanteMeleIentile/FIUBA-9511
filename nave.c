@@ -41,6 +41,10 @@ double nave_get_pos_y(nave_t *nave){
     return nave->pos[Y];
 }
 
+double nave_get_angulo(nave_t *nave){
+    return nave->angulo;
+}
+
 void nave_setear_posicion(nave_t *nave, double x, double y){
     nave->pos[X] = x;
     nave->pos[Y] = y;

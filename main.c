@@ -15,7 +15,8 @@
 #define X 0
 #define Y 1
 
-#define VEL_DISPARO 10
+#define TIEMPO_MAX_DISPAROS 1
+#define VEL_DISPARO 100
 
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
@@ -144,7 +145,9 @@ int main() {
 
     figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant);
 
-    //lista_t *lista_disparos = lista_crear();
+
+    //Creación de listase e iteradores para elementos repetidos.
+    lista_t *lista_disparos = lista_crear();
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -159,8 +162,6 @@ int main() {
 
     size_t nivel = 0;
 
-    double mov_x = 0;
-    double mov_y = 0;
     double f = 1;
     
     bool spawn = true;
@@ -180,32 +181,37 @@ int main() {
                         avanzar = true;
                         chorro_prendido = true;
                         break;
+
                     case SDLK_DOWN:
                         break;
                         
+
                     case SDLK_RIGHT:
                         rotacion_horaria = true;
                         break;
+
                     case SDLK_LEFT:
                         rotacion_antihoraria = true;
                         break;
+
                     case SDLK_SPACE:
                         disparo = true;
                         break;
+
                     case SDLK_w:
                         f++;
-                        mov_y += 20;
                         break;
+
                     case SDLK_s:
                         f--;
-                        mov_y -= 20;
                         break;
+
                     case SDLK_a:
-                        mov_x -= 20;
                         break;
+                    
                     case SDLK_d:
-                        mov_x += 20;
                         break;
+                    
                     case SDLK_ESCAPE:
                         return 0;
                 }
@@ -281,17 +287,43 @@ int main() {
             nave_imprimir(renderer, nave, f, true);
         }
             nave_imprimir(renderer, nave, f, false);
+        
 
         if(disparo){
-            disparo_t *d = disparo_crear(disparo_leido, nave->pos, nave->vel, nave->angulo, 1.f/JUEGO_FPS);
-            disparo_imprimir(renderer, d, 1);
-            if(disparo_get_tiempo(d) > 1000){
-                disparo_destruir(d);
-            }
-        }
-            
+            double a = (VEL_DISPARO * cos(nave_get_angulo(nave)));
+            double b = VEL_DISPARO * sin(nave_get_angulo(nave));
 
-        //printf("X = %f , Y = %f\n, VEL_X = %f , VEL_Y = %f \n", nave->pos[X], nave->pos[Y], nave->vel[X], nave->vel[Y]);
+            lista_insertar_ultimo(lista_disparos, disparo_crear(nave_get_pos_x(nave), nave_get_pos_y(nave), a, b, nave_get_angulo(nave)));
+            
+        }
+
+        //creamos iterar para lista disparos
+        lista_iter_t *iter_disparos = lista_iter_crear(lista_disparos);        
+
+
+        for(size_t i = 0; i < lista_largo(lista_disparos); i++){
+            disparo_t *disp_act = lista_iter_ver_actual(iter_disparos);
+            disparo_aumentar_tiempo(disp_act, 1.f/JUEGO_FPS);
+            
+            if(disparo_get_tiempo(disp_act) > TIEMPO_MAX_DISPAROS){
+                disparo_destruir(disp_act);
+                lista_iter_borrar(iter_disparos);
+                continue;
+            }
+
+            if(!disparo_act_figura(disp_act, disparo_leido)){
+                fprintf(stderr, "Error en memoria\n");
+                return 1;
+            }
+            disparo_avanzar(disp_act, 1.f/JUEGO_FPS);
+
+            disparo_imprimir(renderer, disp_act, f);
+
+            lista_iter_avanzar(iter_disparos);
+        }
+
+        //eliminamos iterar para lista disparos
+        lista_iter_destruir(iter_disparos);
 
 
         if(distancia_a_planeta(estrella, nave) < 20) printf("AUCH\n");
@@ -316,6 +348,7 @@ int main() {
     }
 
     // BEGIN código del alumno
+
 
     // No tengo nada que destruir.
     // END código del alumno

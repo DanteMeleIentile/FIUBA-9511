@@ -33,6 +33,12 @@ double nave_get_pos_x(nave_t *nave);
 double nave_get_pos_y(nave_t *nave);
 
 /*
+** Retorna el angulo de la nave.
+*/
+double nave_get_angulo(nave_t *nave);
+
+
+/*
 ** Setea los parametros de posicion de la nave a los pedidos
 */
 void nave_setear_posicion(nave_t *nave, double x, double y);

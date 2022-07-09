@@ -1,6 +1,5 @@
 make --dry-run --keep-going --print-directory
-make: Entering directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
-gcc -Wall -std=c99 -pedantic -g -c disparo.c
+make: Entering directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
 gcc -Wall -std=c99 -pedantic -g main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o -lSDL2 -lm -o Gravitar
-make: Leaving directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
+make: Leaving directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
  
