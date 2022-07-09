@@ -149,7 +149,7 @@ int main() {
 
     figura_t *nivel1_leido = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
 
-    figura_t *nivel3_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+    figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
 
 
 
@@ -259,8 +259,20 @@ int main() {
 
         // BEGIN código del alumno
         
-        nivel_t *nivel_3 = nivel_crear(nivel3_leido, 1, 1);
-        nivel_imprimir(renderer, nivel_3, a);
+        nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
+        
+        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
+        if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
+            escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
+        float centro = (988 + 150) / 2; 
+
+        printf("Escala planeta = %f\n", escala_no_infinito);
+        printf("Centro planeta = %f\n", centro);
+
+
+        figura_imprimir(renderer, nivel4_leido, escala_no_infinito, (-(centro/2-75)/escala_no_infinito)/2, 0);
+
+
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
