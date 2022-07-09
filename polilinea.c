@@ -75,10 +75,10 @@ double polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor){
         if(i == 0){
             aux = polilinea->puntos[i][Y];
         }
-        if((aux < polilinea->puntos[i][Y]) && !mayor){
+        if((aux < polilinea->puntos[i][Y]) && mayor){
             aux = polilinea->puntos[i][Y];
         }
-        if((aux > polilinea->puntos[i][Y]) && mayor){
+        if((aux > polilinea->puntos[i][Y]) && !mayor){
             aux = polilinea->puntos[i][Y];
         }
         

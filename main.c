@@ -269,17 +269,31 @@ int main() {
         float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
         if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
             escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
-        float centro = (989 + 150) / 2; 
+        float centro = (989 + 150); 
 
-        printf("Escala planeta = %f\n", escala_no_infinito);
-        printf("Centro planeta = %f\n", centro);
-        
         printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
         printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
 
-        //figura_imprimir(renderer, nivel4_leido, escala_no_infinito, (-(centro/2-75)/escala_no_infinito)/2, 0);
+        printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
+        printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
 
-        figura_imprimir(renderer, nivel4_leido, escala_no_infinito, -150, 0);
+        printf("Posición en X = %f; Posición en Y = %f\n", nivel_get_pos_x(nivel_4), nivel_get_pos_y(nivel_4));
+
+        nivel_act_figura(nivel_4, nivel4_leido);
+        
+        printf("Posición en X = %f; Posición en Y = %f\n", nivel_get_pos_x(nivel_4), nivel_get_pos_y(nivel_4));
+
+
+        nivel_trasladar(nivel_4, 989/2 + 300/2, 596/2 + 300/2);
+        
+        //Creamos entidad nivel
+        //centramos entidad nivel (con margen incluido)
+        //trasladamos la entidad nivel
+        //trasladamos la entidad nivel
+
+        nivel_imprimir(renderer, nivel_4, 1);
+
+
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
