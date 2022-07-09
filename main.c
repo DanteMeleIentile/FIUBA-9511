@@ -189,15 +189,11 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
-                        a = a + 0.3;
-
                         avanzar = true;
                         chorro_prendido = true;
                         break;
 
                     case SDLK_DOWN:
-                        a = a -  0.3;
-
                         break;
                         
 
@@ -214,10 +210,12 @@ int main() {
                         break;
 
                     case SDLK_w:
+                        a = a + 0.1;
                         f++;
                         break;
 
                     case SDLK_s:
+                        a = a - 0.1;
                         f--;
                         break;
 
@@ -266,10 +264,10 @@ int main() {
             escala = VENTANA_ANCHO * 1.0 / (planeta_ancho + planeta_x_min);
         centro = (planeta_ancho + planeta_x_min) / 2;*/
 
-        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
+        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596 + 150;
         if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
             escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
-        float centro = (989 + 150); 
+        float centro = (989 + 150)/2; 
 
         printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
         printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
@@ -279,20 +277,20 @@ int main() {
 
         printf("Posición en X = %f; Posición en Y = %f\n", nivel_get_pos_x(nivel_4), nivel_get_pos_y(nivel_4));
 
-        nivel_act_figura(nivel_4, nivel4_leido);
+        //nivel_act_figura(nivel_4, nivel4_leido);
         
         printf("Posición en X = %f; Posición en Y = %f\n", nivel_get_pos_x(nivel_4), nivel_get_pos_y(nivel_4));
 
 
-        nivel_trasladar(nivel_4, 989/2 + 300/2, 596/2 + 300/2);
+        //nivel_trasladar(nivel_4, 989/2 + 300/2, 596/2 + 300/2);
         
         //Creamos entidad nivel
         //centramos entidad nivel (con margen incluido)
         //trasladamos la entidad nivel
         //trasladamos la entidad nivel
+        printf("ESCALA = %f\n", a);
 
-        nivel_imprimir(renderer, nivel_4, 1);
-
+        nivel_imprimir(renderer, nivel_4, a);
 
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
