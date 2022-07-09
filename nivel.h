@@ -16,6 +16,10 @@ typedef struct nivel nivel_t;
 */
 nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible);
 
+/*
+** Devuelve la coordenada del primer punto de la figura en "x"
+*/
+double nivel_x_min(nivel_t *nivel);
 
 /*
 ** Imprime el nivel.

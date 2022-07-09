@@ -260,19 +260,26 @@ int main() {
         // BEGIN código del alumno
         
         nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
-        
+/*        
+        escala = VENTANA_ALTO * 1.0 / planeta_alto;
+        if(VENTANA_ANCHO * 1.0 / (planeta_ancho + planeta_x_min) < escala)
+            escala = VENTANA_ANCHO * 1.0 / (planeta_ancho + planeta_x_min);
+        centro = (planeta_ancho + planeta_x_min) / 2;*/
+
         float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
         if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
             escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
-        float centro = (988 + 150) / 2; 
+        float centro = (989 + 150) / 2; 
 
         printf("Escala planeta = %f\n", escala_no_infinito);
         printf("Centro planeta = %f\n", centro);
+        
+        printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
+        printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
 
+        //figura_imprimir(renderer, nivel4_leido, escala_no_infinito, (-(centro/2-75)/escala_no_infinito)/2, 0);
 
-        figura_imprimir(renderer, nivel4_leido, escala_no_infinito, (-(centro/2-75)/escala_no_infinito)/2, 0);
-
-
+        figura_imprimir(renderer, nivel4_leido, escala_no_infinito, -150, 0);
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
@@ -297,6 +304,13 @@ int main() {
             }
 
             nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
+
+            if(distancia_a_planeta(estrella, nave) < 20) printf("AUCH\n");
+            if(distancia_a_planeta(planeta1, nave) < 20) printf("PLANETA1\n");
+            if(distancia_a_planeta(planeta2, nave) < 20) printf("PLANETA2\n");
+            if(distancia_a_planeta(planeta3, nave) < 20) printf("PLANETA3\n");
+            if(distancia_a_planeta(planeta4, nave) < 20) printf("PLANETA4\n");
+            if(distancia_a_planeta(planeta5, nave) < 20) printf("PLANETA5\n");
         }
 
         if(rotacion_antihoraria){
@@ -359,14 +373,6 @@ int main() {
 
         //eliminamos iterar para lista disparos
         lista_iter_destruir(iter_disparos);
-
-
-        if(distancia_a_planeta(estrella, nave) < 20) printf("AUCH\n");
-        if(distancia_a_planeta(planeta1, nave) < 20) printf("PLANETA1\n");
-        if(distancia_a_planeta(planeta2, nave) < 20) printf("PLANETA2\n");
-        if(distancia_a_planeta(planeta3, nave) < 20) printf("PLANETA3\n");
-        if(distancia_a_planeta(planeta4, nave) < 20) printf("PLANETA4\n");
-        if(distancia_a_planeta(planeta5, nave) < 20) printf("PLANETA5\n");
 
 
         // END código del alumno

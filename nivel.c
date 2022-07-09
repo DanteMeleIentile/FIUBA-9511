@@ -15,9 +15,6 @@ struct nivel {
     size_t cant_combustible;
 };
 
-
-
-
 nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible){
     nivel_t *nivel = malloc(sizeof(nivel_t));
     if(nivel == NULL) return NULL;

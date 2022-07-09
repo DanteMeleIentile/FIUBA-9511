@@ -25,7 +25,7 @@ typedef struct {
 polilinea_t *polilinea_crear_vacia(size_t n);
 
 /*
-Crea una nueva polilínea según los n puntos recibidos. Devuelve la polilínea creada en memoria nueva o NULL en caso de falla.
+**Crea una nueva polilínea según los n puntos recibidos. Devuelve la polilínea creada en memoria nueva o NULL en caso de falla.
 */
 polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c);
 
@@ -35,13 +35,23 @@ polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c);
 void polilinea_destruir(polilinea_t *polilinea);
 
 /*
+** Devuelve el extremo en "x" de la polilinea
+** Si "mayor" es true, devuelve el extremo mayor, sino el menor
+*/
+double polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor);
+
+/*
+** Devuelve el extremo en "y" de la polilinea
+** Si "mayor" es true, devuelve el extremo mayor, sino el menor
+*/
+double polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor);
+/*
 ** De ser posible, asigna un punto de coordenadas "x" e "y" en la posición "pos" de la polilinea "polilinea". Caso contrario devuelve false;
 */
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y);
 
-
 /*
-Devuelve una copia de una polilinea dada en memoria nueva.
+**Devuelve una copia de una polilinea dada en memoria nueva.
 */
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
 
@@ -72,7 +82,7 @@ void escalar(float polilinea[][2], size_t n, float escala);
 
 double calcular_distancia(float px, float py, double qx, double qy);
 
-double calcular_parametro(double ax, double ay, double bx, double by, float px, float py);
+//double calcular_parametro(double ax, double ay, double bx, double by, float px, float py);
 
 double distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py);
 
