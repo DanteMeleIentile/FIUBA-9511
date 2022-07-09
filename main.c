@@ -274,13 +274,12 @@ int main() {
             if(spawn){
                 nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base));
 
-                torreta_setear_en_lugar(torreta1, 200, 200, PI/5);
+                torreta_setear_en_lugar(torreta1, 200, 200, 0);
                 torreta_setear_en_lugar(torreta2, 400, 400, 0);
                 spawn = false;
             }
 
-            if(torreta_get_cooldown(torreta1) <= 0){
-                torreta_apuntar(torreta1, nave_get_pos_x(nave), nave_get_pos_y(nave));
+            if(torreta_get_cooldown(torreta1) <= 0 && torreta_apuntar(torreta1, nave_get_pos_x(nave), nave_get_pos_y(nave))){
                 double a = (VEL_DISPARO * cos(torreta_get_angulo_apuntado(torreta1)));
                 double b = (VEL_DISPARO * sin(torreta_get_angulo_apuntado(torreta1)));
                 lista_insertar_ultimo(lista_disparos, disparo_crear(torreta_get_pos_x(torreta1), torreta_get_pos_y(torreta1), a, b, torreta_get_angulo_apuntado(torreta1), true));
@@ -364,12 +363,12 @@ int main() {
             }
             disparo_avanzar(disp_act, DT);
             
-            if(disparo_can_kill(disp_act) && (distancia_a_disparo(disp_act, nave_get_pos_x(nave), nave_get_pos_y(nave) < 5))){
+/*             if(disparo_can_kill(disp_act) && (distancia_a_disparo(disp_act, nave_get_pos_x(nave), nave_get_pos_y(nave) < 5))){
                 vidas++;
                 printf("VIDAS RESTANTES: %d\n", vidas);
 
             }else{
-            }
+            } */
 
             disparo_imprimir(renderer, disp_act, f);
             lista_iter_avanzar(iter_disparos);

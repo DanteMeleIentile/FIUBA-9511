@@ -48,12 +48,14 @@ void torreta_setear_en_lugar(torreta_t *torreta, double pos_x, double pos_y, dou
 
 /*
 ** Setea el angulo de apuntado de la torreta hacia las cordenadas centro_x y centro_y
+** Devuelve bool si pudo apuntar, caso contrario devuelve false
 */
-void torreta_apuntar(torreta_t *torreta, double centro_x, double centro_y);
+bool torreta_apuntar(torreta_t *torreta, double x_objetivo, double y_objetivo);
 
 /*
 ** Actualiza las 2 figuras de la torreta según los parametros de la misma (posición y ángulo).
 ** PRE: La torreta fue creada.
+** El angulo de apuntado son +90 y -90 grados
 */
 bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo);
 

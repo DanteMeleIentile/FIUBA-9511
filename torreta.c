@@ -4,6 +4,7 @@
 
 #include "torreta.h"
 #include "figura.h"
+#include "fisicas.h"
 #include "config.h"
 
 #define X 0
@@ -55,16 +56,15 @@ void torreta_set_cooldown(torreta_t *torreta, double t){
     torreta->cooldown = t;
 }
 
-void torreta_apuntar(torreta_t *torreta, double centro_x, double centro_y){
-    double angulo = 0;
-    if(torreta->pos[X] > centro_x && torreta->pos[Y] < centro_y){
-        angulo = atan((-torreta->pos[Y] - centro_y)/(torreta->pos[X] - centro_x)) + PI;
-    } else if(torreta->pos[X] > centro_x && torreta->pos[Y] > centro_y){
-        angulo = atan((torreta->pos[Y] - centro_y)/(torreta->pos[X] - centro_x)) + PI;
-    } else {
-        angulo = atan((torreta->pos[Y] - centro_y)/(torreta->pos[X] - centro_x));
+bool torreta_apuntar(torreta_t *torreta, double x_objetivo, double y_objetivo){
+    double angulo = computar_angulo(torreta->pos[X], torreta->pos[Y], x_objetivo, y_objetivo);
+
+    if(angulo > (torreta->angulo + PI) || angulo < (torreta->angulo - PI/2)){
+        return false;
     }
+    
     torreta->angulo_apuntado = angulo;
+    return true;
 }
 
 bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo){
