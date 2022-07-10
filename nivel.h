@@ -29,6 +29,15 @@ float nivel_get_extremo_x(nivel_t *nivel, bool mayor);
 */
 float nivel_get_extremo_y(nivel_t *nivel, bool mayor);
 
+void nivel_trasladar(nivel_t *nivel, float dx, float dy);
+
+
+/*
+** Devuelve un nivel clonado en memoria nueva. Caso contrario, devuelve NULL
+*/
+nivel_t *nivel_clonar(const nivel_t *nivel);
+
+
 
 /*
 ** Dado un nivel y una escala, imprime un nivel escalado según pos_x y pos_y

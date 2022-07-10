@@ -47,3 +47,11 @@ float nivel_get_extremo_y(nivel_t *nivel, bool mayor){
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y){
     figura_imprimir(renderer, nivel->fig, escala, pos_x, pos_y);
 }
+
+void nivel_trasladar(nivel_t *nivel, float dx, float dy){
+    figura_trasladar(nivel->fig, dx, dy);
+}
+
+nivel_t *nivel_clonar(const nivel_t *nivel){
+    return nivel_crear(nivel->fig, nivel->cant_torretas, nivel->cant_combustible);
+}

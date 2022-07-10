@@ -33,11 +33,11 @@ nave_t *nave_crear(void){
     return nave;
 }
 
-double nave_get_pos_x(nave_t *nave){
+float nave_get_pos_x(nave_t *nave){
     return nave->pos[X];
 }
 
-double nave_get_pos_y(nave_t *nave){
+float nave_get_pos_y(nave_t *nave){
     return nave->pos[Y];
 }
 

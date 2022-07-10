@@ -10,7 +10,7 @@
 typedef struct{
     figura_t *fig;
     figura_t *fig_chorro;
-    double pos[2];
+    float pos[2];
     double vel[2];
     double angulo;
     //int cant_combustible;
@@ -24,12 +24,12 @@ nave_t *nave_crear(void);
 /*
 ** Retorna la coordenada "x" de la nave.
 */
-double nave_get_pos_x(nave_t *nave);
+float nave_get_pos_x(nave_t *nave);
 
 /*
 ** Retorna la coordenada "y" de la nave.
 */
-double nave_get_pos_y(nave_t *nave);
+float nave_get_pos_y(nave_t *nave);
 
 /*
 ** Retorna el angulo de la nave.

@@ -21,8 +21,9 @@
 #define COOLDOWN_NAVE 0.5
 #define COOLDOWN_TORRETA 2
 
+
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
-    figura_t *fig;
+    figura_t *fig = NULL;
     for (size_t i = 0; i < n; i++){
         if(strcmp(nombre, vector_figuras[i]->nombre) == 0){
             fig = vector_figuras[i];
@@ -149,12 +150,20 @@ int main() {
 
     figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant_figuras);
 
-    //Leemos figuras de cada nivel y definimos varibales de impresión:
 
+    /********Leemos figuras de cada nivel y definimos variables de impresión******/
+
+    figura_t *nivel1_leido = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
+    if (nivel1_leido == NULL){ //Evaluar necesidad de verificacion 
+        return 1;
+    }
 
     figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
 
     figura_t *nivel5_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+
+
+    float escala_nivel = 1;
 
     float ancho_nivel_x = 0;
     float alto_nivel_y = 0;
@@ -163,6 +172,8 @@ int main() {
     float margen_nivel_y = 0;
 
 
+
+    /********Leemos figuras de cada torreta******/
 
     figura_t *torreta_leida = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
     figura_t *torreta_disparando_leida = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
@@ -252,7 +263,9 @@ int main() {
                         break;
 
                     case SDLK_a:
-                        nivel = 4;
+                        spawn = true;
+
+                        nivel = 1;
                         break;
                     
                     case SDLK_d:
@@ -336,7 +349,13 @@ int main() {
             nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
 
             if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("AUCH\n");
-            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA1\n");
+
+            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                printf("PLANETA1\n");
+                spawn = true;
+                nivel = 1;
+            }
+            
             if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA2\n");
             if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA3\n");
 
@@ -351,9 +370,51 @@ int main() {
             }
         }
 
+        if(nivel == 1){
+            if(spawn){
+                nave_setear_posicion(nave, VENTANA_ANCHO/2, VENTANA_ALTO - 100);
+                spawn = false;
+            }
 
-        
-        float escala_nivel;
+            nivel_t *nivel_1 = nivel_crear(nivel1_leido, 1, 1);
+            if (nivel_1 == NULL) return 1;
+
+            float centro = VENTANA_ANCHO/2;
+
+            float posicion_nave_x = nave_get_pos_x(nave);
+            float posicion_nave_y = nave_get_pos_y(nave);
+
+            
+            if(posicion_nave_y > VENTANA_ALTO * MARGEN_ALTURA){
+                escala_nivel = VENTANA_ALTO * MARGEN_ALTURA / posicion_nave_y;
+            }
+
+            if(escala_nivel < ESCALA_MINIMA){
+                escala_nivel = ESCALA_MINIMA;
+            }
+
+            if((posicion_nave_x - centro) * escala_nivel > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
+                centro = posicion_nave_x - VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala_nivel;
+            else if((centro - posicion_nave_x) * escala_nivel > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
+                centro = posicion_nave_x + VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala_nivel;
+            
+            nivel_t *nivel_1_izq = nivel_clonar(nivel_1);
+            if (nivel_1_izq == NULL) return 1;
+
+            nivel_trasladar(nivel_1_izq, -2000, 0);
+
+            nivel_t *nivel_1_der = nivel_clonar(nivel_1);
+            if (nivel_1_der == NULL) return 1;
+            nivel_trasladar(nivel_1_der, 2000, 0);
+
+
+
+            nivel_imprimir(renderer, nivel_1, escala_nivel, centro, VENTANA_ALTO/2);
+            nivel_imprimir(renderer, nivel_1_izq, escala_nivel, centro, VENTANA_ALTO/2);
+            nivel_imprimir(renderer, nivel_1_der, escala_nivel, centro, VENTANA_ALTO/2);
+
+            printf("test1\n");
+        }
 
 
         if(nivel == 4){
