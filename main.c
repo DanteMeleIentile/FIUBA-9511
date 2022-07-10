@@ -318,14 +318,15 @@ int main() {
         if(nivel == 4){
             nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
             
-            if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
-                escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
+            if(VENTANA_ANCHO * 1.0 / (989 + 150 + 150) < escala_no_infinito)
+                escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150 + 150);
             
             //nivel_trasladar(nivel_4, -150 - 989/2 + VENTANA_ANCHO/2, -150);
             
             //nivel_trasladar(nivel_4, +150 * escala_no_infinito/2, 0);
             
             nivel_imprimir(renderer, nivel_4, escala_no_infinito);
+            nave_acercar(nave, -G, 0, VENTANA_ALTO, 1.f/JUEGO_FPS);
         }
 
 
