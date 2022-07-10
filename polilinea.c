@@ -13,6 +13,8 @@
 #define X 0
 #define Y 1
 
+#include "polilinea.h"
+#include "color.h"
 
 
 /* Estructura de las polilineas */
