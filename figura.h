@@ -102,7 +102,8 @@ void figura_rotar(figura_t *figura, double rad);
 //Traslada la figura dada una distancia "dx" en coordenada "x" y una distancia "dy" en coordenada "y"
 void figura_trasladar(figura_t *figura, double dx, double dy);
 
-
+//Traslada y rota la figura con los mismos parametros que las anteriores 2 funciones
+void figura_rototrasladar(figura_t *figura, double dx, double dy, double angulo);
 
 //Da la distancia más cercana entre el punto y la figura
 double distancia_punto_a_figura(figura_t *figura, double x, double y);

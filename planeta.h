@@ -4,8 +4,6 @@
 #include "figura.h"
 #include "nave.h"
 
-
-
 typedef struct {
     figura_t *figura;
     double x, y;
@@ -25,7 +23,7 @@ void planeta_set_pos(planeta_t *planeta, double x, double y);
 
 void planeta_dibujar(SDL_Renderer *renderer, const planeta_t planeta);
 
-double distancia_a_planeta(planeta_t planeta, nave_t *nave);
+double distancia_a_planeta(planeta_t planeta, double pos_x, double pos_y);
 
 
 #endif

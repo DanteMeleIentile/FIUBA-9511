@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 
 #include "figura.h"
+#include "lista.h"
 
 
 struct nivel;
@@ -61,5 +62,6 @@ bool nivel_act_figura(nivel_t *nivel, figura_t *figura);
 // Posicionar entidad
 // Posiciona figura del nivel
 
+nivel_t *nivel_crear(size_t cant_torretas, figura_t *torreta);
 
 #endif
