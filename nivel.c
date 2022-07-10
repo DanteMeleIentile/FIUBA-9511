@@ -48,6 +48,11 @@ void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float 
     figura_imprimir(renderer, nivel->fig, escala, pos_x, pos_y);
 }
 
+
+void nivel_imprimir_tras(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y, float tras_x){
+    figura_imprimir_tras(renderer, nivel->fig, escala, pos_x, pos_y, tras_x);
+}
+
 void nivel_trasladar(nivel_t *nivel, float dx, float dy){
     figura_trasladar(nivel->fig, dx, dy);
 }

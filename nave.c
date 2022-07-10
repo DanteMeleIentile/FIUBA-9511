@@ -120,3 +120,11 @@ void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool cho
         figura_imprimir(renderer, nave->fig, escala, nave->pos[X], nave->pos[Y]);
     }
 }
+
+void nave_imprimir_tras(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro, float tras_x){
+    if(chorro){
+        figura_imprimir_tras(renderer, nave->fig_chorro, escala, nave->pos[X], nave->pos[Y], tras_x);
+    }else{
+        figura_imprimir_tras(renderer, nave->fig, escala, nave->pos[X], nave->pos[Y], tras_x);
+    }
+}

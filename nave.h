@@ -81,5 +81,8 @@ void nave_invertir_vel_y(nave_t *nave);
 
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro);
 
+void nave_imprimir_tras(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro, float tras_x);
+
+
 
 #endif

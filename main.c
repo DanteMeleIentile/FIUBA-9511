@@ -158,6 +158,12 @@ int main() {
         return 1;
     }
 
+    figura_t *nivel2_leido = encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras);
+    if (nivel1_leido == NULL){ //Evaluar necesidad de verificacion 
+        return 1;
+    }
+
+
     figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
 
     figura_t *nivel5_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
@@ -216,6 +222,13 @@ int main() {
     
     bool spawn = true;
 
+    /********VARIABLES PARA DEBUGEO DE IMPRESIÓN******/
+    float mov_x_print = 0;
+    float mov_y_print = 0;
+    float scale_print = 1;
+
+
+
     // END código del alumno
         float a = 1;
 
@@ -273,6 +286,30 @@ int main() {
                     
                     case SDLK_ESCAPE:
                         return 0;
+
+
+    /********VARIABLES PARA DEBUGEO DE IMPRESIÓN******/
+                    case SDLK_j:
+                        mov_x_print += 50;
+                        break;
+                    case SDLK_g:
+                        mov_x_print -= 50;
+                        break;
+
+                    case SDLK_y:
+                        mov_y_print += 50;
+                        break;
+                    case SDLK_h:
+                        mov_y_print -= 50;
+                        break;
+                    
+                    case SDLK_k:
+                        scale_print += 0.1;
+                        break;
+                    case SDLK_l:
+                        scale_print -= 0.1;
+                        break;
+
                 }
             }
             else if (event.type == SDL_KEYUP) {
@@ -372,7 +409,7 @@ int main() {
 
         if(nivel == 1){
             if(spawn){
-                nave_setear_posicion(nave, VENTANA_ANCHO/2, VENTANA_ALTO - 100);
+                nave_setear_posicion(nave, 1000, VENTANA_ALTO - 100);
                 spawn = false;
             }
 
@@ -385,6 +422,14 @@ int main() {
             float posicion_nave_y = nave_get_pos_y(nave);
 
             
+            if(posicion_nave_x > 1500){
+                nave_setear_posicion(nave, posicion_nave_x - 1000, posicion_nave_y);
+            }
+
+            if(posicion_nave_x < 350){
+                nave_setear_posicion(nave, posicion_nave_x + 1000, posicion_nave_y);
+            }
+
             if(posicion_nave_y > VENTANA_ALTO * MARGEN_ALTURA){
                 escala_nivel = VENTANA_ALTO * MARGEN_ALTURA / posicion_nave_y;
             }
@@ -398,6 +443,11 @@ int main() {
             else if((centro - posicion_nave_x) * escala_nivel > VENTANA_ANCHO / 2 * MARGEN_ANCHO)
                 centro = posicion_nave_x + VENTANA_ANCHO / 2 * MARGEN_ANCHO / escala_nivel;
             
+            //nivel_trasladar(nivel_1, -centro, 0);
+            
+
+            
+            /* 
             nivel_t *nivel_1_izq = nivel_clonar(nivel_1);
             if (nivel_1_izq == NULL) return 1;
 
@@ -406,14 +456,27 @@ int main() {
             nivel_t *nivel_1_der = nivel_clonar(nivel_1);
             if (nivel_1_der == NULL) return 1;
             nivel_trasladar(nivel_1_der, 2000, 0);
+           */
+
+            //nivel_imprimir(renderer, nivel_1, escala_nivel, centro, 0);
+            if(chorro_prendido){
+                nave_imprimir_tras(renderer, nave, escala_nivel, true, centro); 
+            }
+            nave_imprimir_tras(renderer, nave, escala_nivel, false, centro);
+            
+            nivel_imprimir_tras(renderer, nivel_1, escala_nivel, centro, 0, centro);
 
 
+            //nivel_imprimir(renderer, nivel_1, escala_nivel, centro, VENTANA_ALTO/2);
+            //nivel_imprimir(renderer, nivel_1_izq, escala_nivel, centro, VENTANA_ALTO/2);
+            //nivel_imprimir(renderer, nivel_1_der, escala_nivel, centro, VENTANA_ALTO/2);
 
-            nivel_imprimir(renderer, nivel_1, escala_nivel, centro, VENTANA_ALTO/2);
-            nivel_imprimir(renderer, nivel_1_izq, escala_nivel, centro, VENTANA_ALTO/2);
-            nivel_imprimir(renderer, nivel_1_der, escala_nivel, centro, VENTANA_ALTO/2);
+            printf("Posución X nave = %f\n", posicion_nave_x);
+            printf("Posución Y nave = %f\n", posicion_nave_y);
+            printf("Angulo nave = %f\n", nave_get_angulo(nave));
 
-            printf("test1\n");
+            printf("Centro  = %f\n\n", centro);
+
         }
 
 
@@ -471,11 +534,11 @@ int main() {
             nave_avanzar(nave, 0, DT);
         }
 
-        if(chorro_prendido){
-            nave_imprimir(renderer, nave, f, true);
+        /*if(chorro_prendido){
+            nave_imprimir(renderer, nave, escala_nivel, true);
         }
-            nave_imprimir(renderer, nave, f, false);
-        
+            nave_imprimir(renderer, nave, escala_nivel, false);
+        */
         
         if(disparo && listo_para_disparar){
             double c = (VEL_DISPARO * cos(nave_get_angulo(nave)));
