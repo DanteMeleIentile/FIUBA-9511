@@ -89,8 +89,8 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
     return true;
 }
 
-double figura_get_extremo_x(figura_t *figura, bool mayor){
-    double aux = 0;
+float figura_get_extremo_x(figura_t *figura, bool mayor){
+    float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
             aux = polilinea_get_extremo_x(figura->polilineas[i], mayor);
@@ -106,8 +106,8 @@ double figura_get_extremo_x(figura_t *figura, bool mayor){
     return aux;
 }
 
-double figura_get_extremo_y(figura_t *figura, bool mayor){
-    double aux = 0;
+float figura_get_extremo_y(figura_t *figura, bool mayor){
+    float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
             aux = polilinea_get_extremo_y(figura->polilineas[i], mayor);

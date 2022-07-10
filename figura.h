@@ -59,13 +59,13 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 ** Devuelve el extremo en "x" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-double figura_get_extremo_x(figura_t *figura, bool mayor);
+float figura_get_extremo_x(figura_t *figura, bool mayor);
 
 /*
 ** Devuelve el extremo en "y" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-double figura_get_extremo_y(figura_t *figura, bool mayor);
+float figura_get_extremo_y(figura_t *figura, bool mayor);
 
 /*
 ** Destruye figuras

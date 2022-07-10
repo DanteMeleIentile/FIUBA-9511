@@ -14,9 +14,6 @@
 #include "torreta.h"
 
 
-#define X 0
-#define Y 1
-
 #define TIEMPO_MAX_DISPAROS 2
 #define VEL_DISPARO 150
 
@@ -49,6 +46,7 @@ int main() {
     int dormir = 0;
 
     // BEGIN código del alumno
+    
 
 //----------------------------------------------------------------------------------------------------------------------
 //CREACIÓN DE ESTRUCTURA DE LECTURA
@@ -151,11 +149,20 @@ int main() {
 
     figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant_figuras);
 
-    figura_t *nivel1_leido = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
+    //Leemos figuras de cada nivel y definimos varibales de impresión:
+
 
     figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
 
     figura_t *nivel5_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+
+    float ancho_nivel_x = 0;
+    float alto_nivel_y = 0;
+
+    float margen_nivel_x = 0;
+    float margen_nivel_y = 0;
+
+
 
     figura_t *torreta_leida = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
     figura_t *torreta_disparando_leida = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
@@ -172,7 +179,6 @@ int main() {
     //Creación de listase e iteradores para elementos repetidos.
     lista_t *lista_disparos = lista_crear();
 
-    lista_t *lista_torretas = lista_crear();
 
     torreta_t *torreta1 = torreta_crear();
     torreta_t *torreta2 = torreta_crear();
@@ -283,17 +289,7 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
-        
-        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
-        if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
-            escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
-        float centro = (989 + 150)/2; 
 
-        //printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
-        //printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
-
-        //printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
-        //printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
 
@@ -355,24 +351,49 @@ int main() {
             }
         }
 
+
+        
+        float escala_nivel;
+
+
         if(nivel == 4){
             nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
+
+            ancho_nivel_x = nivel_get_extremo_x(nivel_4, true);
+            margen_nivel_x = nivel_get_extremo_x(nivel_4, false);
+
+            alto_nivel_y = nivel_get_extremo_y(nivel_4, true);
+            margen_nivel_y = nivel_get_extremo_y(nivel_4, false);
+
+            escala_nivel = VENTANA_ALTO * 1.0 / alto_nivel_y;
             
-            if(VENTANA_ANCHO * 1.0 / (989 + 150 + 150) < escala_no_infinito)
-                escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150 + 150);
+            if(VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x) < escala_nivel)
+                escala_nivel = VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x);
             
-            //nivel_trasladar(nivel_4, -150 - 989/2 + VENTANA_ANCHO/2, -150);
-            
-            //nivel_trasladar(nivel_4, +150 * escala_no_infinito/2, 0);
-            
-            nivel_imprimir(renderer, nivel_4, escala_no_infinito);
+            nivel_imprimir(renderer, nivel_4, escala_nivel, 0, margen_nivel_y * escala_nivel);
+
             nave_acercar(nave, -G, 0, VENTANA_ALTO, 1.f/JUEGO_FPS);
         }
 
 
         if(nivel == 5){
             nivel_t *nivel_5 = nivel_crear(nivel5_leido, 1, 1);
-            nivel_imprimir(renderer, nivel_5, escala_no_infinito);
+
+            ancho_nivel_x = nivel_get_extremo_x(nivel_5, true);
+            margen_nivel_x = nivel_get_extremo_x(nivel_5, false);
+
+            alto_nivel_y = nivel_get_extremo_y(nivel_5, true);
+            margen_nivel_y = nivel_get_extremo_y(nivel_5, false);
+
+
+            escala_nivel = VENTANA_ALTO * 1.0 / alto_nivel_y;
+            
+            if(VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x) < escala_nivel)
+                escala_nivel = VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x);
+
+            nivel_imprimir(renderer, nivel_5, escala_nivel, 0, 0);
+
+            nave_acercar(nave, -G, 0, VENTANA_ALTO, 1.f/JUEGO_FPS);
         }
 
         if(rotacion_antihoraria){

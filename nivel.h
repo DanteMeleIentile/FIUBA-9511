@@ -17,43 +17,23 @@ typedef struct nivel nivel_t;
 nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible);
 
 /*
-** Dado un nivel y una escala, imprime un nivel
+** Devuelve el extremo en "x" del nivel
+** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);
+float nivel_get_extremo_x(nivel_t *nivel, bool mayor);
 
 
 /*
-** Traslada el nivel en X "dx" y en Y "dy"
+** Devuelve el extremo en "x" del nivel
+** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-void nivel_trasladar(nivel_t *nivel, float dx, float dy);
-
-
-
-
-
-
-
-
-
-
-
+float nivel_get_extremo_y(nivel_t *nivel, bool mayor);
 
 
 /*
-** Devuelve la coordenada del primer punto de la figura en "x"
+** Dado un nivel y una escala, imprime un nivel escalado según pos_x y pos_y
 */
-double nivel_x_min(nivel_t *nivel);
-
-
-
-
-
-
-double nivel_get_pos_x(nivel_t *nivel);
-double nivel_get_pos_y(nivel_t *nivel);
-
-
-bool nivel_act_figura(nivel_t *nivel, figura_t *figura);
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y);
 
 
 #endif

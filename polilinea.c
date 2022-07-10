@@ -55,8 +55,8 @@ polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c){
     return polilinea;
 }
 
-double polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor){
-    double aux = 0; 
+float polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor){
+    float aux = 0; 
     for(size_t i = 0; i < polilinea->n; i++){
         if(i == 0){
             aux = polilinea->puntos[i][X];
@@ -71,8 +71,8 @@ double polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor){
     return aux;
 }
 
-double polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor){
-    double aux = 0; 
+float polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor){
+    float aux = 0; 
     for(size_t i = 0; i < polilinea->n; i++){
         if(i == 0){
             aux = polilinea->puntos[i][Y];

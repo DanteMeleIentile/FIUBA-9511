@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-
 #include "nivel.h"
 #include "config.h"
 
@@ -35,16 +34,16 @@ nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combust
 }
 
 
-void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala){
-    figura_imprimir(renderer, nivel->fig, escala, 0, 0.62 * 150);
-
+float nivel_get_extremo_x(nivel_t *nivel, bool mayor){
+    return figura_get_extremo_x(nivel->fig, mayor);
 }
 
 
-void nivel_trasladar(nivel_t *nivel, float dx, float dy){
-    figura_trasladar(nivel->fig, dx, dy);
+float nivel_get_extremo_y(nivel_t *nivel, bool mayor){
+    return figura_get_extremo_y(nivel->fig, mayor);
 }
 
 
-
-
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y){
+    figura_imprimir(renderer, nivel->fig, escala, pos_x, pos_y);
+}
