@@ -151,6 +151,9 @@ int main() {
 
     figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
 
+    figura_t *nivel5_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+
+
 
 
 
@@ -189,11 +192,15 @@ int main() {
                 // Se apretó una tecla
                 switch(event.key.keysym.sym) {
                     case SDLK_UP:
+                        a = a + 0.3;
+
                         avanzar = true;
                         chorro_prendido = true;
                         break;
 
                     case SDLK_DOWN:
+                        a = a -  0.3;
+
                         break;
                         
 
@@ -210,16 +217,15 @@ int main() {
                         break;
 
                     case SDLK_w:
-                        a = a + 0.1;
                         f++;
                         break;
 
                     case SDLK_s:
-                        a = a - 0.1;
                         f--;
                         break;
 
                     case SDLK_a:
+                        nivel = 4;
                         break;
                     
                     case SDLK_d:
@@ -257,41 +263,16 @@ int main() {
 
         // BEGIN código del alumno
         
-        nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
-/*        
-        escala = VENTANA_ALTO * 1.0 / planeta_alto;
-        if(VENTANA_ANCHO * 1.0 / (planeta_ancho + planeta_x_min) < escala)
-            escala = VENTANA_ANCHO * 1.0 / (planeta_ancho + planeta_x_min);
-        centro = (planeta_ancho + planeta_x_min) / 2;*/
-
-        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596 + 150;
+        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
         if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
             escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
         float centro = (989 + 150)/2; 
 
-        printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
-        printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
+        //printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
+        //printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
 
-        printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
-        printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
-
-        printf("Posición en X = %f; Posición en Y = %f\n", nivel_get_pos_x(nivel_4), nivel_get_pos_y(nivel_4));
-
-        //nivel_act_figura(nivel_4, nivel4_leido);
-        
-        printf("Posición en X = %f; Posición en Y = %f\n", nivel_get_pos_x(nivel_4), nivel_get_pos_y(nivel_4));
-
-
-        //nivel_trasladar(nivel_4, 989/2 + 300/2, 596/2 + 300/2);
-        
-        //Creamos entidad nivel
-        //centramos entidad nivel (con margen incluido)
-        //trasladamos la entidad nivel
-        //trasladamos la entidad nivel
-        printf("ESCALA = %f\n", a);
-
-        nivel_imprimir(renderer, nivel_4, a);
-
+        //printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
+        //printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
         
@@ -300,6 +281,7 @@ int main() {
                 nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base));
                 spawn = false;
             }
+
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
             planeta_dibujar(renderer, planeta1);
@@ -321,8 +303,35 @@ int main() {
             if(distancia_a_planeta(planeta1, nave) < 20) printf("PLANETA1\n");
             if(distancia_a_planeta(planeta2, nave) < 20) printf("PLANETA2\n");
             if(distancia_a_planeta(planeta3, nave) < 20) printf("PLANETA3\n");
-            if(distancia_a_planeta(planeta4, nave) < 20) printf("PLANETA4\n");
-            if(distancia_a_planeta(planeta5, nave) < 20) printf("PLANETA5\n");
+
+            if(distancia_a_planeta(planeta4, nave) < 20){
+                printf("PLANETA4\n");
+                nivel = 4;
+            }
+            
+            if(distancia_a_planeta(planeta5, nave) < 20){
+                printf("PLANETA5\n");
+                nivel = 5;
+            }
+        }
+
+        if(nivel == 4){
+            nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
+            
+            if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
+                escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
+            
+            //nivel_trasladar(nivel_4, -150 - 989/2 + VENTANA_ANCHO/2, -150);
+            
+            //nivel_trasladar(nivel_4, +150 * escala_no_infinito/2, 0);
+            
+            nivel_imprimir(renderer, nivel_4, escala_no_infinito);
+        }
+
+
+        if(nivel == 5){
+            nivel_t *nivel_5 = nivel_crear(nivel5_leido, 1, 1);
+            nivel_imprimir(renderer, nivel_5, escala_no_infinito);
         }
 
         if(rotacion_antihoraria){

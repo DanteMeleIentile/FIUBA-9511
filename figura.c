@@ -28,6 +28,7 @@ char *nombre_icono[] = {
 };
 
 
+
 const char* figura_tipo_a_cadena(figura_tipo_t figura){
     return nombre_icono[figura];
 }
@@ -177,16 +178,15 @@ void figura_trasladar(figura_t *figura, double dx, double dy){
 
 
 void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y){
-
     for(size_t k = 0; k < figura->cant_polilineas; k++){
         SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
         for(size_t z = 0; z < figura->polilineas[k]->n - 1; z++){
             SDL_RenderDrawLine(
             renderer,
-            ((figura->polilineas[k]->puntos[z][X]-x) * escala + x),
+            ((figura->polilineas[k]->puntos[z][X] - x) * escala + x),
             (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y),
             ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x),
-            (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO - y)
+            (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO- y)
             );
         }
     }

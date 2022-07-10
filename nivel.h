@@ -16,9 +16,9 @@ typedef struct nivel nivel_t;
 nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible);
 
 /*
-** Devuelve la coordenada del primer punto de la figura en "x"
+** Dado un nivel y una escala, imprime un nivel
 */
-double nivel_x_min(nivel_t *nivel);
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);
 
 
 /*
@@ -27,10 +27,26 @@ double nivel_x_min(nivel_t *nivel);
 void nivel_trasladar(nivel_t *nivel, float dx, float dy);
 
 
+
+
+
+
+
+
+
+
+
+
+
 /*
-** Imprime el nivel.
+** Devuelve la coordenada del primer punto de la figura en "x"
 */
-void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);
+double nivel_x_min(nivel_t *nivel);
+
+
+
+
+
 
 double nivel_get_pos_x(nivel_t *nivel);
 double nivel_get_pos_y(nivel_t *nivel);
