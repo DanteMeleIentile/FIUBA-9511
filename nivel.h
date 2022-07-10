@@ -56,12 +56,4 @@ double nivel_get_pos_y(nivel_t *nivel);
 bool nivel_act_figura(nivel_t *nivel, figura_t *figura);
 
 
-
-
-// Crear nivel
-// Posicionar entidad
-// Posiciona figura del nivel
-
-nivel_t *nivel_crear(size_t cant_torretas, figura_t *torreta);
-
 #endif

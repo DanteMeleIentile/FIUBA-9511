@@ -11,6 +11,8 @@
 #include "nave.h"
 #include "planeta.h"
 #include "nivel.h"
+#include "torreta.h"
+
 
 #define X 0
 #define Y 1
@@ -154,6 +156,9 @@ int main() {
     figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
 
     figura_t *nivel5_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
+
+    figura_t *torreta_leida = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
+    figura_t *torreta_disparando_leida = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
 
 
 
@@ -301,6 +306,22 @@ int main() {
                 spawn = false;
             }
 
+            if(torreta_get_cooldown(torreta1) <= 0 && torreta_apuntar(torreta1, nave_get_pos_x(nave), nave_get_pos_y(nave))){
+                double a = (VEL_DISPARO * cos(torreta_get_angulo_apuntado(torreta1)));
+                double b = (VEL_DISPARO * sin(torreta_get_angulo_apuntado(torreta1)));
+                lista_insertar_ultimo(lista_disparos, disparo_crear(torreta_get_pos_x(torreta1), torreta_get_pos_y(torreta1), a, b, torreta_get_angulo_apuntado(torreta1), true));
+                torreta_set_cooldown(torreta1, COOLDOWN_TORRETA);
+            }
+
+            torreta_act_figura(torreta1, torreta_leida, torreta_disparando_leida);
+            torreta_act_figura(torreta2, torreta_leida, torreta_disparando_leida);
+
+            torreta_restar_cooldown(torreta1, DT);
+            torreta_imprimir(renderer, torreta1, f, false);
+            torreta_imprimir(renderer, torreta2, f, true);
+
+
+
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
             planeta_dibujar(renderer, planeta1);
@@ -318,17 +339,17 @@ int main() {
 
             nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
 
-            if(distancia_a_planeta(estrella, nave) < 20) printf("AUCH\n");
-            if(distancia_a_planeta(planeta1, nave) < 20) printf("PLANETA1\n");
-            if(distancia_a_planeta(planeta2, nave) < 20) printf("PLANETA2\n");
-            if(distancia_a_planeta(planeta3, nave) < 20) printf("PLANETA3\n");
+            if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("AUCH\n");
+            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA1\n");
+            if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA2\n");
+            if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA3\n");
 
-            if(distancia_a_planeta(planeta4, nave) < 20){
+            if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
                 printf("PLANETA4\n");
                 nivel = 4;
             }
             
-            if(distancia_a_planeta(planeta5, nave) < 20){
+            if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
                 printf("PLANETA5\n");
                 nivel = 5;
             }

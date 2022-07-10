@@ -13,7 +13,6 @@ typedef struct{
     double pos[2];
     double vel[2];
     double angulo;
-
     //int cant_combustible;
 } nave_t;
 
