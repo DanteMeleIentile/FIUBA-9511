@@ -14,15 +14,88 @@
 #include "torreta.h"
 
 
-#define X 0
-#define Y 1
-
 #define TIEMPO_MAX_DISPAROS 2
 #define VEL_DISPARO 150
 
 #define DT 1.f/JUEGO_FPS
 #define COOLDOWN_NAVE 0.5
 #define COOLDOWN_TORRETA 2
+
+//SI DISPARO_LEIDO SE VUELVE FALSE, HUBO UN ERROR EN LA MEMORIA
+void main_disparo_en_pantalla(SDL_Renderer *renderer, lista_t *lista_disparos, figura_t *disparo_leido, double escala){
+    bool pego = false;
+    lista_iter_t *iter = lista_iter_crear(lista_disparos);
+
+    for(size_t i = 0; i < lista_largo(lista_disparos); i++){
+        disparo_t *disp_act = lista_iter_ver_actual(iter);
+        disparo_aumentar_tiempo(disp_act, DT);
+        
+        if(disparo_get_tiempo(disp_act) > TIEMPO_MAX_DISPAROS){
+            disparo_destruir(disp_act);
+            lista_iter_borrar(iter);
+            continue;
+        }
+
+        if(!disparo_act_figura(disp_act, disparo_leido)){
+            fprintf(stderr, "Error en memoria\n");
+            disparo_leido = NULL;
+        }
+
+        disparo_avanzar(disp_act, DT);
+        
+            disparo_imprimir(renderer, disp_act, escala);
+            lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
+}
+
+
+
+bool main_disparo_pego(lista_t *lista_disparos, figura_t *figura, double dmin, bool friendly){
+    bool pego = false;
+    lista_iter_t *iter = lista_iter_crear(lista_disparos);
+    for(size_t i = 0; i < lista_largo(lista_disparos); i++){
+        disparo_t *disp_act = lista_iter_ver_actual(iter);
+        if((disparo_friendly(disp_act) && !friendly) || (!disparo_friendly(disp_act) && friendly)){
+            if(distancia_punto_a_figura(figura, disparo_get_pos_x(disp_act), disparo_get_pos_y(disp_act)) <= dmin){
+                disparo_destruir(disp_act);
+                lista_iter_borrar(iter);
+                lista_iter_destruir(iter);
+                return true;
+            }
+        }
+        
+        lista_iter_avanzar(iter);
+    }
+
+    lista_iter_destruir(iter);
+    return false;
+}
+
+void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista_t *lista_disparos, double movil_x, double movil_y, double escala, figura_t *torreta_leida, figura_t *torreta_disparo_leida){
+    disparo_t *disparo_que_pego = NULL;
+    lista_iter_t *iter = lista_iter_crear(lista_torreta);
+    for(size_t i = 0; i < lista_largo(lista_torreta); i++){
+        torreta_t *torreta_act = lista_iter_ver_actual(iter);
+
+        if(main_disparo_pego(lista_disparos, torreta_get_figura_principal(torreta_act), 5, false)){
+            torreta_destruir(torreta_act);
+            lista_iter_borrar(iter);
+            continue;
+        } 
+        if(torreta_get_cooldown(torreta_act) <= 0 && torreta_apuntar(torreta_act, movil_x, movil_y)){
+            double a = (VEL_DISPARO * cos(torreta_get_angulo_apuntado(torreta_act)));
+            double b = (VEL_DISPARO * sin(torreta_get_angulo_apuntado(torreta_act)));
+            lista_insertar_ultimo(lista_disparos, disparo_crear(torreta_get_pos_x(torreta_act)+10*cos(torreta_get_angulo(torreta_act)), torreta_get_pos_y(torreta_act)+10*sin(torreta_get_angulo(torreta_act)), a, b, torreta_get_angulo_apuntado(torreta_act), false));
+            torreta_set_cooldown(torreta_act, COOLDOWN_TORRETA);
+        }
+        torreta_act_figura(torreta_act, torreta_leida, torreta_disparo_leida);
+        torreta_restar_cooldown(torreta_act, DT);
+        torreta_imprimir(renderer, torreta_act, escala, false);
+        lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
+}
 
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
     figura_t *fig;
@@ -148,20 +221,14 @@ int main() {
     
     figura_t *nave_leida = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     figura_t *nave_mas_chorro_leida = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
-
+    figura_t *escudo_leido = encontrar_figura("ESCUDO", vector_figuras, cant_figuras);
+    figura_t *escudo2_leido = encontrar_figura("ESCUDO2", vector_figuras, cant_figuras);
     figura_t *disparo_leido = encontrar_figura("DISPARO", vector_figuras, cant_figuras);
-
     figura_t *nivel1_leido = encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras);
-
     figura_t *nivel4_leido = encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras);
-
     figura_t *nivel5_leido = encontrar_figura("NIVEL1R", vector_figuras, cant_figuras);
-
     figura_t *torreta_leida = encontrar_figura("TORRETA", vector_figuras, cant_figuras);
     figura_t *torreta_disparando_leida = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
-
-
-
 
 /*    nivel_t *nivel1 = nivel_crear();
     nivel_t *nivel2 = nivel_crear();
@@ -172,17 +239,30 @@ int main() {
     //Creación de listase e iteradores para elementos repetidos.
     lista_t *lista_disparos = lista_crear();
 
-    lista_t *lista_torretas = lista_crear();
+    lista_t *lista_combustibles_4 = lista_crear();
 
-    torreta_t *torreta1 = torreta_crear();
-    torreta_t *torreta2 = torreta_crear();
+    lista_t *lista_torretas_4 = lista_crear();
 
-    torreta_set_cooldown(torreta1, COOLDOWN_TORRETA);
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 257, 0.62 * (440 + 56), 0.66));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 719, 0.62 * (674 + 56), 2.23));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 985, 0.62 * (565 + 56), 0));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 1125, 0.62 * (417 + 56), 3.8));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 862, 0.62 * (163 + 56), 3.8));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 626, 0.62 * (323 + 56), 2.23));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 505, 0.62 * (331 + 56), 3.8));
+    lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 378, 0.62 * (296 + 56), 2.23));
+
+    lista_t *lista_torretas_5 = lista_crear();
+
+
+
 
 
 //----------------------------------------------------------------------------------------------------------------------
     //Boleeanos de estado
     bool chorro_prendido = false;
+    bool escudo_prendido = false;
+
     bool disparo = false;
     double tiempo_para_disparar = 0;
     bool listo_para_disparar = true;
@@ -221,9 +301,7 @@ int main() {
 
                     case SDLK_DOWN:
                         a = a -  0.3;
-
                         break;
-                        
 
                     case SDLK_RIGHT:
                         rotacion_horaria = true;
@@ -235,6 +313,10 @@ int main() {
 
                     case SDLK_SPACE:
                         disparo = true;
+                        break;
+                    
+                    case SDLK_LALT:
+                        escudo_prendido = true;
                         break;
 
                     case SDLK_w:
@@ -272,6 +354,9 @@ int main() {
                     case SDLK_SPACE:
                         disparo = false;
                         break;
+                    case SDLK_LALT:
+                        escudo_prendido = false;
+                        break;
                 }
             }
             // END código del alumno
@@ -295,33 +380,16 @@ int main() {
         //printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
         //printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
 
-        nave_act_figura(nave, nave_leida, nave_mas_chorro_leida);
+        nave_act_figura(nave, nave_leida, nave_mas_chorro_leida, escudo_leido, escudo2_leido);
+        nave_apagar(nave, true, true, true);
 
         if(nivel == 0){
             if(spawn){
                 nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base));
 
-                torreta_setear_en_lugar(torreta1, 200, 200, 0);
-                torreta_setear_en_lugar(torreta2, 400, 400, 0);
                 spawn = false;
             }
-
-            if(torreta_get_cooldown(torreta1) <= 0 && torreta_apuntar(torreta1, nave_get_pos_x(nave), nave_get_pos_y(nave))){
-                double a = (VEL_DISPARO * cos(torreta_get_angulo_apuntado(torreta1)));
-                double b = (VEL_DISPARO * sin(torreta_get_angulo_apuntado(torreta1)));
-                lista_insertar_ultimo(lista_disparos, disparo_crear(torreta_get_pos_x(torreta1), torreta_get_pos_y(torreta1), a, b, torreta_get_angulo_apuntado(torreta1), true));
-                torreta_set_cooldown(torreta1, COOLDOWN_TORRETA);
-            }
-
-            torreta_act_figura(torreta1, torreta_leida, torreta_disparando_leida);
-            torreta_act_figura(torreta2, torreta_leida, torreta_disparando_leida);
-
-            torreta_restar_cooldown(torreta1, DT);
-            torreta_imprimir(renderer, torreta1, f, false);
-            torreta_imprimir(renderer, torreta2, f, true);
-
-
-
+            
             planeta_dibujar(renderer, base);
             planeta_dibujar(renderer, estrella);
             planeta_dibujar(renderer, planeta1);
@@ -340,35 +408,55 @@ int main() {
             nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
 
             if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("AUCH\n");
-            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA1\n");
-            if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA2\n");
-            if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("PLANETA3\n");
+
+            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                spawn = true;
+                printf("PLANETA1\n");
+                nivel = 1;
+            }
+            if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                spawn = true;
+                printf("PLANETA2\n");
+                nivel = 2;
+            }
+            if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                spawn = true;
+                printf("PLANETA3\n");
+                nivel = 3;
+            }
 
             if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                spawn = true;
                 printf("PLANETA4\n");
                 nivel = 4;
             }
             
             if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                spawn = true;
                 printf("PLANETA5\n");
                 nivel = 5;
             }
         }
 
+        if(nivel == 3){
+            nave_acercar_direccion(nave, G, PI / 2, 1.f/JUEGO_FPS);
+        }
+
         if(nivel == 4){
+            if(spawn == true){
+                nave_setear_posicion(nave, VENTANA_ANCHO/2, 500);
+                spawn = false;
+            }
             nivel_t *nivel_4 = nivel_crear(nivel4_leido, 1, 1);
-            
             if(VENTANA_ANCHO * 1.0 / (989 + 150 + 150) < escala_no_infinito)
                 escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150 + 150);
-            
             //nivel_trasladar(nivel_4, -150 - 989/2 + VENTANA_ANCHO/2, -150);
             
             //nivel_trasladar(nivel_4, +150 * escala_no_infinito/2, 0);
-            
             nivel_imprimir(renderer, nivel_4, escala_no_infinito);
-            nave_acercar(nave, -G, 0, VENTANA_ALTO, 1.f/JUEGO_FPS);
+            nave_acercar_direccion(nave, -G, PI / 2, 1.f/JUEGO_FPS);
+            lista_iterar_torretas(renderer, lista_torretas_4, lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), escala_no_infinito, torreta_leida, torreta_disparando_leida);
         }
-
 
         if(nivel == 5){
             nivel_t *nivel_5 = nivel_crear(nivel5_leido, 1, 1);
@@ -390,15 +478,27 @@ int main() {
         }
 
         if(chorro_prendido){
-            nave_imprimir(renderer, nave, f, true);
+            nave_prender(nave, true, false, false);
         }
-            nave_imprimir(renderer, nave, f, false);
+
+        if(escudo_prendido && (nivel != 0 && nivel != 5)){
+            nave_prender(nave, false, false, true);
+        } else if(escudo_prendido){
+            nave_prender(nave, false, true, false);
+        }
+
+        nave_imprimir(renderer, nave, f);
         
-        
+        if(main_disparo_pego(lista_disparos, nave_get_figura_principal(nave), 5, true)){
+            //vidas--;
+            printf("VIDAS = %d", vidas);
+            //spawn = true;
+        }
+
         if(disparo && listo_para_disparar){
             double c = (VEL_DISPARO * cos(nave_get_angulo(nave)));
             double d = VEL_DISPARO * sin(nave_get_angulo(nave));
-            lista_insertar_ultimo(lista_disparos, disparo_crear(nave_get_pos_x(nave), nave_get_pos_y(nave), c, d, nave_get_angulo(nave), false));
+            lista_insertar_ultimo(lista_disparos, disparo_crear(nave_get_pos_x(nave), nave_get_pos_y(nave), c, d, nave_get_angulo(nave), true));
             listo_para_disparar = false;
         }
         tiempo_para_disparar += DT;
@@ -408,39 +508,10 @@ int main() {
             listo_para_disparar = true;
         }
 
-        //Creamos iterar para lista disparos
-        lista_iter_t *iter_disparos = lista_iter_crear(lista_disparos);        
-
-        for(size_t i = 0; i < lista_largo(lista_disparos); i++){
-            disparo_t *disp_act = lista_iter_ver_actual(iter_disparos);
-            disparo_aumentar_tiempo(disp_act, DT);
-            
-            if(disparo_get_tiempo(disp_act) > TIEMPO_MAX_DISPAROS){
-                disparo_destruir(disp_act);
-                lista_iter_borrar(iter_disparos);
-                continue;
-            }
-
-            if(!disparo_act_figura(disp_act, disparo_leido)){
-                fprintf(stderr, "Error en memoria\n");
-                return 1;
-            }
-            disparo_avanzar(disp_act, DT);
-            
-/*             if(disparo_can_kill(disp_act) && (distancia_a_disparo(disp_act, nave_get_pos_x(nave), nave_get_pos_y(nave) < 5))){
-                vidas++;
-                printf("VIDAS RESTANTES: %d\n", vidas);
-
-            }else{
-            } */
-
-            disparo_imprimir(renderer, disp_act, f);
-            lista_iter_avanzar(iter_disparos);
+        main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, f);
+        if(disparo_leido == NULL){
+            return 1;
         }
-
-        //eliminamos iterar para lista disparos
-        lista_iter_destruir(iter_disparos);
-
 
         // END código del alumno
 

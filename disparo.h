@@ -15,7 +15,7 @@ typedef struct disparo disparo_t;
 ** Crea un disparo inicializando sus parámetros segun los valores dados
 ** Retorna NULL en caso de falla de memoria
 */
-disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y, double angulo, bool can_kill);
+disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y, double angulo, bool friendly);
 
 //GETTERS
 
@@ -26,9 +26,19 @@ disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y,
 double disparo_get_tiempo(disparo_t *disparo);
 
 /*
+** Devuelve la posicion en "x" del disparo
+*/
+double disparo_get_pos_x(disparo_t *disparo);
+
+/*
+** Devuelve la posicion en "y" del disparo
+*/
+double disparo_get_pos_y(disparo_t *disparo);
+
+/*
 ** Devuelve si el disparo puede hacer daño
 */
-bool disparo_can_kill(disparo_t *disparo);
+bool disparo_friendly(disparo_t *disparo);
 
 /*
 ** Devuelve la distancia entre el disparo y pos_x y pos_y

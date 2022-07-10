@@ -17,17 +17,19 @@ struct torreta {
     double angulo;
     double angulo_apuntado;
     double cooldown;
-    bool vivo;
+    uint8_t estado;
 };
 
-torreta_t *torreta_crear(void){
+torreta_t *torreta_crear(double cooldown, double pos_x, double pos_y, double angulo){
     torreta_t *torreta = malloc(sizeof(torreta_t));
     if(torreta == NULL) return NULL;
 
-    torreta->pos[X] = 0;
-    torreta->pos[Y] = 0;
-    torreta->angulo = 0;
+    torreta->pos[X] = pos_x;
+    torreta->pos[Y] = pos_y;
+    torreta->angulo = angulo;
     torreta->angulo_apuntado = 0;
+
+    torreta->cooldown = cooldown;
 
     return torreta;
 }
@@ -50,6 +52,14 @@ double torreta_get_pos_y(torreta_t *torreta){
 
 double torreta_get_angulo_apuntado(torreta_t *torreta){
     return torreta->angulo_apuntado;
+}
+
+figura_t *torreta_get_figura_principal(torreta_t *torreta){
+    return torreta->fig;
+}
+
+double torreta_get_angulo(torreta_t *torreta){
+    return torreta->angulo;
 }
 
 void torreta_set_cooldown(torreta_t *torreta, double t){

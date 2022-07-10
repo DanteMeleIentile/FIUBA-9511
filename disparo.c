@@ -16,10 +16,10 @@ struct disparo{
     double vel[2];
     double angulo;
     double tiempo;
-    bool can_kill;
+    bool friendly;
 };
 
-disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y, double angulo, bool can_kill){
+disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y, double angulo, bool friendly){
     disparo_t *disparo = malloc(sizeof(disparo_t)*1);
     if(disparo == NULL) return NULL;
 
@@ -33,7 +33,7 @@ disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y,
     
     disparo->tiempo = 0;
 
-    disparo->can_kill = can_kill;
+    disparo->friendly = friendly;
     
     return disparo;
 }
@@ -68,8 +68,16 @@ double disparo_get_tiempo(disparo_t *disparo){
     return disparo->tiempo;
 }
 
-bool disparo_can_kill(disparo_t *disparo){
-    return disparo->can_kill;
+double disparo_get_pos_x(disparo_t *disparo){
+    return disparo->pos[X];
+}
+
+double disparo_get_pos_y(disparo_t *disparo){
+    return disparo->pos[Y];
+}
+
+bool disparo_friendly(disparo_t *disparo){
+    return disparo->friendly;
 }
 
 double distancia_a_disparo(disparo_t *disparo, double pos_x, double pos_y){

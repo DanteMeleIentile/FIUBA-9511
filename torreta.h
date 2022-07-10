@@ -9,7 +9,10 @@ struct torreta;
 
 typedef struct torreta torreta_t;
 
-torreta_t *torreta_crear(void);
+/*
+** Crea la torreta en posicion y rotacion pedidas
+*/
+torreta_t *torreta_crear(double cooldown, double pos_x, double pos_y, double angulo);
 
 /*
 ** Devuelve la posicion en "x" de la torreta
@@ -25,6 +28,16 @@ double torreta_get_pos_y(torreta_t *torreta);
 ** Devuelve el angulo de apuntado de la torreta
 */
 double torreta_get_angulo_apuntado(torreta_t *torreta);
+
+/*
+** Devuelve la figura principal de la torreta
+*/
+figura_t *torreta_get_figura_principal(torreta_t *torreta);
+
+/*
+** Devuelve el angulo de rotacion de la torreta
+*/
+double torreta_get_angulo(torreta_t *torreta);
 
 /*
 ** Devuelve el cooldown de la torreta

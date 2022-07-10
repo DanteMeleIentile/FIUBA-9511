@@ -67,6 +67,8 @@ double figura_get_extremo_x(figura_t *figura, bool mayor);
 */
 double figura_get_extremo_y(figura_t *figura, bool mayor);
 
+char *figura_get_nombre(figura_t *figura);
+
 /*
 ** Destruye figuras
 */

@@ -8,10 +8,23 @@
 #include "config.h"
 #include "fisicas.h"
 
+#define MASCARA_ESTADO 0x0F //00001111
 
 #define X 0
 #define Y 1
 
+//la variable "estado" determina cual figura utilizar
+struct nave {
+    figura_t *fig;
+    figura_t *fig_chorro;
+    figura_t *fig_escudo;
+    figura_t *fig_escudo_nivel;
+    double pos[2];
+    double vel[2];
+    double angulo;
+    uint8_t estado;
+    //int cant_combustible;
+};
 
 static double DEG_A_RAD(double grados){
     return grados * PI / 180;
@@ -45,17 +58,53 @@ double nave_get_angulo(nave_t *nave){
     return nave->angulo;
 }
 
+figura_t *nave_get_figura_principal(nave_t *nave){
+    return nave->fig;
+}
+
 void nave_setear_posicion(nave_t *nave, double x, double y){
     nave->pos[X] = x;
     nave->pos[Y] = y;
 }
 
-void nave_act_figura(nave_t *nave, figura_t *figura, figura_t *figura2){
-    nave->fig = figura_clonar(figura);
-    nave->fig_chorro = figura_clonar(figura2);
+void nave_prender(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
+    if(chorro && !((nave->estado) % 2)){
+        nave->estado += 1;
+    }
+    
+    if(escudo && !((nave->estado >> 1) % 2)){
+        nave->estado += 2;
+    }
+
+    if(escudo_nivel && !((nave->estado >> 2) % 2)){
+        nave->estado += 4;
+    }
+}
+
+void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
+    if(chorro && ((nave->estado) % 2)){
+        nave->estado -= 1;
+    }
+    
+    if(escudo && ((nave->estado >> 1) % 2)){
+        nave->estado -= 2;
+    }
+
+    if(escudo_nivel && ((nave->estado >> 2) % 2)){
+        nave->estado -= 4;
+    }
+}
+
+void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig){
+    nave->fig = figura_clonar(nave_fig);
+    nave->fig_chorro = figura_clonar(nave_mas_chorro_fig);
+    nave->fig_escudo = figura_clonar(escudo_fig);
+    nave->fig_escudo_nivel = figura_clonar(escudo_nivel_fig);
 
     figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
+    figura_rototrasladar(nave->fig_escudo, nave->pos[X], nave->pos[Y], nave->angulo);
+    figura_rototrasladar(nave->fig_escudo_nivel, nave->pos[X], nave->pos[Y], nave->angulo);
 }
 
 void nave_rotar(nave_t *nave, double angulo){
@@ -92,15 +141,19 @@ void nave_avanzar(nave_t *nave, double aceleracion, double dt){
     nave_velocidad(nave, dt);
 }
 
+void nave_acercar_direccion(nave_t *nave, double aceleracion, double angulo, double dt){
+    while(angulo > 2 * PI)
+        angulo = angulo- (2 * PI);
+
+    while(angulo < 0)
+        angulo = angulo + (2 * PI);
+
+    nave_aceleracion(nave, aceleracion, angulo, dt);
+    nave_velocidad(nave, dt);
+}
+
 void nave_acercar(nave_t *nave, double aceleracion, double centro_x, double centro_y, double dt){
-    double angulo = 0;
-    if(nave->pos[X] > centro_x && nave->pos[Y] < centro_y){
-        angulo = atan((-nave->pos[Y] - centro_y)/(nave->pos[X] - centro_x)) + PI;
-    } else if(nave->pos[X] > centro_x && nave->pos[Y] > centro_y){
-        angulo = atan((nave->pos[Y] - centro_y)/(nave->pos[X] - centro_x)) + PI;
-    } else {
-        angulo = atan((nave->pos[Y] - centro_y)/(nave->pos[X] - centro_x));
-    }
+    double angulo = computar_angulo(nave->pos[X], nave->pos[Y], centro_x, centro_y);
     nave_aceleracion(nave, aceleracion, angulo, dt);
     nave_velocidad(nave, dt);
 }
@@ -113,10 +166,16 @@ void nave_invertir_vel_y(nave_t *nave){
     nave->vel[Y] = -nave->vel[Y];
 }
 
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro){
-    if(chorro){
+void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala){
+    if((nave->estado % 2)){
         figura_imprimir(renderer, nave->fig_chorro, escala, nave->pos[X], nave->pos[Y]);
-    }else{
+    } else {
         figura_imprimir(renderer, nave->fig, escala, nave->pos[X], nave->pos[Y]);
+    }
+
+    if((nave->estado >> 1) % 2){
+        figura_imprimir(renderer, nave->fig_escudo, escala, nave->pos[X], nave->pos[Y]);
+    } else if((nave->estado >> 2) % 2){
+        figura_imprimir(renderer, nave->fig_escudo_nivel, escala, nave->pos[X], nave->pos[Y]);
     }
 }
