@@ -62,9 +62,10 @@ figura_t *nave_get_figura_principal(nave_t *nave){
     return nave->fig;
 }
 
-void nave_setear_posicion(nave_t *nave, double x, double y){
+void nave_setear_posicion(nave_t *nave, double x, double y, double angulo){
     nave->pos[X] = x;
     nave->pos[Y] = y;
+    nave->angulo = angulo;
 }
 
 void nave_setear_velocidad(nave_t *nave, double vel_x, double vel_y){

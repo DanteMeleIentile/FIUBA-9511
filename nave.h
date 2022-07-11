@@ -39,7 +39,7 @@ figura_t *nave_get_figura_principal(nave_t *nave);
 /*
 ** Setea los parametros de posicion de la nave a los pedidos.
 */
-void nave_setear_posicion(nave_t *nave, double x, double y);
+void nave_setear_posicion(nave_t *nave, double x, double y, double angulo);
 
 /*
 ** Setea los parametros de velocidad de la nave a los pedidos.
