@@ -17,6 +17,11 @@ typedef struct nivel nivel_t;
 nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible);
 
 /*
+** Devuelve la figura del nivel dado
+*/
+figura_t *nivel_get_figura(nivel_t *nivel);
+
+/*
 ** Dado un nivel y una escala, imprime un nivel
 */
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);

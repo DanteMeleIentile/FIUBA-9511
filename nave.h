@@ -42,6 +42,11 @@ figura_t *nave_get_figura_principal(nave_t *nave);
 void nave_setear_posicion(nave_t *nave, double x, double y);
 
 /*
+** Setea los parametros de velocidad de la nave a los pedidos.
+*/
+void nave_setear_velocidad(nave_t *nave, double vel_x, double vel_y);
+
+/*
 ** Enciende su respectiva opcion.
 */
 void nave_prender(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel);

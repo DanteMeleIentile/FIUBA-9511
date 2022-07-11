@@ -67,6 +67,11 @@ void nave_setear_posicion(nave_t *nave, double x, double y){
     nave->pos[Y] = y;
 }
 
+void nave_setear_velocidad(nave_t *nave, double vel_x, double vel_y){
+    nave->vel[X] = vel_x;
+    nave->vel[Y] = vel_y;
+}
+
 void nave_prender(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
     if(chorro && !((nave->estado) % 2)){
         nave->estado += 1;

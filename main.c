@@ -49,8 +49,6 @@ void main_disparo_en_pantalla(SDL_Renderer *renderer, lista_t *lista_disparos, f
     lista_iter_destruir(iter);
 }
 
-
-
 bool main_disparo_pego(lista_t *lista_disparos, figura_t *figura, double dmin, bool friendly){
     bool pego = false;
     lista_iter_t *iter = lista_iter_crear(lista_disparos);
@@ -273,7 +271,7 @@ int main() {
     bool avanzar = false;
 
     size_t nivel = 0;
-    int vidas = 3;
+    int vidas = 20;
 
     double f = 1;
     
@@ -301,6 +299,7 @@ int main() {
 
                     case SDLK_DOWN:
                         a = a -  0.3;
+                        nave_setear_velocidad(nave, 0, 0);
                         break;
 
                     case SDLK_RIGHT:
@@ -383,10 +382,12 @@ int main() {
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida, escudo_leido, escudo2_leido);
         nave_apagar(nave, true, true, true);
 
+        if(spawn)
+            nave_setear_velocidad(nave, 0, 0);
+
         if(nivel == 0){
             if(spawn){
                 nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base));
-
                 spawn = false;
             }
             
@@ -407,34 +408,37 @@ int main() {
 
             nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
 
-            if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20) printf("AUCH\n");
+            if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+                nivel = 0;
+                spawn = true;
+            }
 
-            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 40){
                 spawn = true;
                 printf("PLANETA1\n");
-                nivel = 1;
+                //nivel = 1;
             }
-            if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+            if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 40){
                 spawn = true;
                 printf("PLANETA2\n");
-                nivel = 2;
+                //nivel = 2;
             }
-            if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+            if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 40){
                 spawn = true;
                 printf("PLANETA3\n");
-                nivel = 3;
+                //nivel = 3;
             }
 
-            if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+            if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 25){
                 spawn = true;
                 printf("PLANETA4\n");
                 nivel = 4;
             }
             
-            if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 20){
+            if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 40){
                 spawn = true;
                 printf("PLANETA5\n");
-                nivel = 5;
+                //nivel = 5;
             }
         }
 
@@ -456,6 +460,29 @@ int main() {
             nivel_imprimir(renderer, nivel_4, escala_no_infinito);
             nave_acercar_direccion(nave, -G, PI / 2, 1.f/JUEGO_FPS);
             lista_iterar_torretas(renderer, lista_torretas_4, lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), escala_no_infinito, torreta_leida, torreta_disparando_leida);
+            if(distancia_punto_a_figura(nivel_get_figura(nivel_4), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 5){
+                //vidas--;
+                printf("VIDAS = %d\n", vidas);
+                //spawn = true;
+            }
+
+            if(nave_get_pos_x(nave) < 0){
+                nave_setear_posicion(nave, VENTANA_ANCHO, nave_get_pos_y(nave));
+            }
+
+            if(nave_get_pos_x(nave) > VENTANA_ANCHO){
+                nave_setear_posicion(nave, 0, nave_get_pos_y(nave));
+            }
+
+            if(nave_get_pos_y(nave) < 0){
+                nave_invertir_vel_y(nave);
+            }
+
+            if(nave_get_pos_y(nave) > VENTANA_ALTO * 1.25){
+                nivel = 0;
+                spawn = true;
+            }
+
         }
 
         if(nivel == 5){
@@ -490,9 +517,9 @@ int main() {
         nave_imprimir(renderer, nave, f);
         
         if(main_disparo_pego(lista_disparos, nave_get_figura_principal(nave), 5, true)){
-            //vidas--;
-            printf("VIDAS = %d", vidas);
-            //spawn = true;
+            vidas--;
+            printf("VIDAS = %d\n", vidas);
+            spawn = true;
         }
 
         if(disparo && listo_para_disparar){

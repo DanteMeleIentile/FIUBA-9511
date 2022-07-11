@@ -34,12 +34,14 @@ nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combust
     return nivel;
 }
 
+figura_t *nivel_get_figura(nivel_t *nivel){
+    return  nivel->fig;
+}
 
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala){
     figura_imprimir(renderer, nivel->fig, escala, 0, 0.62 * 150);
 
 }
-
 
 void nivel_trasladar(nivel_t *nivel, float dx, float dy){
     figura_trasladar(nivel->fig, dx, dy);
