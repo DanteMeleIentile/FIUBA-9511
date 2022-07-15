@@ -23,5 +23,8 @@
 
 #define NAVE_ANGULO_INICIAL (PI/2)
 
+#define X 0
+#define Y 1
+
 #endif // _CONFIG_H_
 

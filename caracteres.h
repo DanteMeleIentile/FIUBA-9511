@@ -1,6 +1,9 @@
 #ifndef _LETRAS_H_
 #define _LETRAS_H_
 
+#include "color.h"
+#include <SDL2/SDL.h>
+
 #define CARACTER_ANCHO 6
 #define CARACTER_ALTO 6
 
@@ -48,5 +51,7 @@ extern const int caracter_arriba[5][2];
 extern const int caracter_abajo[5][2];
 
 extern const int caracter_espacio[1][2];
+
+void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color);
 
 #endif // _LETRAS_H_

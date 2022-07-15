@@ -1,4 +1,11 @@
 #include "caracteres.h"
+#include "color.h"
+#include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define VENTANA_ANCHO 800
+#define VENTANA_ALTO 600
 
 const int caracter_a[7][2] = {
 	{0, 0},
@@ -340,4 +347,157 @@ const int caracter_abajo[5][2] = {
 const int caracter_espacio[1][2] = {
 	{0, 0},
 };
+
+typedef enum {
+	A = 65,
+	B = 66,
+	C = 67,
+	D = 68,
+	E = 69,
+	F = 70,
+	G = 71,
+	H = 72,
+	I = 73,
+	J = 74,
+	K = 75,
+	L = 76,
+	M = 77,
+	N = 78,
+	O = 79,
+	P = 80,
+	Q = 81,
+	R = 82,
+	S = 83,
+	T = 84,
+	U = 85,
+	V = 86,
+	W = 87,
+	X = 88,
+	Y = 89,
+	Z = 90,
+	CERO = 48,
+	UNO = 49,
+	DOS = 50,
+	TRES = 51,
+	CUATRO = 52,
+	CINCO = 53,
+	SEIS = 54,
+	SIETE = 55,
+	OCHO = 56,
+	NUEVE = 57,
+	ESPACIO = 32,
+	ARRIBA = 1,
+	ABAJO = 2, 
+	IZQUIERDA = 3,
+	DERECHA = 4,
+} caracteres_t;
+
+const int *tabla_caracteres[] = {
+	[A] = caracter_a,
+	[B] = caracter_b,
+	[C] = caracter_c,
+	[D] = caracter_d,
+	[E] = caracter_e,
+	[F] = caracter_f,
+	[G] = caracter_g,
+	[H] = caracter_h,
+	[I] = caracter_i,
+	[J] = caracter_j,
+	[K] = caracter_k,
+	[L] = caracter_l,
+	[M] = caracter_m,
+	[N] = caracter_n,
+	[O] = caracter_o,
+	[P] = caracter_p,
+	[Q] = caracter_q,
+	[R] = caracter_r,
+	[S] = caracter_s,
+	[T] = caracter_t,
+	[U] = caracter_u,
+	[V] = caracter_v,
+	[W] = caracter_w,
+	[X] = caracter_x,
+	[Y] = caracter_y,
+	[Z] = caracter_z,
+	[CERO] = caracter_0,
+	[UNO] = caracter_1,
+	[DOS] = caracter_2,
+	[TRES] = caracter_3,
+	[CUATRO] = caracter_4,
+	[CINCO] = caracter_5,
+	[SEIS] = caracter_6,
+	[SIETE] = caracter_7,
+	[OCHO] = caracter_8,
+	[NUEVE] = caracter_9,
+	[ESPACIO] = caracter_espacio,
+	[ARRIBA] = caracter_arriba,
+	[ABAJO] = caracter_abajo, 
+	[IZQUIERDA] = caracter_izquierda,
+	[DERECHA] = caracter_derecha,
+};
+
+const size_t cant_puntos_caracteres[] = {
+	[A] = 7,
+	[B] = 12,
+	[C] = 4,
+	[D] = 7,
+	[E] = 7,
+	[F] = 6,
+	[G] = 7,
+	[H] = 6,
+	[I] = 6,
+	[J] = 4,
+	[K] = 6,
+	[L] = 3,
+	[M] = 5,
+	[N] = 4,
+	[O] = 5,
+	[P] = 5,
+	[Q] = 9,
+	[R] = 7,
+	[S] = 6,
+	[T] = 4,
+	[U] = 4,
+	[V] = 3,
+	[W] = 5,
+	[X] = 5,
+	[Y] = 5,
+	[Z] = 4,
+	[CERO] = 5,
+	[UNO] = 2,
+	[DOS] = 6,
+	[TRES] = 7,
+	[CUATRO] = 5,
+	[CINCO] = 6,
+	[SEIS] = 5,
+	[SIETE] = 3,
+	[OCHO] = 7,
+	[NUEVE] = 5,
+	[ESPACIO] = 1,
+	[ARRIBA] = 5,
+	[ABAJO] = 5, 
+	[IZQUIERDA] = 5,
+	[DERECHA] = 5,
+};
+
+
+void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color){
+	size_t len = strlen(cadena);
+
+	int shift = 10;
+
+	for(size_t i = 0; i < len + 1; i++){
+		for(size_t j = 0; j < ((cant_puntos_caracteres[cadena[i]] * 2) - 3); j++){
+			SDL_RenderDrawLine(
+			renderer,
+			((tabla_caracteres[cadena[i]][j] - pos_x) * escala + pos_x + shift*escala),
+			(-(tabla_caracteres[cadena[i]][j+1] - pos_y) * escala + VENTANA_ALTO - pos_y),
+			((tabla_caracteres[cadena[i]][j+2] - pos_x) * escala + pos_x + shift*escala),
+			(-(tabla_caracteres[cadena[i]][j+3] - pos_y) * escala + VENTANA_ALTO - pos_y)
+			);
+		}
+	}
+}
+
+
 

@@ -12,6 +12,7 @@
 #include "planeta.h"
 #include "nivel.h"
 #include "torreta.h"
+#include "caracteres.h"
 
 #define TIEMPO_MAX_DISPAROS 2
 #define VEL_DISPARO 150
@@ -66,6 +67,29 @@ bool main_disparo_pego(lista_t *lista_disparos, figura_t *figura, double dmin, b
     lista_iter_destruir(iter);
     return false;
 }
+
+
+
+void lista_iterar_combustibles(SDL_Renderer *renderer, lista_t *lista_combustible, nave_t *nave, double escala, figura_t *combustible_leido){
+    lista_iter_t *iter = lista_iter_crear(lista_combustible);
+    if(iter == NULL){
+        fprintf(stderr, "Error en memoria\n");
+        combustible_leido = NULL;
+    }
+    for(size_t i = 0; i < lista_largo(lista_combustible); i++){
+        float *pos = lista_iter_ver_actual(iter);
+
+        if(distancia_entre_puntos(nave_get_pos_x(nave), nave_get_pos_y(nave), pos[X], pos[Y]) < escala * 20){
+            lista_iter_borrar(iter);
+            continue;
+        } 
+
+        figura_imprimir(renderer, combustible_leido, escala, pos[X], pos[Y]);
+        lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
+}
+
 
 void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista_t *lista_disparos, double movil_x, double movil_y, double escala, figura_t *torreta_leida, figura_t *torreta_disparo_leida){
     lista_iter_t *iter = lista_iter_crear(lista_torreta);
@@ -211,7 +235,7 @@ int main() {
 
     //Creamos referencias a las figuras del vector_figuras para no buscarlas nuevamente por cada dt
     
-    nave_t *nave = nave_crear();
+    nave_t *nave = nave_crear(JUEGO_COMBUSTIBLE_INICIAL);
     if(nave == NULL){
         fprintf(stderr, "Error de memoria");
         return 1;
@@ -286,11 +310,24 @@ int main() {
 
     //Creación de listase e iteradores para elementos repetidos.
     lista_t *lista_disparos = lista_crear();
-
+    if(lista_disparos == NULL){
+        fprintf(stderr, "Error en la memoria");
+        return 1;
+    }
 
     //lista_t *lista_combustibles_4 = lista_crear();
 
     lista_t *lista_torretas_4 = lista_crear();
+    if(lista_torretas_4 == NULL){
+        fprintf(stderr, "Error en la memoria");
+        return 1;
+    }
+
+    lista_t *lista_combustibles_4 = lista_crear();
+    if(lista_combustibles_4 == NULL){
+        fprintf(stderr, "Error en la memoria");
+        return 1;
+    }
 
     lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 257, 0.62 * (440 + 56), 0.66));
     lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 719, 0.62 * (674 + 56), 2.23));
@@ -327,6 +364,8 @@ int main() {
     double f = 1;
     
     bool spawn = true;
+
+    //Tiempo combustible
 
     // END código del alumno
         float a = 1;
@@ -422,6 +461,7 @@ int main() {
         float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
         if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
             escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
+
         //float centro = (989 + 150)/2; 
 
         //printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
@@ -429,6 +469,8 @@ int main() {
 
         //printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
         //printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
+
+        cadena_imprimir(renderer, "HOLA", VENTANA_ANCHO/2, VENTANA_ALTO/2, f, color_crear(true, true, true));
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida, escudo_leido, escudo2_leido);
         nave_apagar(nave, true, true, true);
@@ -532,7 +574,6 @@ int main() {
                 nivel = 0;
                 spawn = true;
             }
-
         }
 
         if(nivel == 5){
@@ -556,12 +597,31 @@ int main() {
 
         if(chorro_prendido){
             nave_prender(nave, true, false, false);
+            nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_POT_X_SEG);
         }
 
         if(escudo_prendido && (nivel != 0 && nivel != 5)){
             nave_prender(nave, false, false, true);
+            nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_ESC_X_SEG);
         } else if(escudo_prendido){
             nave_prender(nave, false, true, false);
+            nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_ESC_X_SEG);
+        }
+
+        if(nave_get_combustible(nave) <= 0){
+            return 0;
+        }
+
+//CONDICIONES PARA SETEAR EL ANGULO DEL ESCUDO:
+
+        if(nave_get_pos_y(nave) < VENTANA_ALTO/3){
+            nave_escudo_setear_angulo(nave, PI);
+        } else if(nave_get_pos_y(nave) > 2*VENTANA_ALTO/3){
+            nave_escudo_setear_angulo(nave, 0);
+        } else if(nave_get_pos_x(nave) < VENTANA_ANCHO/3){
+            nave_escudo_setear_angulo(nave, PI/2);
+        } else if(nave_get_pos_x(nave) > 2*VENTANA_ANCHO/3){
+            nave_escudo_setear_angulo(nave, -PI/2);
         }
 
         nave_imprimir(renderer, nave, f);

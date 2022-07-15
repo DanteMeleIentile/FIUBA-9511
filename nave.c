@@ -22,15 +22,16 @@ struct nave {
     double pos[2];
     double vel[2];
     double angulo;
+    double angulo_escudo;
     uint8_t estado;
-    //int cant_combustible;
+    int cant_combustible;
 };
 
 static double DEG_A_RAD(double grados){
     return grados * PI / 180;
 }
 
-nave_t *nave_crear(void){
+nave_t *nave_crear(int cant_combustible){
     //Evaluar necesidad de memoría dinámica
     nave_t *nave = malloc(sizeof(nave_t));
     if(nave == NULL) return NULL;
@@ -42,6 +43,8 @@ nave_t *nave_crear(void){
 
     nave->vel[X] = 0;
     nave->vel[Y] = 0;
+
+    nave->cant_combustible = cant_combustible;
 
     return nave;
 }
@@ -60,6 +63,14 @@ double nave_get_angulo(nave_t *nave){
 
 figura_t *nave_get_figura_principal(nave_t *nave){
     return nave->fig;
+}
+
+int nave_get_combustible(nave_t *nave){
+    return nave->cant_combustible;
+}
+
+bool nave_estado_escudo_nivel(nave_t *nave){
+    return (nave->estado >> 2) % 2;
 }
 
 void nave_setear_posicion(nave_t *nave, double x, double y, double angulo){
@@ -110,7 +121,7 @@ void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro
     figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_escudo, nave->pos[X], nave->pos[Y], nave->angulo);
-    figura_rototrasladar(nave->fig_escudo_nivel, nave->pos[X], nave->pos[Y], nave->angulo);
+    figura_rototrasladar(nave->fig_escudo_nivel, nave->pos[X], nave->pos[Y], nave->angulo_escudo);
 }
 
 void nave_rotar(nave_t *nave, double angulo){
@@ -130,6 +141,17 @@ void nave_rotar(nave_t *nave, double angulo){
 
     while(nave->angulo < 0)
         nave->angulo = nave->angulo + (2 * PI);
+}
+
+void nave_escudo_setear_angulo(nave_t *nave, double angulo){
+
+    nave->angulo_escudo = angulo;
+
+    while(nave->angulo_escudo > 2 * PI)
+        nave->angulo_escudo = nave->angulo_escudo - (2 * PI);
+
+    while(nave->angulo_escudo < 0)
+        nave->angulo_escudo = nave->angulo_escudo + (2 * PI);
 }
 
 static void nave_aceleracion(nave_t *nave, double aceleracion, double rad, double dt){
@@ -170,6 +192,10 @@ void nave_invertir_vel_x(nave_t *nave){
 
 void nave_invertir_vel_y(nave_t *nave){
     nave->vel[Y] = -nave->vel[Y];
+}
+
+void nave_sumar_combustible(nave_t *nave, int combustible){
+    nave->cant_combustible += combustible;
 }
 
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala){
