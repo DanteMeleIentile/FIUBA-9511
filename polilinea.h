@@ -76,11 +76,11 @@ void trasladar(float polilinea[][2], size_t n, float dx, float dy);
 void rotar(float polilinea[][2], size_t n, double rad);
 
 /*
-** Escala la polilinea
+** Escala la polilinea segun el origen
 */
 void escalar(float polilinea[][2], size_t n, float escala);
 
-double calcular_distancia(float px, float py, double qx, double qy);
+double calcular_distancia(float px, float py, float qx, float qy);
 
 //double calcular_parametro(double ax, double ay, double bx, double by, float px, float py);
 

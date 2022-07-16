@@ -145,11 +145,11 @@ void escalar(float polilinea[][2], size_t n, float escala){
     }
 }
 
-double calcular_distancia(float px, float py, double qx, double qy){
+double calcular_distancia(float px, float py, float qx, float qy){
     return sqrt(pow(px-qx,2) + pow(py-qy,2));
 }
 
-double calcular_parametro(double ax, double ay, double bx, double by, float px, float py) {
+double calcular_parametro(float ax, float ay, float bx, float by, float px, float py) {
 
     double k = ((px - ax) * (bx - ax) + (py - ay) * (by - ay))/ pow(calcular_distancia(bx, by, ax, ay),2); 
 

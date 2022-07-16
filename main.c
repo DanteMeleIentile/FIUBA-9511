@@ -19,9 +19,24 @@
 
 #define DT 1.f/JUEGO_FPS
 #define COOLDOWN_NAVE 0.5
-#define COOLDOWN_TORRETA 2
+#define COOLDOWN_TORRETA 10
 
 //SI DISPARO_LEIDO SE VUELVE FALSE, HUBO UN ERROR EN LA MEMORIA
+float computar_escala_nivel(figura_t *figura){
+
+    float planeta_ancho = figura_get_extremo_x(figura, true) - figura_get_extremo_x(figura, false);
+    float planeta_alto = figura_get_extremo_y(figura, true) - figura_get_extremo_y(figura, false);
+
+    float escala_no_infinito = VENTANA_ALTO * 1.0 / planeta_alto;
+
+    if(VENTANA_ANCHO * 1.0 / (planeta_ancho - figura_get_extremo_x(figura, false)) < escala_no_infinito)
+        escala_no_infinito = VENTANA_ANCHO * 1.0 / planeta_ancho;
+    
+    printf("ESCALA: %f\n", escala_no_infinito);
+
+    return escala_no_infinito;
+}
+
 void main_disparo_en_pantalla(SDL_Renderer *renderer, lista_t *lista_disparos, figura_t *disparo_leido, double escala){
     lista_iter_t *iter = lista_iter_crear(lista_disparos);
 
@@ -91,7 +106,7 @@ void lista_iterar_combustibles(SDL_Renderer *renderer, lista_t *lista_combustibl
 }
 
 
-void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista_t *lista_disparos, double movil_x, double movil_y, double escala, figura_t *torreta_leida, figura_t *torreta_disparo_leida){
+void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista_t *lista_disparos, float movil_x, float movil_y, float escala, figura_t *torreta_leida, figura_t *torreta_disparo_leida){
     lista_iter_t *iter = lista_iter_crear(lista_torreta);
     for(size_t i = 0; i < lista_largo(lista_torreta); i++){
         torreta_t *torreta_act = lista_iter_ver_actual(iter);
@@ -235,7 +250,7 @@ int main() {
 
     //Creamos referencias a las figuras del vector_figuras para no buscarlas nuevamente por cada dt
     
-    nave_t *nave = nave_crear(JUEGO_COMBUSTIBLE_INICIAL);
+    nave_t *nave = nave_crear(10000);
     if(nave == NULL){
         fprintf(stderr, "Error de memoria");
         return 1;
@@ -328,6 +343,8 @@ int main() {
         fprintf(stderr, "Error en la memoria");
         return 1;
     }
+
+    float escala_no_infinito = computar_escala_nivel(nivel4_leido);
 
     lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 257, 0.62 * (440 + 56), 0.66));
     lista_insertar_ultimo(lista_torretas_4, torreta_crear(COOLDOWN_TORRETA, 0.62 * 719, 0.62 * (674 + 56), 2.23));
@@ -458,15 +475,17 @@ int main() {
 
         // BEGIN código del alumno
         
-        float escala_no_infinito = VENTANA_ALTO * 1.0 / 596;
-        if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
-            escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
-
-        int c = nave_get_combustible(nave);
         char cadena[10];
-        sprintf(cadena, "%d", c);
+        sprintf(cadena, "%d", nave_get_combustible(nave));
 
-        cadena_imprimir(renderer, cadena, 200, 200, 3, color_crear(true, true, true));
+        cadena_imprimir(renderer, cadena, VENTANA_ANCHO/4, 7*VENTANA_ALTO/8, 2, color_crear(true, true, true));
+        cadena_imprimir(renderer, "FUEL", VENTANA_ANCHO/2, 9*VENTANA_ALTO/10, 2, color_crear(true, true, true));
+
+        int score = 1000;
+        sprintf(cadena, "%d", score);
+        cadena_imprimir(renderer, "SCORE", VENTANA_ANCHO/2, 9*VENTANA_ALTO/10, 2, color_crear(true, true, true));
+
+        
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida, escudo_leido, escudo2_leido);
         nave_apagar(nave, true, true, true);
@@ -547,11 +566,13 @@ int main() {
             //nivel_trasladar(nivel_4, +150 * escala_no_infinito/2, 0);
             nivel_imprimir(renderer, nivel_4, escala_no_infinito);
             nave_acercar_direccion(nave, -G, PI / 2, 1.f/JUEGO_FPS);
+
             lista_iterar_torretas(renderer, lista_torretas_4, lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), escala_no_infinito, torreta_leida, torreta_disparando_leida);
-            if(distancia_punto_a_figura(nivel_get_figura(nivel_4), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 5){
-                //vidas--;
+            
+            if(distancia_punto_a_figura(nivel_get_figura(nivel_4), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){
+                vidas--;
                 printf("VIDAS = %d\n", vidas);
-                //spawn = true;
+                spawn = true;
             }
 
             if(nave_get_pos_x(nave) < 0){

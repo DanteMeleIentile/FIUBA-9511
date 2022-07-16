@@ -59,13 +59,13 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 ** Devuelve el extremo en "x" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-double figura_get_extremo_x(figura_t *figura, bool mayor);
+float figura_get_extremo_x(figura_t *figura, bool mayor);
 
 /*
 ** Devuelve el extremo en "y" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-double figura_get_extremo_y(figura_t *figura, bool mayor);
+float figura_get_extremo_y(figura_t *figura, bool mayor);
 
 char *figura_get_nombre(figura_t *figura);
 
@@ -89,26 +89,25 @@ void figura_agregar_en_lista(char *nombre, lista_t *lista);
 //EVALIUAR FUNCION PARA ELIMINAR TODAS LAS ENTIDADES CON "NOMBRE"
 void figura_eliminar_en_lista(char *nombre, lista_t *lista);
 
-
 void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
 
-
-//Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado.
-void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y);
-
+//Dada una figura, una escala y un renderer, escala sus polilineas según su centro (las modifica) y luego las imprime.
+void figura_imprimir(SDL_Renderer *renderer, figura_t *figura, float escala, float x, float y);
 
 //Rota la figura dada un angulo "rad"
 void figura_rotar(figura_t *figura, double rad);
 
-
 //Traslada la figura dada una distancia "dx" en coordenada "x" y una distancia "dy" en coordenada "y"
-void figura_trasladar(figura_t *figura, double dx, double dy);
+void figura_trasladar(figura_t *figura, float dx, float dy);
 
 //Traslada y rota la figura con los mismos parametros que las anteriores 2 funciones
-void figura_rototrasladar(figura_t *figura, double dx, double dy, double angulo);
+void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo);
+
+//Escala la figura  según su posición
+void figura_escalar(figura_t *figura, float pos_x, float pos_y, float escala);
 
 //Da la distancia más cercana entre el punto y la figura
-double distancia_punto_a_figura(figura_t *figura, double x, double y);
+double distancia_punto_a_figura(figura_t *figura, float x, float y);
 
 /*
 ** Dada una figura, la setea en unas coordenadas "x" e "y" rotada un angulo "rad" y escalada por "escala".

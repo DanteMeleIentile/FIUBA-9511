@@ -89,8 +89,8 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
     return true;
 }
 
-double figura_get_extremo_x(figura_t *figura, bool mayor){
-    double aux = 0;
+float figura_get_extremo_x(figura_t *figura, bool mayor){
+    float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
             aux = polilinea_get_extremo_x(figura->polilineas[i], mayor);
@@ -106,8 +106,8 @@ double figura_get_extremo_x(figura_t *figura, bool mayor){
     return aux;
 }
 
-double figura_get_extremo_y(figura_t *figura, bool mayor){
-    double aux = 0;
+float figura_get_extremo_y(figura_t *figura, bool mayor){
+    float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
             aux = polilinea_get_extremo_y(figura->polilineas[i], mayor);
@@ -170,33 +170,42 @@ void figura_rotar(figura_t *figura, double rad){
     }
 }
 
-void figura_trasladar(figura_t *figura, double dx, double dy){
+void figura_trasladar(figura_t *figura, float dx, float dy){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, dx, dy);
     }
 }
 
-void figura_rototrasladar(figura_t *figura, double dx, double dy, double angulo){
+void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo){
     figura_rotar(figura, angulo);
     figura_trasladar(figura, dx, dy);
 }
 
-void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y){
+void figura_escalar(figura_t *figura, float pos_x, float pos_y, float escala){
+    figura_trasladar(figura, -pos_x, -pos_y);
+    for(size_t i = 0; i < figura->cant_polilineas; i++){
+        escalar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, escala);
+    }
+    figura_trasladar(figura, pos_x, pos_y);
+}
+
+void figura_imprimir(SDL_Renderer *renderer, figura_t *figura, float escala, float x, float y){
+    figura_escalar(figura, x, y, escala);
     for(size_t k = 0; k < figura->cant_polilineas; k++){
         SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
         for(size_t z = 0; z < figura->polilineas[k]->n - 1; z++){
             SDL_RenderDrawLine(
             renderer,
-            ((figura->polilineas[k]->puntos[z][X] - x) * escala + x),
-            (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y),
-            ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x),
-            (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO- y)
+            ((figura->polilineas[k]->puntos[z][X])),
+            (-(figura->polilineas[k]->puntos[z][Y]) + VENTANA_ALTO),
+            ((figura->polilineas[k]->puntos[z+1][X])),
+            (-(figura->polilineas[k]->puntos[z+1][Y]) + VENTANA_ALTO)
             );
         }
     }
 }
 
-double distancia_punto_a_figura(figura_t *figura, double x, double y){
+double distancia_punto_a_figura(figura_t *figura, float x, float y){
     double distancia;
     double distancia_actual;
     for(size_t i = 0; i < figura->cant_polilineas; i++){

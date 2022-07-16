@@ -12,7 +12,7 @@ typedef struct torreta torreta_t;
 /*
 ** Crea la torreta en posicion y rotacion pedidas
 */
-torreta_t *torreta_crear(double cooldown, double pos_x, double pos_y, double angulo);
+torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angulo);
 
 /*
 ** Devuelve la posicion en "x" de la torreta
@@ -57,13 +57,13 @@ void torreta_restar_cooldown(torreta_t *torreta, double t);
 /*
 ** Setea el la posicion y el angulo de rotacion de la torreta dada
 */
-void torreta_setear_en_lugar(torreta_t *torreta, double pos_x, double pos_y, double angulo);
+void torreta_setear_en_lugar(torreta_t *torreta, float pos_x, float pos_y, double angulo);
 
 /*
 ** Setea el angulo de apuntado de la torreta hacia las cordenadas centro_x y centro_y
 ** Devuelve bool si pudo apuntar, caso contrario devuelve false
 */
-bool torreta_apuntar(torreta_t *torreta, double x_objetivo, double y_objetivo);
+bool torreta_apuntar(torreta_t *torreta, float x_objetivo, float y_objetivo);
 
 /*
 ** Actualiza las 2 figuras de la torreta según los parametros de la misma (posición y ángulo).
@@ -80,7 +80,7 @@ void torreta_destruir(torreta_t *torreta);
 /*
 ** Imprime la torreta dada
 */
-void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, double escala, bool disparo);
+void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, float escala, bool disparo);
 
 //SPAWN TORRETA EN POSICION XY Y ROTARLO UN ANGULO, Y QUE DISPARE
 

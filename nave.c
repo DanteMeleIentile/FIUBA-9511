@@ -19,8 +19,8 @@ struct nave {
     figura_t *fig_chorro;
     figura_t *fig_escudo;
     figura_t *fig_escudo_nivel;
-    double pos[2];
-    double vel[2];
+    float pos[2];
+    float vel[2];
     double angulo;
     double angulo_escudo;
     uint8_t estado;
@@ -73,13 +73,13 @@ bool nave_estado_escudo_nivel(nave_t *nave){
     return (nave->estado >> 2) % 2;
 }
 
-void nave_setear_posicion(nave_t *nave, double x, double y, double angulo){
+void nave_setear_posicion(nave_t *nave, float x, float y, double angulo){
     nave->pos[X] = x;
     nave->pos[Y] = y;
     nave->angulo = angulo;
 }
 
-void nave_setear_velocidad(nave_t *nave, double vel_x, double vel_y){
+void nave_setear_velocidad(nave_t *nave, float vel_x, float vel_y){
     nave->vel[X] = vel_x;
     nave->vel[Y] = vel_y;
 }
@@ -154,7 +154,7 @@ void nave_escudo_setear_angulo(nave_t *nave, double angulo){
         nave->angulo_escudo = nave->angulo_escudo + (2 * PI);
 }
 
-static void nave_aceleracion(nave_t *nave, double aceleracion, double rad, double dt){
+static void nave_aceleracion(nave_t *nave, float aceleracion, double rad, double dt){
     nave->vel[X] = computar_velocidad(nave->vel[X], aceleracion * cos(rad), dt);
     nave->vel[Y] = computar_velocidad(nave->vel[Y], aceleracion * sin(rad), dt);
 }
@@ -164,12 +164,12 @@ static void nave_velocidad(nave_t *nave, double dt){
     nave->pos[Y] = computar_posicion(nave->pos[Y], nave->vel[Y], dt);
 }
 
-void nave_avanzar(nave_t *nave, double aceleracion, double dt){
+void nave_avanzar(nave_t *nave, float aceleracion, double dt){
     nave_aceleracion(nave, aceleracion, nave->angulo, dt);
     nave_velocidad(nave, dt);
 }
 
-void nave_acercar_direccion(nave_t *nave, double aceleracion, double angulo, double dt){
+void nave_acercar_direccion(nave_t *nave, float aceleracion, double angulo, double dt){
     while(angulo > 2 * PI)
         angulo = angulo- (2 * PI);
 
@@ -180,7 +180,7 @@ void nave_acercar_direccion(nave_t *nave, double aceleracion, double angulo, dou
     nave_velocidad(nave, dt);
 }
 
-void nave_acercar(nave_t *nave, double aceleracion, double centro_x, double centro_y, double dt){
+void nave_acercar(nave_t *nave, float aceleracion, float centro_x, float centro_y, double dt){
     double angulo = computar_angulo(nave->pos[X], nave->pos[Y], centro_x, centro_y);
     nave_aceleracion(nave, aceleracion, angulo, dt);
     nave_velocidad(nave, dt);
@@ -198,7 +198,7 @@ void nave_sumar_combustible(nave_t *nave, int combustible){
     nave->cant_combustible += combustible;
 }
 
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala){
+void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala){
     if((nave->estado % 2)){
         figura_imprimir(renderer, nave->fig_chorro, escala, nave->pos[X], nave->pos[Y]);
     } else {

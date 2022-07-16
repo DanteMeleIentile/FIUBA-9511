@@ -49,12 +49,12 @@ bool nave_estado_escudo_nivel(nave_t *nave);
 /*
 ** Setea los parametros de posicion de la nave a los pedidos.
 */
-void nave_setear_posicion(nave_t *nave, double x, double y, double angulo);
+void nave_setear_posicion(nave_t *nave, float x, float y, double angulo);
 
 /*
 ** Setea los parametros de velocidad de la nave a los pedidos.
 */
-void nave_setear_velocidad(nave_t *nave, double vel_x, double vel_y);
+void nave_setear_velocidad(nave_t *nave, float vel_x, float vel_y);
 
 /*
 ** Enciende su respectiva opcion.
@@ -85,17 +85,17 @@ void nave_escudo_setear_angulo(nave_t *nave, double angulo);
 /*
 ** Avanza en dirección a la punta de la nave con acc "aceleracion" en un tiempo dt. Actualiza los valores de velocidad de la nave. 
 */
-void nave_avanzar(nave_t *nave, double aceleracion, double dt);
+void nave_avanzar(nave_t *nave, float aceleracion, double dt);
 
 /*
 ** Acerca la nave hacia el centro con una aceleración "aceleracion" en un tiempo dt. Actualiza los valores de velocidad de la nave. 
 */
-void nave_acercar(nave_t *nave, double aceleracion, double centro_x, double centro_y, double dt);
+void nave_acercar(nave_t *nave, float aceleracion, float centro_x, float centro_y, double dt);
 
 /*
 ** Acerca la nave en direccion al angulo dado en un tiempo dt. Actualiza los valores de velocidad de la nave. 
 */
-void nave_acercar_direccion(nave_t *nave, double aceleracion, double angulo, double dt);
+void nave_acercar_direccion(nave_t *nave, float aceleracion, double angulo, double dt);
 
 /*
 ** Invierte el parámetro de velocidad en "x" de la nave.
@@ -116,7 +116,7 @@ void nave_sumar_combustible(nave_t *nave, int combustible);
 /*
 ** Dibuja la nave en pantalla segun sus parametros;
 */
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala);
+void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala);
 
 
 #endif

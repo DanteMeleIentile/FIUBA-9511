@@ -413,10 +413,10 @@ const char tabla_caracteres[] = {
 	[OCHO] = '8',
 	[NUEVE] = '9',
 	[ESPACIO] = ' ',
-//	[ARRIBA] = caracter_arriba,
-//	[ABAJO] = caracter_abajo, 
-//	[IZQUIERDA] = caracter_izquierda,
-//	[DERECHA] = caracter_derecha,
+	[ARRIBA] = 'a',
+	[ABAJO] = 'b', 
+	[IZQUIERDA] = 'c',
+	[DERECHA] = 'd',
 	[A] = 'A',
 	[B] = 'B',
 	[C] = 'C',
@@ -542,10 +542,10 @@ void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float po
 				for(size_t k = 0; k < ((cant_puntos_caracteres[j] - 1) * 2); k+=2){
 					SDL_RenderDrawLine(
 					renderer,
-					( (*(poli+k+EJE_X) + pos_x) * escala - pos_x*2 + SHIFT*escala*i),
-					(-(*(poli+k+EJE_Y) + pos_y) * escala + VENTANA_ALTO + pos_y*2),
-					( (*(poli+k+EJE_X+2) + pos_x) * escala - pos_x*2 + SHIFT*escala*i),
-					(-(*(poli+k+EJE_Y+2) + pos_y) * escala + VENTANA_ALTO + pos_y*2)
+					( (*(poli+k+EJE_X) + pos_x) * escala - pos_x*(escala-1) + SHIFT*escala*i) - (len/k) * escala,
+					(-(*(poli+k+EJE_Y) + pos_y) * escala + VENTANA_ALTO + pos_y*(escala-1) ),
+					( (*(poli+k+EJE_X+2) + pos_x) * escala - pos_x*(escala-1)  + SHIFT*escala*i) - (len/k) * escala,
+					(-(*(poli+k+EJE_Y+2) + pos_y) * escala + VENTANA_ALTO + pos_y*(escala-1) )
 					);
 				}
 			}

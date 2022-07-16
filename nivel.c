@@ -39,7 +39,8 @@ figura_t *nivel_get_figura(nivel_t *nivel){
 }
 
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala){
-    figura_imprimir(renderer, nivel->fig, escala, 0, 0.62 * 150);
+    nivel_trasladar(nivel, 0, 56*escala);
+    figura_imprimir(renderer, nivel->fig, escala, 0, 56*escala);
 
 }
 
