@@ -462,15 +462,11 @@ int main() {
         if(VENTANA_ANCHO * 1.0 / (989 + 150) < escala_no_infinito)
             escala_no_infinito = VENTANA_ANCHO * 1.0 / (989 + 150);
 
-        //float centro = (989 + 150)/2; 
+        int c = nave_get_combustible(nave);
+        char cadena[10];
+        sprintf(cadena, "%d", c);
 
-        //printf("MIN X = %f\n", figura_get_extremo_x(nivel4_leido, false));
-        //printf("MAX X = %f\n", figura_get_extremo_x(nivel4_leido, true));
-
-        //printf("MIN Y = %f\n", figura_get_extremo_y(nivel4_leido, false));
-        //printf("MAX Y = %f\n", figura_get_extremo_y(nivel4_leido, true));
-
-        cadena_imprimir(renderer, "HOLA", VENTANA_ANCHO/2, VENTANA_ALTO/2, f, color_crear(true, true, true));
+        cadena_imprimir(renderer, cadena, 200, 200, 3, color_crear(true, true, true));
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida, escudo_leido, escudo2_leido);
         nave_apagar(nave, true, true, true);
@@ -597,12 +593,12 @@ int main() {
 
         if(chorro_prendido){
             nave_prender(nave, true, false, false);
-            nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_POT_X_SEG);
+            nave_sumar_combustible(nave, -JUEGO_COMBUSTIBLE_ESC_X_SEG/JUEGO_FPS);
         }
 
         if(escudo_prendido && (nivel != 0 && nivel != 5)){
             nave_prender(nave, false, false, true);
-            nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_ESC_X_SEG);
+            nave_sumar_combustible(nave, -JUEGO_COMBUSTIBLE_ESC_X_SEG/JUEGO_FPS);
         } else if(escudo_prendido){
             nave_prender(nave, false, true, false);
             nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_ESC_X_SEG);

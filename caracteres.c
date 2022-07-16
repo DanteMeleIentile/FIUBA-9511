@@ -7,6 +7,14 @@
 #define VENTANA_ANCHO 800
 #define VENTANA_ALTO 600
 
+#define EJE_X 0
+#define EJE_Y 1
+
+#define SHIFT 6
+
+#define CANT_CARACTERES 41
+
+
 const int caracter_a[7][2] = {
 	{0, 0},
 	{0, 4},
@@ -525,37 +533,20 @@ const size_t cant_puntos_caracteres[] = {
 	[Z] = 4,
 };
 
-
 void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color){
 	size_t len = strlen(cadena);
-
-	int shift = 20;
-
 	for(size_t i = 0; i < len; i++){
-		for(size_t j = 0; j < 41 ; j++){
+		for(size_t j = 0; j < CANT_CARACTERES ; j++){
 			if(cadena[i] == tabla_caracteres[j]){
-				printf("EL CARACTER ES: %c\n", tabla_caracteres[j]);
-				//const int *poli[2] = *(const int (*)[2])tabla_polilineas_caracteres[j];
-
 				const int *poli = (const int (*))tabla_polilineas_caracteres[j];
-
-				for(size_t k = 0; k < ((cant_puntos_caracteres[j] * 2)); k+=4){
-/* 					SDL_RenderDrawLine(
-					renderer,
-					(( (*(poli)+k) - pos_x) * escala + pos_x + shift*escala*i),
-					(-( (*(poli)+k+1) - pos_y) * escala + VENTANA_ALTO - pos_y),
-					(( (*(poli)+k+2) - pos_x) * escala + pos_x + shift*escala*i),
-					(-( (*(poli)+k+3)- pos_y) * escala + VENTANA_ALTO - pos_y)
-					);
-					 */
+				for(size_t k = 0; k < ((cant_puntos_caracteres[j] - 1) * 2); k+=2){
 					SDL_RenderDrawLine(
 					renderer,
-					( (*(poli)+k)) + VENTANA_ANCHO/2,
-					(-( *(poli)+k+1) + VENTANA_ALTO/2),
-					( (*(poli)+k+2)) + VENTANA_ANCHO/2,
-					(-( *(poli)+k+3) + VENTANA_ALTO/2)
+					( (*(poli+k+EJE_X) + pos_x) * escala - pos_x*2 + SHIFT*escala*i),
+					(-(*(poli+k+EJE_Y) + pos_y) * escala + VENTANA_ALTO + pos_y*2),
+					( (*(poli+k+EJE_X+2) + pos_x) * escala - pos_x*2 + SHIFT*escala*i),
+					(-(*(poli+k+EJE_Y+2) + pos_y) * escala + VENTANA_ALTO + pos_y*2)
 					);
-//si hacemos 
 				}
 			}
 		}

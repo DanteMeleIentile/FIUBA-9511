@@ -4,6 +4,7 @@
 #include "color.h"
 #include <SDL2/SDL.h>
 
+
 #define CARACTER_ANCHO 6
 #define CARACTER_ALTO 6
 
