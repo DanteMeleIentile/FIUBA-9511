@@ -70,7 +70,10 @@ int nave_get_combustible(nave_t *nave){
 }
 
 bool nave_estado_escudo_nivel(nave_t *nave){
-    return (nave->estado >> 2) % 2;
+    if((nave->estado >> 2) % 2){
+        return true;
+    }
+    return false;
 }
 
 void nave_setear_posicion(nave_t *nave, float x, float y, double angulo){

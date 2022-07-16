@@ -15,6 +15,8 @@
         "nave.h": "c",
         "fisicas.h": "c",
         "caracteres.h": "c",
-        "disparo.h": "c"
+        "disparo.h": "c",
+        "combustible.h": "c",
+        "torreta.h": "c"
     }
 }

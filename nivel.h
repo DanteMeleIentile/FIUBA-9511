@@ -14,7 +14,7 @@ typedef struct nivel nivel_t;
 /*
 ** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
 */
-nivel_t *nivel_crear(figura_t *figura, size_t cant_torretas, size_t cant_combustible);
+nivel_t *nivel_crear(figura_t *figura);
 
 /*
 ** Devuelve la figura del nivel dado
@@ -26,30 +26,25 @@ figura_t *nivel_get_figura(nivel_t *nivel);
 */
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);
 
-
 /*
 ** Traslada el nivel en X "dx" y en Y "dy"
 */
 void nivel_trasladar(nivel_t *nivel, float dx, float dy);
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 ** Devuelve la coordenada del primer punto de la figura en "x"
 */
 double nivel_x_min(nivel_t *nivel);
 
+/*
+** Devuelve la lista enlazada de torretas
+*/
+lista_t *nivel_get_lista_torretas(nivel_t *nivel);
 
+/*
+** Devuelve la lista enlazada de combustibles
+*/
+lista_t *nivel_get_lista_combustibles(nivel_t *nivel);
 
 
 

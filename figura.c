@@ -123,6 +123,10 @@ float figura_get_extremo_y(figura_t *figura, bool mayor){
     return aux;
 }
 
+char *figura_get_nombre(figura_t *figura){
+    return figura->nombre;
+}
+
 void figura_destruir(figura_t *figura){
     for(size_t i = 0; (i < figura->cant_polilineas); i++){
         polilinea_destruir(figura->polilineas[i]);
@@ -190,16 +194,15 @@ void figura_escalar(figura_t *figura, float pos_x, float pos_y, float escala){
 }
 
 void figura_imprimir(SDL_Renderer *renderer, figura_t *figura, float escala, float x, float y){
-    figura_escalar(figura, x, y, escala);
     for(size_t k = 0; k < figura->cant_polilineas; k++){
         SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
         for(size_t z = 0; z < figura->polilineas[k]->n - 1; z++){
             SDL_RenderDrawLine(
             renderer,
-            ((figura->polilineas[k]->puntos[z][X])),
-            (-(figura->polilineas[k]->puntos[z][Y]) + VENTANA_ALTO),
-            ((figura->polilineas[k]->puntos[z+1][X])),
-            (-(figura->polilineas[k]->puntos[z+1][Y]) + VENTANA_ALTO)
+            ((figura->polilineas[k]->puntos[z][X] - x) * escala + x),
+            (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y),
+            ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x),
+            (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO - y)
             );
         }
     }
