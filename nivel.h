@@ -44,7 +44,7 @@ nivel_t *nivel_clonar(const nivel_t *nivel);
 */
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y);
 
-void nivel_imprimir_tras(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y, float tras_x);
+void nivel_imprimir_tras(SDL_Renderer *renderer, nivel_t *nivel, float escala, float pos_x, float pos_y, float tras_x, float tras_y);
 
 
 

@@ -94,7 +94,7 @@ void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
 //Dado un vector de polilineas de longitud cant_polilineas, una escala y un renderer, imprime por pantalla todas las polilineas del vector dado.
 void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y);
 
-void figura_imprimir_tras(SDL_Renderer *renderer, const figura_t *figura, float escala, double x, double y, float tras_x);
+void figura_imprimir_tras(SDL_Renderer *renderer, const figura_t *figura, float escala, float x, float y, float tras_x, float tras_y);
 
 
 //Rota la figura dada un angulo "rad"

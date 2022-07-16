@@ -55,6 +55,10 @@ void nave_act_figura(nave_t *nave, figura_t *figura, figura_t *figura2);
 */
 void nave_rotar(nave_t *nave, double angulo);
 
+/*
+** Traslada la nave dada según dx y dy, no actualiza posicion.
+*/
+void nave_trasladar(nave_t *nave, float dx, float dy);
 
 /*
 ** Avanza en dirección a la punta de la nave con acc "aceleracion" en un tiempo dt. Actualiza los valores de velocidad de la nave. 
@@ -81,7 +85,7 @@ void nave_invertir_vel_y(nave_t *nave);
 
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro);
 
-void nave_imprimir_tras(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro, float tras_x);
+void nave_imprimir_tras(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro, float tras_x, float tras_y);
 
 
 

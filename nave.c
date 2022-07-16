@@ -77,6 +77,12 @@ void nave_rotar(nave_t *nave, double angulo){
         nave->angulo = nave->angulo + (2 * PI);
 }
 
+void nave_trasladar(nave_t *nave, float dx, float dy){
+    figura_trasladar(nave->fig, dx, dy);
+    figura_trasladar(nave->fig_chorro, dx, dy);
+}
+
+
 static void nave_aceleracion(nave_t *nave, double aceleracion, double rad, double dt){
     nave->vel[X] = computar_velocidad(nave->vel[X], aceleracion * cos(rad), dt);
     nave->vel[Y] = computar_velocidad(nave->vel[Y], aceleracion * sin(rad), dt);
@@ -121,10 +127,10 @@ void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, double escala, bool cho
     }
 }
 
-void nave_imprimir_tras(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro, float tras_x){
+void nave_imprimir_tras(SDL_Renderer *renderer, nave_t *nave, double escala, bool chorro, float tras_x, float tras_y){
     if(chorro){
-        figura_imprimir_tras(renderer, nave->fig_chorro, escala, nave->pos[X], nave->pos[Y], tras_x);
+        figura_imprimir_tras(renderer, nave->fig_chorro, escala, nave->pos[X], nave->pos[Y], tras_x, tras_y);
     }else{
-        figura_imprimir_tras(renderer, nave->fig, escala, nave->pos[X], nave->pos[Y], tras_x);
+        figura_imprimir_tras(renderer, nave->fig, escala, nave->pos[X], nave->pos[Y], tras_x, tras_y);
     }
 }
