@@ -69,6 +69,10 @@ void nivel_trasladar(nivel_t *nivel, float dx, float dy){
     figura_trasladar(nivel->fig, dx, dy);
 }
 
+void nivel_destruir(nivel_t *nivel){
+    figura_destruir(nivel->fig);
+}
+
 
 
 

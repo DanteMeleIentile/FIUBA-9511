@@ -4,7 +4,7 @@
 #include "figura.h"
 #include "nave.h"
 
-typedef struct {
+typedef struct{
     figura_t *figura;
     double x, y;
 }planeta_t;

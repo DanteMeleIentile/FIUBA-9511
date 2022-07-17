@@ -23,7 +23,9 @@ combustible_t *combustible_crear(float pos_x, float pos_y, double angulo){
 }
 
 bool combustible_act_figura(combustible_t *combustible, figura_t *figura){
+/*     if(combustible->fig != NULL) figura_destruir(combustible->fig); */
     combustible->fig = figura_clonar(figura);
+
     if(combustible->fig == NULL) return false;
     figura_rototrasladar(combustible->fig, combustible->pos[X], combustible->pos[Y], combustible->angulo);
     return true;

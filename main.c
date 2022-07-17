@@ -20,7 +20,7 @@
 
 #define DT 1.f/JUEGO_FPS
 #define COOLDOWN_NAVE 0.5
-#define COOLDOWN_TORRETA 10
+#define COOLDOWN_TORRETA 3
 #define NEXT_SHIP 10000
 
 //SI DISPARO_LEIDO SE VUELVE FALSE, HUBO UN ERROR EN LA MEMORIA
@@ -334,6 +334,7 @@ int main() {
     }
     
 //Creación de niveles
+
     nivel_t *nivel_1 = nivel_crear(nivel1_leido);
     if(nivel_1 == NULL){
         fprintf(stderr, "Error en la memoria");
@@ -375,23 +376,7 @@ int main() {
         return 1;
     }
 
-    //lista_t *lista_combustibles_4 = lista_crear();
-
-    lista_t *lista_torretas_4 = lista_crear();
-    if(lista_torretas_4 == NULL){
-        fprintf(stderr, "Error en la memoria");
-        return 1;
-    }
-
-    lista_t *lista_combustibles_4 = lista_crear();
-    if(lista_combustibles_4 == NULL){
-        fprintf(stderr, "Error en la memoria");
-        return 1;
-    }
-
     float escala_no_infinito = 0.62;//computar_escala_nivel(nivel4_leido);
-
-    //lista_t *lista_torretas_5 = lista_crear();
 
 //----------------------------------------------------------------------------------------------------------------------
     //Boleeanos de estado
@@ -399,7 +384,7 @@ int main() {
     bool escudo_prendido = false;
 
     bool disparo = false;
-    double tiempo_para_disparar = 0;
+    double tiempo_para_disparar = COOLDOWN_NAVE;
     bool listo_para_disparar = true;
     
     //Boleeanos de movimiento
@@ -505,7 +490,7 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
-        
+
         char cadena[15];
         sprintf(cadena, "%d", nave_get_combustible(nave));
 
@@ -534,7 +519,6 @@ int main() {
         nave_apagar(nave, true, true, true);
 
         if(nivel == 0){
-
             if(spawn){
                 nave_setear_velocidad(nave, 0, 0);
                 nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base), 0);
@@ -565,7 +549,7 @@ int main() {
             nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 1.f/JUEGO_FPS);
 
             if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 25){
-                nivel = 0;
+                vidas--;
                 spawn = true;
             }
 
@@ -596,6 +580,10 @@ int main() {
                 printf("PLANETA5\n");
                 //nivel = 5;
             }
+            if(spawn){
+                lista_destruir(lista_disparos, disparo_destruir);
+                lista_disparos = lista_crear();
+            }
         }
 
         if(nivel == 3){
@@ -621,7 +609,7 @@ int main() {
         }
 
         if(nivel == 4){
-            if(spawn == true){
+            if(spawn){
                 nave_setear_velocidad(nave, 0, 0);
                 nave_setear_posicion(nave, VENTANA_ANCHO/2, 500, 0);
                 spawn = false;
@@ -668,6 +656,10 @@ int main() {
             if(lista_largo(nivel_get_lista_torretas(nivel_4)) == 0){
                 score[0] += 8000;
                 score[1] -= 8000;
+            }
+            if(spawn){
+                lista_destruir(lista_disparos, disparo_destruir);
+                lista_disparos = lista_crear();
             }
         }
 
@@ -718,6 +710,12 @@ int main() {
         }
 
         nave_imprimir(renderer, nave, f);
+
+        main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, f);
+        if(disparo_leido == NULL){
+            fprintf(stderr, "Error en la memoria");
+            break;
+        }
         
         if(main_disparo_pego(lista_disparos, nave_get_figura_principal(nave), 5, true)){
             vidas--;
@@ -736,12 +734,6 @@ int main() {
         if(tiempo_para_disparar >= COOLDOWN_NAVE){
             tiempo_para_disparar = 0;
             listo_para_disparar = true;
-        }
-
-        main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, f);
-        if(disparo_leido == NULL){
-            fprintf(stderr, "Error en la memoria");
-            break;
         }
 
         if(score[1] <= 0){

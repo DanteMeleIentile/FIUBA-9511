@@ -44,6 +44,9 @@ void disparo_avanzar(disparo_t *disparo, double dt){
 }
 
 bool disparo_act_figura(disparo_t *disparo, figura_t *figura){
+/*     if(disparo->fig != NULL){
+        figura_destruir(disparo->fig);
+    } */
     disparo->fig = figura_clonar(figura);
 
     if(disparo->fig == NULL){

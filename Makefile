@@ -47,7 +47,7 @@ torreta.o: torreta.c torreta.h figura.h fisicas.h config.h
 caracteres.o: caracteres.c caracteres.h color.h
 	$(CC) $(CFLAGS) -c caracteres.c
 
-combustible.o: combustible.h
+combustible.o: combustible.c combustible.h
 	$(CC) $(CFLAGS) -c combustible.c
 
 clean:

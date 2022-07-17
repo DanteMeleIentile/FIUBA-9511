@@ -102,7 +102,6 @@ void nave_acercar_direccion(nave_t *nave, float aceleracion, double angulo, doub
 */
 void nave_invertir_vel_x(nave_t *nave);
 
-
 /*
 ** Invierte el parámetro de velocidad en "y" de la nave.
 */
@@ -114,7 +113,7 @@ void nave_invertir_vel_y(nave_t *nave);
 void nave_sumar_combustible(nave_t *nave, int combustible);
 
 /*
-** Dibuja la nave en pantalla segun sus parametros;
+** Dibuja la nave en pantalla segun sus parametros.
 */
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala);
 

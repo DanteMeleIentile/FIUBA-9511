@@ -116,6 +116,14 @@ void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
 }
 
 void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig){
+
+/*     if(nave->fig != NULL){
+        figura_destruir(nave->fig);
+        figura_destruir(nave->fig_chorro);
+        figura_destruir(nave->fig_escudo);
+        figura_destruir(nave->fig_escudo_nivel);
+    } */
+
     nave->fig = figura_clonar(nave_fig);
     nave->fig_chorro = figura_clonar(nave_mas_chorro_fig);
     nave->fig_escudo = figura_clonar(escudo_fig);
