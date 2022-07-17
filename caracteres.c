@@ -356,7 +356,7 @@ const int caracter_espacio[1][2] = {
 	{0, 0},
 };
 
-const int caracter_nave[9][2] = {
+/* const int caracter_nave[9][2] = {
 	{0, 8},
 	{-6, -1},
 	{-4, -4},
@@ -366,6 +366,18 @@ const int caracter_nave[9][2] = {
 	{4, -4},
 	{6, -1},
 	{0, 8},
+}; */
+
+const int caracter_nave[9][2] = {
+	{0, -8}, 
+	{6, 1}, 
+	{4, 4}, 
+	{2, 4}, 
+	{-0, 2}, 
+	{-2, 4}, 
+	{-4, 4}, 
+	{-6, 1}, 
+	{0, -8}, 
 };
 
 typedef enum {
