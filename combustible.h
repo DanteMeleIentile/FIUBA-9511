@@ -16,7 +16,7 @@ combustible_t *combustible_crear(float pos_x, float pos_y, double angulo);
 /*
 ** actualiza la figura del combustible
 */
-void combustible_act_figura(combustible_t *combustible, figura_t *figura);
+bool combustible_act_figura(combustible_t *combustible, figura_t *figura);
 
 /*
 ** Devuelve la posicion en "x" del combustible

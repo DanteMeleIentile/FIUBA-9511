@@ -12,7 +12,7 @@
 
 #define SHIFT 6
 
-#define CANT_CARACTERES 41
+#define CANT_CARACTERES 42
 
 
 const int caracter_a[7][2] = {
@@ -356,6 +356,18 @@ const int caracter_espacio[1][2] = {
 	{0, 0},
 };
 
+const int caracter_nave[9][2] = {
+	{0, 8},
+	{-6, -1},
+	{-4, -4},
+	{-2, -4}, 
+	{-0, -2},
+	{2, -4},
+	{4, -4},
+	{6, -1},
+	{0, 8},
+};
+
 typedef enum {
 	CERO = 0,
 	UNO = 1,
@@ -398,6 +410,7 @@ typedef enum {
 	X = 38,
 	Y = 39,
 	Z = 40,
+	NAVE = 41,
 
 } caracteres_t;
 
@@ -443,6 +456,7 @@ const char tabla_caracteres[] = {
 	[X] = 'X',
 	[Y] = 'Y',
 	[Z] = 'Z',
+	[NAVE] = 'n',
 };
 
 const void *tabla_polilineas_caracteres[] = {
@@ -487,6 +501,7 @@ const void *tabla_polilineas_caracteres[] = {
 	[X] = &caracter_x,
 	[Y] = &caracter_y,
 	[Z] = &caracter_z,
+	[NAVE] = &caracter_nave,
 };
 
 const size_t cant_puntos_caracteres[] = {
@@ -531,9 +546,10 @@ const size_t cant_puntos_caracteres[] = {
 	[X] = 5,
 	[Y] = 5,
 	[Z] = 4,
+	[NAVE] = 9,
 };
 
-void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color){
+void cadena_imprimir_centrado(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color){
 	size_t len = strlen(cadena);
 	if(len == 0) return;
 	uint8_t r;
@@ -552,6 +568,33 @@ void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float po
 					( (*(poli+k+EJE_X) + pos_x) * escala - pos_x*(escala-1) + SHIFT*escala*i) - SHIFT*escala*(0.5 + (float)len/2),
 					(-(*(poli+k+EJE_Y) + pos_y) * escala + VENTANA_ALTO + pos_y*(escala-1)),
 					( (*(poli+k+EJE_X+2) + pos_x) * escala - pos_x*(escala-1)  + SHIFT*escala*i) - SHIFT*escala*(0.5 + (float)len/2),
+					(-(*(poli+k+EJE_Y+2) + pos_y) * escala + VENTANA_ALTO + pos_y*(escala-1))
+					);
+				}
+			}
+		}
+	}
+}
+
+void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color){
+	size_t len = strlen(cadena);
+	if(len == 0) return;
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	color_a_rgb(color, &r, &g, &b);
+
+	for(size_t i = 0; i < len; i++){
+		for(size_t j = 0; j < CANT_CARACTERES ; j++){
+			if(cadena[i] == tabla_caracteres[j]){
+				const int *poli = (const int (*))tabla_polilineas_caracteres[j];
+				SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
+				for(size_t k = 0; k < ((cant_puntos_caracteres[j] - 1) * 2); k+=2){
+					SDL_RenderDrawLine(
+					renderer,
+					( (*(poli+k+EJE_X) + pos_x) * escala - pos_x*(escala-1) + SHIFT*escala*i),
+					(-(*(poli+k+EJE_Y) + pos_y) * escala + VENTANA_ALTO + pos_y*(escala-1)),
+					( (*(poli+k+EJE_X+2) + pos_x) * escala - pos_x*(escala-1)  + SHIFT*escala*i),
 					(-(*(poli+k+EJE_Y+2) + pos_y) * escala + VENTANA_ALTO + pos_y*(escala-1))
 					);
 				}

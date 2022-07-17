@@ -53,6 +53,10 @@ extern const int caracter_abajo[5][2];
 
 extern const int caracter_espacio[1][2];
 
+extern const int caracter_nave[9][2];
+
+void cadena_imprimir_centrado(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color);
+
 void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float pos_y, double escala, color_t color);
 
 #endif // _LETRAS_H_

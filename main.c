@@ -21,6 +21,7 @@
 #define DT 1.f/JUEGO_FPS
 #define COOLDOWN_NAVE 0.5
 #define COOLDOWN_TORRETA 10
+#define NEXT_SHIP 10000
 
 //SI DISPARO_LEIDO SE VUELVE FALSE, HUBO UN ERROR EN LA MEMORIA
 float computar_escala_nivel(figura_t *figura){
@@ -146,7 +147,11 @@ bool lista_iterar_combustibles(SDL_Renderer *renderer, lista_t *lista_combustibl
             lista_iter_borrar(iter);
             absorbido = true;
         } 
-        combustible_act_figura(comb_act, combustible_leido);
+        if(!combustible_act_figura(comb_act, combustible_leido)){
+            fprintf(stderr, "Error en memoria\n");
+            combustible_leido = NULL;
+            return false;
+        }
         combustible_imprimir(renderer, comb_act, escala);
         lista_iter_avanzar(iter);
     }
@@ -155,7 +160,7 @@ bool lista_iterar_combustibles(SDL_Renderer *renderer, lista_t *lista_combustibl
 }
 
 
-void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista_t *lista_disparos, float movil_x, float movil_y, float escala, figura_t *torreta_leida, figura_t *torreta_disparo_leida){
+void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista_t *lista_disparos, float movil_x, float movil_y, float escala, figura_t *torreta_leida, figura_t *torreta_disparo_leida, int *score){
     lista_iter_t *iter = lista_iter_crear(lista_torreta);
     for(size_t i = 0; i < lista_largo(lista_torreta); i++){
         torreta_t *torreta_act = lista_iter_ver_actual(iter);
@@ -166,6 +171,8 @@ void lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista
         if(main_disparo_pego(lista_disparos, torreta_get_figura_principal(torreta_act), 5, false)){
             torreta_destruir(torreta_act);
             lista_iter_borrar(iter);
+            score[0] += 250;
+            score[1] -= 250;
             continue;
         } 
         if(torreta_get_cooldown(torreta_act) <= 0 && torreta_apuntar(torreta_act, movil_x, movil_y)){
@@ -384,17 +391,7 @@ int main() {
 
     float escala_no_infinito = 0.62;//computar_escala_nivel(nivel4_leido);
 
-    int bonus_1 = 2000;
-    int bonus_2 = 4000;
-    int bonus_3 = 6000;
-    int bonus_4 = 8000;
-    int bonus_5 = 9000;
-
     //lista_t *lista_torretas_5 = lista_crear();
-
-
-
-
 
 //----------------------------------------------------------------------------------------------------------------------
     //Boleeanos de estado
@@ -411,7 +408,8 @@ int main() {
     bool avanzar = false;
 
     size_t nivel = 0;
-    int vidas = 20;
+    int vidas = 5;
+    int score[2] = {0, NEXT_SHIP};
 
     double f = 1;
     
@@ -419,12 +417,10 @@ int main() {
 
     //Tiempo combustible
 
-    // END código del alumno
         float a = 1;
 
     unsigned int ticks = SDL_GetTicks();
     while(1) {
-        if(vidas == 0) return 0;
         if(SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 break;
@@ -510,19 +506,29 @@ int main() {
 
         // BEGIN código del alumno
         
-        char cadena[20];
+        char cadena[15];
         sprintf(cadena, "%d", nave_get_combustible(nave));
 
-        cadena_imprimir(renderer, cadena, VENTANA_ANCHO/4, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
-        cadena_imprimir(renderer, "FUEL", VENTANA_ANCHO/2, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+        cadena_imprimir_centrado(renderer, cadena, VENTANA_ANCHO/4, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
+        cadena_imprimir_centrado(renderer, "FUEL", VENTANA_ANCHO/2, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
 
-        int score = 0;
-        sprintf(cadena, "%d", score);
 
-        cadena_imprimir(renderer, cadena, VENTANA_ANCHO/4, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
-        cadena_imprimir(renderer, "SCORE", VENTANA_ANCHO/2, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+        sprintf(cadena, "%d", score[0]);
 
+
+        cadena_imprimir_centrado(renderer, cadena, 3*VENTANA_ANCHO/4, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
+        cadena_imprimir_centrado(renderer, "SCORE", VENTANA_ANCHO/2, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+
+        char next_c[15] = "NEXT SHIP";
+        sprintf(cadena, "%d", score[1]);
         
+        cadena_imprimir_centrado(renderer, next_c, 3*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+        cadena_imprimir_centrado(renderer, cadena, 4*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
+
+        for(size_t i = 0; i < vidas; i++){
+            cadena_imprimir(renderer, "n", VENTANA_ANCHO/20 + 20*i, 38*VENTANA_ALTO/40, 1.40, color_crear(false, false, true));
+        }
+
 
         nave_act_figura(nave, nave_leida, nave_mas_chorro_leida, escudo_leido, escudo2_leido);
         nave_apagar(nave, true, true, true);
@@ -543,11 +549,11 @@ int main() {
             planeta_dibujar(renderer, planeta4);
             planeta_dibujar(renderer, planeta5);
 
-            cadena_imprimir(renderer, "2000", 663 + 40, 473 + 20, 1.5, color_crear(false, true, true));
-            cadena_imprimir(renderer, "4000", 671 + 40, 145 - 30, 1.5, color_crear(false, true, true));
-            cadena_imprimir(renderer, "6000", 110 - 0, 79 - 30, 1.5, color_crear(false, true, true));
-            cadena_imprimir(renderer, "8000", 204 - 40, 455 + 20, 1.5, color_crear(false, true, true));
-            cadena_imprimir(renderer, "9000", 111 - 40, 307 - 15, 1.5, color_crear(false, true, true));
+            cadena_imprimir_centrado(renderer, "2000", 663 + 40, 473 + 20, 1.5, color_crear(false, true, true));
+            cadena_imprimir_centrado(renderer, "4000", 671 + 40, 145 - 30, 1.5, color_crear(false, true, true));
+            cadena_imprimir_centrado(renderer, "6000", 110 - 0, 79 - 30, 1.5, color_crear(false, true, true));
+            cadena_imprimir_centrado(renderer, "8000", 204 - 40, 455 + 20, 1.5, color_crear(false, true, true));
+            cadena_imprimir_centrado(renderer, "9000", 111 - 40, 307 - 15, 1.5, color_crear(false, true, true));
 
             if(nave_get_pos_x(nave) < 0 || nave_get_pos_x(nave) > VENTANA_ANCHO){
                 nave_invertir_vel_x(nave);
@@ -600,15 +606,15 @@ int main() {
             }
             nave_acercar_direccion(nave, G, PI / 2, 1.f/JUEGO_FPS);
 
-            lista_iterar_torretas(renderer, nivel_get_lista_torretas(nivel_3), lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), 1, torreta_leida, torreta_disparando_leida);
+            lista_iterar_torretas(renderer, nivel_get_lista_torretas(nivel_3), lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), 1, torreta_leida, torreta_disparando_leida, score);
             if(torreta_leida == NULL){
                 fprintf(stderr, "Error de memoria");
-                return 1;
+                break;
             }
             if(lista_iterar_combustibles(renderer, nivel_get_lista_combustibles(nivel_3), nave, 1, combustible_leido, escudo_prendido)){
                 if(combustible_leido == NULL){
                     fprintf(stderr, "Error de memoria");
-                    return 1;
+                    break;
                 }
                 nave_sumar_combustible(nave, 3000);
             }
@@ -623,15 +629,15 @@ int main() {
             nivel_imprimir(renderer, nivel_4, 1);
             nave_acercar_direccion(nave, -G, PI / 2, 1.f/JUEGO_FPS);
 
-            lista_iterar_torretas(renderer, nivel_get_lista_torretas(nivel_4), lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), 1, torreta_leida, torreta_disparando_leida);
+            lista_iterar_torretas(renderer, nivel_get_lista_torretas(nivel_4), lista_disparos, nave_get_pos_x(nave), nave_get_pos_y(nave), 1, torreta_leida, torreta_disparando_leida, score);
             if(torreta_leida == NULL){
                 fprintf(stderr, "Error de memoria");
-                return 1;
+                break;
             }
             if(lista_iterar_combustibles(renderer, nivel_get_lista_combustibles(nivel_4), nave, 1, combustible_leido, escudo_prendido)){
                 if(combustible_leido == NULL){
                     fprintf(stderr, "Error de memoria");
-                    return 1;
+                    break;
                 }
                 nave_sumar_combustible(nave, 3000);
             }
@@ -657,6 +663,11 @@ int main() {
             if(nave_get_pos_y(nave) > VENTANA_ALTO * 1.25){
                 nivel = 0;
                 spawn = true;
+            }
+
+            if(lista_largo(nivel_get_lista_torretas(nivel_4)) == 0){
+                score[0] += 8000;
+                score[1] -= 8000;
             }
         }
 
@@ -691,9 +702,8 @@ int main() {
             nave_sumar_combustible(nave, -1.f/JUEGO_COMBUSTIBLE_ESC_X_SEG);
         }
 
-        if(nave_get_combustible(nave) <= 0){
-            return 0;
-        }
+        if(vidas == 0) break;
+        if(nave_get_combustible(nave) <= 0) break;
 
 //CONDICIONES PARA SETEAR EL ANGULO DEL ESCUDO:
 
@@ -731,7 +741,12 @@ int main() {
         main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, f);
         if(disparo_leido == NULL){
             fprintf(stderr, "Error en la memoria");
-            return 1;
+            break;
+        }
+
+        if(score[1] <= 0){
+            score[1] = NEXT_SHIP;
+            vidas++;
         }
 
         // END código del alumno
@@ -751,6 +766,8 @@ int main() {
 
 
     // No tengo nada que destruir.
+
+
     // END código del alumno
 
     SDL_DestroyRenderer(renderer);

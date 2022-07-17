@@ -22,10 +22,11 @@ combustible_t *combustible_crear(float pos_x, float pos_y, double angulo){
     return combustible;
 }
 
-void combustible_act_figura(combustible_t *combustible, figura_t *figura){
+bool combustible_act_figura(combustible_t *combustible, figura_t *figura){
     combustible->fig = figura_clonar(figura);
-    if(combustible->fig == NULL) return NULL;
+    if(combustible->fig == NULL) return false;
     figura_rototrasladar(combustible->fig, combustible->pos[X], combustible->pos[Y], combustible->angulo);
+    return true;
 }
 
 float combustible_get_pos_x(combustible_t *combustible){
