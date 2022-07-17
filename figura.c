@@ -193,14 +193,6 @@ void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escal
             (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO- y)
             );
         }
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-            SDL_RenderDrawLine(
-            renderer,
-            ((0) * escala + x),
-            (-(10) * escala + VENTANA_ALTO - y),
-            ((-10) * escala + x),
-            (-(1) * escala + VENTANA_ALTO- y)
-            );
     }
 }
 
@@ -208,12 +200,19 @@ void figura_imprimir_tras(SDL_Renderer *renderer, const figura_t *figura, float 
     for(size_t k = 0; k < figura->cant_polilineas; k++){
         SDL_SetRenderDrawColor(renderer, figura->polilineas[k]->r, figura->polilineas[k]->g, figura->polilineas[k]->b, 0xFF);
         for(size_t z = 0; z < figura->polilineas[k]->n - 1; z++){
-            SDL_RenderDrawLine(
+            /*SDL_RenderDrawLine(
             renderer,
             ((figura->polilineas[k]->puntos[z][X] - x) * escala + x + tras_x),
             (-(figura->polilineas[k]->puntos[z][Y]-y) * escala + VENTANA_ALTO - y - tras_y),
             ((figura->polilineas[k]->puntos[z+1][X]-x) * escala + x + tras_x),
             (-(figura->polilineas[k]->puntos[z+1][Y]-y) * escala + VENTANA_ALTO- y - tras_y)
+            );*/
+            SDL_RenderDrawLine(
+            renderer,
+            (figura->polilineas[k]->puntos[z][X] * escala + tras_x),
+            (-figura->polilineas[k]->puntos[z][Y] * escala + VENTANA_ALTO - tras_y),
+            (figura->polilineas[k]->puntos[z+1][X] * escala + tras_x),
+            (-figura->polilineas[k]->puntos[z+1][Y] * escala + VENTANA_ALTO - tras_y)
             );
         }
     }
