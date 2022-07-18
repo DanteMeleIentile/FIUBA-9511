@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 10 15:41:09 2022
+# Make data base, printed on Mon Jul 18 12:10:37 2022
 
 # Variables
 
@@ -19,7 +19,7 @@ NO_AT_BRIDGE = 1
 # environment
 WSLENV = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /mnt/wslg/runtime-dir/vscode-ipc-0040967f-aebb-422f-8942-8e50248e4524.sock
+VSCODE_IPC_HOOK_EXTHOST = /mnt/wslg/runtime-dir/vscode-ipc-7a64a372-f77b-4558-8d33-b9ff7a58135e.sock
 # environment
 VSCODE_CWD = /home/dmeleientile
 # environment
@@ -77,7 +77,7 @@ LESS_TERMCAP_ue = [0m
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXmMwkTZ/agent.83
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXUdjzv2/agent.82
 # default
 .SHELLFLAGS := -c
 # environment
@@ -93,19 +93,19 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 513
+VSCODE_PID = 8740
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/DESKTOP-OO3QT7D:@/tmp/.ICE-unix/39,unix/DESKTOP-OO3QT7D:/tmp/.ICE-unix/39
+SESSION_MANAGER = local/DESKTOP-OO3QT7D:@/tmp/.ICE-unix/38,unix/DESKTOP-OO3QT7D:/tmp/.ICE-unix/38
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-U3gKRFIns4,guid=6b924aaf336c88c9d7641b4e62cb1d3c
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-lOhIyIB28o,guid=dd6baaf2739eebb5daa0c28362d55b5c
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -169,7 +169,7 @@ USER = dmeleientile
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 84
+SSH_AGENT_PID = 83
 # environment
 _ = /usr/share/code/code
 # environment
@@ -247,13 +247,13 @@ color.h:
 # Not a target:
 nivel.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:49:10.147940602
+#  Last modified 2022-07-18 00:29:11.604422515
 #  File has been updated.
 #  Successfully updated.
 
 torreta.o: torreta.c torreta.h figura.h fisicas.h config.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:30.017957428
+#  Last modified 2022-07-18 00:27:01.624423483
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 45):
@@ -262,22 +262,22 @@ torreta.o: torreta.c torreta.h figura.h fisicas.h config.h
 # Not a target:
 figura.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:07:13.21795934
+#  Last modified 2022-07-18 00:17:45.754427621
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 nave.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:13:16.847956632
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 nave.c:
-#  Implicit rule search has been done.
  
-#  Last modified 2022-07-10 12:13:09.577956687
+#  Implicit rule search has been done.
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
@@ -291,20 +291,20 @@ lista.h:
 # Not a target:
 planeta.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:24:39.068005156
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:38:08.227999132
+#  Last modified 2022-07-18 00:12:19.674430049
 #  File has been updated.
 #  Successfully updated.
 
 lectura.o: lectura.c polilinea.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:28.607957438
+#  Last modified 2022-07-18 00:26:59.414423499
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 21):
@@ -319,7 +319,7 @@ lectura.h:
 
 figura.o: figura.c figura.h polilinea.h lista.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:28.41795744
+#  Last modified 2022-07-18 00:26:59.094423501
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 24):
@@ -328,13 +328,13 @@ figura.o: figura.c figura.h polilinea.h lista.h
 # Not a target:
 disparo.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:24:39.068005156
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
 polilinea.o: polilinea.c color.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:28.647957438
+#  Last modified 2022-07-18 00:26:59.474423499
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 18):
@@ -342,7 +342,7 @@ polilinea.o: polilinea.c color.h
 
 nivel.o: nivel.c nivel.h figura.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:49:11.887940589
+#  Last modified 2022-07-18 00:29:15.144422489
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 42):
@@ -351,7 +351,7 @@ nivel.o: nivel.c nivel.h figura.h
 # Not a target:
 fisicas.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:24:39.068005156
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
@@ -379,7 +379,7 @@ valgrind-log-file:
 # Not a target:
 polilinea.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:07:20.407959286
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
@@ -400,7 +400,7 @@ exe:
 # Not a target:
 torreta.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:24:39.068005156
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
@@ -414,7 +414,7 @@ color.c:
 # Not a target:
 polilinea.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:07:25.29795925
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
@@ -434,21 +434,21 @@ all: Gravitar
 # Not a target:
 nivel.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:43:18.127943222
+#  Last modified 2022-07-18 00:29:08.454422538
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:50:31.357939997
+#  Last modified 2022-07-18 00:35:48.094419563
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 torreta.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:24:39.068005156
+#  Last modified 2022-07-18 00:12:19.694430048
 #  File has been updated.
 #  Successfully updated.
 
@@ -461,7 +461,7 @@ fisicas.h:
 
 main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:50:33.397939982
+#  Last modified 2022-07-18 00:35:50.144419548
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 12):
@@ -471,20 +471,20 @@ main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
 # Not a target:
 config.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-08 02:32:45.928531989
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 disparo.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 10:24:39.068005156
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
 Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:50:33.58793998
+#  Last modified 2022-07-18 00:35:50.554419545
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 9):
@@ -492,7 +492,7 @@ Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planet
 
 fisicas.o: fisicas.c fisicas.h polilinea.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:28.707957438
+#  Last modified 2022-07-18 00:26:59.544423498
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 30):
@@ -500,7 +500,7 @@ fisicas.o: fisicas.c fisicas.h polilinea.h
 
 disparo.o: disparo.c disparo.h figura.h fisicas.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:29.477957432
+#  Last modified 2022-07-18 00:27:00.774423489
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 39):
@@ -508,7 +508,7 @@ disparo.o: disparo.c disparo.h figura.h fisicas.h
 
 lista.o: lista.c lista.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:28.677957438
+#  Last modified 2022-07-18 00:26:59.514423498
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 27):
@@ -517,13 +517,13 @@ lista.o: lista.c lista.h
 # Not a target:
 figura.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-10 12:07:08.407959375
+#  Last modified 2022-07-18 00:12:19.684430048
 #  File has been updated.
 #  Successfully updated.
 
 color.o: color.c color.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:28.157957442
+#  Last modified 2022-07-18 00:26:58.594423505
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 15):
@@ -531,7 +531,7 @@ color.o: color.c color.h
 
 planeta.o: planeta.c planeta.h figura.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:11:29.027957435
+#  Last modified 2022-07-18 00:26:59.994423495
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 33):
@@ -539,7 +539,7 @@ planeta.o: planeta.c planeta.h figura.h
 
 nave.o: nave.c nave.h figura.h fisicas.h
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-10 12:17:17.887954838
+#  Last modified 2022-07-18 00:27:00.374423492
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -557,9 +557,9 @@ nave.o: nave.c nave.h figura.h fisicas.h
 # current buf: size = 8162 B / used = 508 B / count = 55 / avg = 9 B
 
 # strcache performance: lookups = 151 / hit rate = 63%
-# hash-table stats:
  
+# hash-table stats:
 # Load=55/8192=1%, Rehash=0, Collisions=0/151=0%
-# Finished Make data base on Sun Jul 10 15:41:09 2022
+# Finished Make data base on Mon Jul 18 12:10:37 2022
 
  
