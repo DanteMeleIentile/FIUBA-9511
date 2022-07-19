@@ -1,12 +1,12 @@
 PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -std=c99 -pedantic -g
+CFLAGS = -Wall -std=c99 -pedantic -g3
 SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)
 
-$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o caracteres.o
-	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o caracteres.o $(SDLFLAGS) -o $(PROGRAM)
+$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o
+	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o $(SDLFLAGS) -o $(PROGRAM)
 
 main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
 	$(CC) $(CFLAGS) -c main.c
@@ -47,8 +47,11 @@ torreta.o: torreta.c torreta.h figura.h fisicas.h config.h
 caracteres.o: caracteres.c caracteres.h color.h
 	$(CC) $(CFLAGS) -c caracteres.c
 
-combustible.o: combustible.c combustible.h
+combustible.o: combustible.c combustible.h figura.h
 	$(CC) $(CFLAGS) -c combustible.c
+
+reactor.o: reactor.c reactor.h figura.h nivel.h
+	$(CC) $(CFLAGS) -c reactor.c
 
 clean:
 	rm -vf *.o main

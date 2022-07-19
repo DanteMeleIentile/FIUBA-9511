@@ -42,6 +42,11 @@ figura_t *nave_get_figura_principal(nave_t *nave);
 int nave_get_combustible(nave_t *nave);
 
 /*
+** Devuelve el estado del escudo.
+*/
+bool nave_estado_escudo(nave_t *nave);
+
+/*
 ** Devuelve el estado del escudo en nivel.
 */
 bool nave_estado_escudo_nivel(nave_t *nave);

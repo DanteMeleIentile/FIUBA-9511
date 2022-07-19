@@ -107,7 +107,7 @@ void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo);
 void figura_escalar(figura_t *figura, float pos_x, float pos_y, float escala);
 
 //Da la distancia más cercana entre el punto y la figura
-double distancia_punto_a_figura(figura_t *figura, float x, float y);
+float distancia_punto_a_figura(figura_t *figura, float x, float y);
 
 /*
 ** Dada una figura, la setea en unas coordenadas "x" e "y" rotada un angulo "rad" y escalada por "escala".

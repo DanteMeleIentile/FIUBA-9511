@@ -14,7 +14,6 @@
 
 #define CANT_CARACTERES 42
 
-
 const int caracter_a[7][2] = {
 	{0, 0},
 	{0, 4},
@@ -570,7 +569,7 @@ void cadena_imprimir_centrado(SDL_Renderer *renderer, char *cadena, float pos_x,
 	color_a_rgb(color, &r, &g, &b);
 
 	for(size_t i = 0; i < len; i++){
-		for(size_t j = 0; j < CANT_CARACTERES ; j++){
+		for(size_t j = 0; j < CANT_CARACTERES; j++){
 			if(cadena[i] == tabla_caracteres[j]){
 				const int *poli = (const int (*))tabla_polilineas_caracteres[j];
 				SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
@@ -597,7 +596,7 @@ void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float po
 	color_a_rgb(color, &r, &g, &b);
 
 	for(size_t i = 0; i < len; i++){
-		for(size_t j = 0; j < CANT_CARACTERES ; j++){
+		for(size_t j = 0; j < CANT_CARACTERES; j++){
 			if(cadena[i] == tabla_caracteres[j]){
 				const int *poli = (const int (*))tabla_polilineas_caracteres[j];
 				SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
@@ -613,6 +612,18 @@ void cadena_imprimir(SDL_Renderer *renderer, char *cadena, float pos_x, float po
 			}
 		}
 	}
+}
+
+void entero_imprimir(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, double escala, color_t color){
+	char cadena[15];
+	sprintf(cadena, "%d", numero);
+	cadena_imprimir(renderer, cadena, pos_x, pos_y, escala, color);
+}
+
+void entero_imprimir_centrado(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, double escala, color_t color){
+	char cadena[15];
+	sprintf(cadena, "%d", numero);
+	cadena_imprimir_centrado(renderer, cadena, pos_x, pos_y, escala, color);
 }
 
 

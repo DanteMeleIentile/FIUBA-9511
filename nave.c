@@ -69,6 +69,13 @@ int nave_get_combustible(nave_t *nave){
     return nave->cant_combustible;
 }
 
+bool nave_estado_escudo(nave_t *nave){
+    if(((nave->estado >> 2) % 2) || ((nave->estado >> 1) % 2)){
+        return true;
+    }
+    return false;
+}
+
 bool nave_estado_escudo_nivel(nave_t *nave){
     if((nave->estado >> 2) % 2){
         return true;

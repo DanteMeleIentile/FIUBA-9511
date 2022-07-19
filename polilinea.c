@@ -145,35 +145,37 @@ void escalar(float polilinea[][2], size_t n, float escala){
     }
 }
 
-double calcular_distancia(float px, float py, float qx, float qy){
+float calcular_distancia(float px, float py, float qx, float qy){
     return sqrt(pow(px-qx,2) + pow(py-qy,2));
 }
 
-double calcular_parametro(float ax, float ay, float bx, float by, float px, float py) {
+float calcular_parametro(float ax, float ay, float bx, float by, float px, float py) {
 
     double k = ((px - ax) * (bx - ax) + (py - ay) * (by - ay))/ pow(calcular_distancia(bx, by, ax, ay),2); 
 
     return k;
 }
 
-double distancia_punto_a_polilinea(float polilinea[][2], size_t n, float px, float py) {
+float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py){
 
-    double punto_cercano_x;
-    double punto_cercano_y;
-    double ax;
-    double ay;
-    double bx;
-    double by;
-    double k;
-    double acc_d;
-    double distancia;
+    float punto_cercano_x;
+    float punto_cercano_y;
+    float ax;
+    float ay;
+    float bx;
+    float by;
+    float k;
+    float acc_d;
+    float distancia;
+
+    size_t n = polilinea->n;
 
     for(int i = 0; i < n - 1; i++) {
-        ax = polilinea[i][0];
-        ay = polilinea[i][1];
+        ax = polilinea->puntos[i][0];
+        ay = polilinea->puntos[i][1];
         
-        bx = polilinea[i+1][0];
-        by = polilinea[i+1][1]; 
+        bx = polilinea->puntos[i+1][0];
+        by = polilinea->puntos[i+1][1]; 
 
         k = calcular_parametro(ax, ay, bx, by, px, py);
         

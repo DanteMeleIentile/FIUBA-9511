@@ -26,5 +26,17 @@
 #define X 0
 #define Y 1
 
+#define TIEMPO_MAX_DISPAROS 2
+#define VEL_DISPARO 150
+
+#define COOLDOWN_NAVE 0
+#define COOLDOWN_TORRETA 3
+
+#define SCORE_NEXT_SHIP 10000
+
+#define TIEMPO_REACTOR 25
+
+#define DT (1.0/JUEGO_FPS)
+
 #endif // _CONFIG_H_
 

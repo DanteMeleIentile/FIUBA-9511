@@ -208,15 +208,14 @@ void figura_imprimir(SDL_Renderer *renderer, figura_t *figura, float escala, flo
     }
 }
 
-double distancia_punto_a_figura(figura_t *figura, float x, float y){
-    double distancia;
-    double distancia_actual;
-    for(size_t i = 0; i < figura->cant_polilineas; i++){
-        distancia = distancia_punto_a_polilinea(figura->polilineas[i]->puntos, figura->polilineas[i]->n, x, y);
-        if(i == 0){
-            distancia_actual = distancia;
-            continue;
-        }
+float distancia_punto_a_figura(figura_t *figura, float x, float y){
+    float distancia;
+    float distancia_actual;
+    distancia = distancia_punto_a_polilinea(figura->polilineas[0], x, y);
+    distancia_actual = distancia;
+    
+    for(size_t i = 1; i < figura->cant_polilineas; i++){
+        distancia = distancia_punto_a_polilinea(figura->polilineas[i], x, y);
         if(distancia < distancia_actual) distancia_actual = distancia;
     }
     return distancia;
