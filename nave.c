@@ -49,11 +49,11 @@ nave_t *nave_crear(int cant_combustible){
     return nave;
 }
 
-double nave_get_pos_x(nave_t *nave){
+float nave_get_pos_x(nave_t *nave){
     return nave->pos[X];
 }
 
-double nave_get_pos_y(nave_t *nave){
+float nave_get_pos_y(nave_t *nave){
     return nave->pos[Y];
 }
 
@@ -124,17 +124,20 @@ void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
 
 void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig){
 
+//CHEQUEAR MEMORIA
+
+
+    nave->fig = figura_clonar(nave_fig);
+    nave->fig_chorro = figura_clonar(nave_mas_chorro_fig);
+    nave->fig_escudo = figura_clonar(escudo_fig);
+    nave->fig_escudo_nivel = figura_clonar(escudo_nivel_fig);
+
 /*     if(nave->fig != NULL){
         figura_destruir(nave->fig);
         figura_destruir(nave->fig_chorro);
         figura_destruir(nave->fig_escudo);
         figura_destruir(nave->fig_escudo_nivel);
     } */
-
-    nave->fig = figura_clonar(nave_fig);
-    nave->fig_chorro = figura_clonar(nave_mas_chorro_fig);
-    nave->fig_escudo = figura_clonar(escudo_fig);
-    nave->fig_escudo_nivel = figura_clonar(escudo_nivel_fig);
 
     figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
@@ -216,16 +219,17 @@ void nave_sumar_combustible(nave_t *nave, int combustible){
     nave->cant_combustible += combustible;
 }
 
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala){
+void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     if((nave->estado % 2)){
-        figura_imprimir(renderer, nave->fig_chorro, escala, nave->pos[X], nave->pos[Y]);
+        figura_imprimir(renderer, nave->fig_chorro, escala, escala_x, escala_y, tras_x, tras_y);
     } else {
-        figura_imprimir(renderer, nave->fig, escala, nave->pos[X], nave->pos[Y]);
+        figura_imprimir(renderer, nave->fig, escala, escala_x, escala_y, tras_x, tras_y);
     }
 
     if((nave->estado >> 1) % 2){
-        figura_imprimir(renderer, nave->fig_escudo, escala, nave->pos[X], nave->pos[Y]);
+        figura_imprimir(renderer, nave->fig_escudo, escala, escala_x, escala_y, tras_x, tras_y);
     } else if((nave->estado >> 2) % 2){
-        figura_imprimir(renderer, nave->fig_escudo_nivel, escala, nave->pos[X], nave->pos[Y]);
+        figura_imprimir(renderer, nave->fig_escudo_nivel, escala, escala_x, escala_y, tras_x, tras_y);
     }
 }
+

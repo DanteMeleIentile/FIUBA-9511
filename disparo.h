@@ -62,7 +62,7 @@ void disparo_destruir(disparo_t *disparo);
 /*
 ** Dado el renderer de SDL, un disparo y una escala, dibuja.
 */
-void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, double escala);
+void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 
 /*

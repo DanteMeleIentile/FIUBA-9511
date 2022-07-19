@@ -80,7 +80,7 @@ void torreta_destruir(torreta_t *torreta);
 /*
 ** Imprime la torreta dada
 */
-void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, float escala, bool disparo);
+void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, float escala, float escala_x, float escala_y, float tras_x, float tras_y, bool disparo);
 
 //SPAWN TORRETA EN POSICION XY Y ROTARLO UN ANGULO, Y QUE DISPARE
 

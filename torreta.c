@@ -17,7 +17,7 @@ struct torreta {
     double angulo;
     double angulo_apuntado;
     double cooldown;
-    uint8_t estado;
+    bool estado;
 };
 
 torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angulo){
@@ -107,10 +107,10 @@ void torreta_destruir(torreta_t *torreta){
     free(torreta);
 }
 
-void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, float escala, bool disparo){
+void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, float escala, float escala_x, float escala_y, float tras_x, float tras_y, bool disparo){
     if(disparo){
-        figura_imprimir(renderer, torreta->fig_disparo, escala, torreta->pos[X], torreta->pos[Y]);
+        figura_imprimir(renderer, torreta->fig_disparo, escala, escala_x, escala_y, tras_x, tras_y);
     }else{
-        figura_imprimir(renderer, torreta->fig, escala, torreta->pos[X], torreta->pos[Y]);
+        figura_imprimir(renderer, torreta->fig, escala, escala_x, escala_y, tras_x, tras_y);
     }
 }

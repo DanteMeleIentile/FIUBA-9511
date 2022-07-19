@@ -19,12 +19,12 @@ nave_t *nave_crear(int cant_combustible);
 /*
 ** Devuelve la coordenada "x" de la nave.
 */
-double nave_get_pos_x(nave_t *nave);
+float nave_get_pos_x(nave_t *nave);
 
 /*
 ** Devuelve la coordenada "y" de la nave.
 */
-double nave_get_pos_y(nave_t *nave);
+float nave_get_pos_y(nave_t *nave);
 
 /*
 ** Devuelve el angulo de la nave.
@@ -120,7 +120,7 @@ void nave_sumar_combustible(nave_t *nave, int combustible);
 /*
 ** Dibuja la nave en pantalla segun sus parametros.
 */
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala);
+void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 
 #endif

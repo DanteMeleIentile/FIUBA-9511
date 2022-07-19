@@ -11,11 +11,13 @@
 struct nivel;
 typedef struct nivel nivel_t;
 
+
 /*
 ** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
 ** PRE: se le da un puntero a reactor, puede ser NULL
 */
 nivel_t *nivel_crear(figura_t *figura, reactor_t *reactor, int bonus);
+
 
 /*
 ** Devuelve la figura del nivel dado.
@@ -26,6 +28,19 @@ figura_t *nivel_get_figura(nivel_t *nivel);
 ** Avisa al TDA nivel que este ya no posee un reactor.
 */
 void nivel_reactor_destruir(nivel_t *nivel);
+
+/*
+** Devuelve el extremo en "x" del nivel
+** Si "mayor" es true, devuelve el extremo mayor, sino el menor
+*/
+float nivel_get_extremo_x(nivel_t *nivel, bool mayor);
+
+
+/*
+** Devuelve el extremo en "x" del nivel
+** Si "mayor" es true, devuelve el extremo mayor, sino el menor
+*/
+float nivel_get_extremo_y(nivel_t *nivel, bool mayor);
 
 /*
 ** Devuelve la lista enlazada de torretas.
@@ -48,18 +63,16 @@ int nivel_get_bonus(nivel_t *nivel);
 bool nivel_es_infinito(nivel_t *nivel);
 
 /*
-** Dado un nivel y una escala, imprime un nivel; si se creó con un reactor, se imprime el reactor junto con el nivel.
+** Devuelve un nivel clonado en memoria nueva. Caso contrario, devuelve NULL
 */
-void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala);
+nivel_t *nivel_clonar(const nivel_t *nivel);
 
-
-
-double nivel_get_pos_x(nivel_t *nivel);
-
-double nivel_get_pos_y(nivel_t *nivel);
-
-
-bool nivel_act_figura(nivel_t *nivel, figura_t *figura);
-
+/*
+**Imprime un "nivel" con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".
+** Si el nivel es infinito, se imprimirá una copia de la figura del nivel a izquierda y a derecha ubicada según la coordenada máxima y mínima de la misma en el eje x. Esta funcionalidad tiene el objetivo de dar la ilusión de niveles infinitos. 
+**PRE: El nivel fue creado y posee una figura.
+**POST: NINGÚN parámetro del nivel se modifica luego de imprimirlo en pantalla
+*/
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 #endif

@@ -38,5 +38,7 @@
 
 #define DT (1.0/JUEGO_FPS)
 
+#define ESCALA_NIVEL_0 1
+
 #endif // _CONFIG_H_
 

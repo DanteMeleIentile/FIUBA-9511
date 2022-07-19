@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
-
 #include "nivel.h"
 #include "config.h"
 #include "lista.h"
@@ -79,13 +78,12 @@ void nivel_reactor_destruir(nivel_t *nivel){
     reactor_destruir(nivel->reactor);
 }
 
-void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala){
-    figura_imprimir(renderer, nivel->fig, escala, 0, 0);
-    if(nivel->reactor != NULL) reactor_imprimir(renderer, nivel->reactor, escala);
+float nivel_get_extremo_x(nivel_t *nivel, bool mayor){
+    return figura_get_extremo_x(nivel->fig, mayor);
 }
 
-void nivel_trasladar(nivel_t *nivel, float dx, float dy){
-    figura_trasladar(nivel->fig, dx, dy);
+float nivel_get_extremo_y(nivel_t *nivel, bool mayor){
+    return figura_get_extremo_y(nivel->fig, mayor);
 }
 
 void nivel_destruir(nivel_t *nivel){
@@ -94,5 +92,19 @@ void nivel_destruir(nivel_t *nivel){
 }
 
 
+nivel_t *nivel_clonar(const nivel_t *nivel){
+    return nivel_crear(nivel->fig, nivel->reactor, nivel->bonus);
+}
 
+void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
 
+    figura_imprimir(renderer, nivel->fig, escala, escala_x, escala_y, tras_x, tras_y);
+    if(nivel->infinito){
+        float shift_der = nivel_get_extremo_x(nivel, true) * escala;
+        float shift_izq = - shift_der;
+        //Impresión a derecha
+        figura_imprimir(renderer, nivel->fig, escala, escala_x, escala_y, tras_x + shift_der, tras_y);
+        //Impresión a izquierda
+        figura_imprimir(renderer, nivel->fig, escala, escala_x, escala_y, tras_x + shift_izq, tras_y);
+    }
+}

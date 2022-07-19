@@ -92,6 +92,6 @@ void disparo_aumentar_tiempo(disparo_t *disparo, double t){
 }
 
 
-void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, double escala){
-    figura_imprimir(renderer, disparo->fig, escala, disparo->pos[X], disparo->pos[Y]);
+void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+    figura_imprimir(renderer, disparo->fig, escala, escala_x, escala_y, tras_x, tras_y);
 }

@@ -31,6 +31,6 @@ float combustible_get_pos_y(combustible_t *combustible);
 /*
 ** Dibuja el combustible en pantalla segun sus parametros;
 */
-void combustible_imprimir(SDL_Renderer *renderer, combustible_t *combustible, float escala);
+void combustible_imprimir(SDL_Renderer *renderer, combustible_t *combustible, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 #endif

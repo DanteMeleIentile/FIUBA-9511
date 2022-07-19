@@ -27,11 +27,11 @@ void planeta_set_pos(planeta_t *planeta, double x, double y){
     planeta->y = y;
 }
 
-void planeta_dibujar(SDL_Renderer *renderer, const planeta_t planeta){
+void planeta_imprimir(SDL_Renderer *renderer, planeta_t planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     figura_t *planeta_fig = figura_clonar(planeta.figura);
 
     figura_trasladar(planeta_fig, planeta.x, planeta.y);
-    figura_imprimir(renderer, planeta_fig, 1, planeta.x, planeta.y);
+    figura_imprimir(renderer, planeta_fig, escala, escala_x, escala_y, tras_x, tras_y);
     figura_destruir(planeta_fig);
 }
 

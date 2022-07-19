@@ -39,6 +39,6 @@ float combustible_get_pos_y(combustible_t *combustible){
     return combustible->pos[Y];
 }
 
-void combustible_imprimir(SDL_Renderer *renderer, combustible_t *combustible, float escala){
-    figura_imprimir(renderer, combustible->fig, escala, combustible->pos[X], combustible->pos[Y]);
+void combustible_imprimir(SDL_Renderer *renderer, combustible_t *combustible, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+    figura_imprimir(renderer, combustible->fig, escala, escala_x, escala_y, tras_x, tras_y);
 }
