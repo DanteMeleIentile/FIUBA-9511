@@ -368,37 +368,37 @@ int main() {
     
 //Creación de niveles
 
-    nivel_t *nivel_1 = nivel_crear(nivel1_leido, NULL, 2000);
+    nivel_t *nivel_1 = nivel_crear(nivel1_leido, 2000);
     if(nivel_1 == NULL){
         fprintf(stderr, "Error en la memoria");
         return 1;
     }
     crear_listas_nivel(nivel_1, 1);
 
-    nivel_t *nivel_2 = nivel_crear(nivel2_leido, NULL, 4000);
+    nivel_t *nivel_2 = nivel_crear(nivel2_leido, 4000);
     if(nivel_2 == NULL){
         fprintf(stderr, "Error en la memoria");
         return 1;
     }
     crear_listas_nivel(nivel_2, 2);
 
-    nivel_t *nivel_3 = nivel_crear(nivel3_leido, NULL, 6000);
+    nivel_t *nivel_3 = nivel_crear(nivel3_leido, 6000);
     if(nivel_3 == NULL){
         fprintf(stderr, "Error en la memoria");
         return 1;
     }
     crear_listas_nivel(nivel_3, 3);
 
-    nivel_t *nivel_4 = nivel_crear(nivel4_leido, NULL, 8000);
+    nivel_t *nivel_4 = nivel_crear(nivel4_leido, 8000);
     if(nivel_4 == NULL){
         fprintf(stderr, "Error en la memoria");
         return 1;
     }
     crear_listas_nivel(nivel_4, 4);
 
-    reactor_t *reactor_5 = reactor_crear(reactor_leido, 815, 309, 0);
+    reactor_t *reactor = reactor_crear(reactor_leido, 815, 309, 0);
 
-    nivel_t *nivel_5 = nivel_crear(nivel5_leido, reactor_5, 9000);
+    nivel_t *nivel_5 = nivel_crear(nivel5_leido, 9000);
     if(nivel_5 == NULL){
         fprintf(stderr, "Error en la memoria");
         return 1;
@@ -418,6 +418,8 @@ int main() {
     bool chorro_prendido = false;
     bool escudo_prendido = false;
 
+    bool reactor_destruido = false;
+
     bool disparo = false;
     double tiempo_para_disparar = COOLDOWN_NAVE;
     bool listo_para_disparar = true;
@@ -430,7 +432,7 @@ int main() {
     size_t nivel = 0;
     int vidas = 5;
     int score[2] = {0, SCORE_NEXT_SHIP};
-
+    
     double tiempo_reactor = TIEMPO_REACTOR;
     
     bool spawn = true;
@@ -444,6 +446,7 @@ int main() {
     float alto_nivel_y = 0;
 
     float margen_nivel_x = 0;
+    float margen_nivel_y = 0;
 
     // END código del alumno
 
@@ -646,44 +649,40 @@ int main() {
                 spawn = true;
                 nivel_actual = nivel_1;
                 nivel = 1;
-                continue;
             }
             if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 25){
                 spawn = true;
                 nivel_actual = nivel_2;
                 nivel = 2;
-                continue;
             }
             if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 25){
                 spawn = true;
                 nivel_actual = nivel_3;
                 nivel = 3;
-                continue;
             }
             if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 25){
                 spawn = true;
                 nivel_actual = nivel_4;
                 nivel = 4;
-                continue;
             }
             if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 25){
                 spawn = true;
                 nivel_actual = nivel_5;
                 nivel = 5;
-                continue;
             }
+            main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, 0, 0, 0);
             nave_imprimir(renderer, nave, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0);
         }
 
         if(nivel_actual != NULL && nivel_get_infinito(nivel_actual)){
             ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true) - nivel_get_extremo_x(nivel_actual, false);
+
             if(spawn == true){
                 centro = ancho_nivel_x/2;
                 nave_setear_velocidad(nave, 0, 0);
                 nave_setear_posicion(nave, ancho_nivel_x/2, 1000, 0);
                 spawn = false;
             }
-            computar_escala_y_centro(nave, &escala_nivel, &centro);
 
             if(nave_get_pos_x(nave) > nivel_get_extremo_x(nivel_actual, true)){
                 nave_setear_posicion(nave, nivel_get_extremo_x(nivel_1, false), nave_get_pos_y(nave), nave_get_angulo(nave));
@@ -695,127 +694,100 @@ int main() {
                 centro += ancho_nivel_x;
             }
 
+            nave_escudo_setear_angulo(nave, 0);
+            main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, 0, (-centro + VENTANA_ANCHO/2/escala_nivel) * escala_nivel, 0);
             main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, 0, (-centro + VENTANA_ANCHO/2/escala_nivel) * escala_nivel, 0);
-
+            nave_acercar_direccion(nave, G, -PI/2, DT);
             nave_imprimir(renderer, nave, escala_nivel, 0, 0, (-centro + VENTANA_ANCHO/2/escala_nivel) * escala_nivel, 0);
         }
 
-        if(nivel == 4){
+        if(nivel_actual != NULL && !nivel_get_infinito(nivel_actual)){
+            
+            ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true);    //contempla el margen izquierdo
+            alto_nivel_y = nivel_get_extremo_y(nivel_actual, true);     //contempla el margen inferior
 
-            if(spawn){
-                nave_setear_velocidad(nave, 0, 0);
-                nave_setear_posicion(nave, VENTANA_ANCHO/2, 500, 0);
-                spawn = false;
-            }
-
-            ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true);
             margen_nivel_x = nivel_get_extremo_x(nivel_actual, false);
-
-            alto_nivel_y = nivel_get_extremo_y(nivel_actual, true);
-
-            escala_nivel = VENTANA_ALTO * 1.0 / alto_nivel_y;
-            
-            if(VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x) < escala_nivel)
-                escala_nivel = VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x);
-
-            main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, 0, 0, 0);
-
-            if(nave_get_pos_x(nave) < 0){
-                nave_setear_posicion(nave, VENTANA_ANCHO, nave_get_pos_y(nave), nave_get_angulo(nave));
-            }
-            if(nave_get_pos_x(nave) > VENTANA_ANCHO){
-                nave_setear_posicion(nave, 0, nave_get_pos_y(nave), nave_get_angulo(nave));
-            }
-            if(nave_get_pos_y(nave) < 0){
-                nave_invertir_vel_y(nave);
-            }
-
-            nave_imprimir(renderer, nave, escala_nivel, 0, 0, 0, 0);
-        }
-
-        if(nivel == 5){
-            
-            if(spawn){
-                nave_setear_velocidad(nave, 0, 0);
-                nave_setear_posicion(nave, (VENTANA_ANCHO/2)/escala_nivel, (VENTANA_ALTO/2)/escala_nivel, 0);
-                tiempo_reactor = TIEMPO_REACTOR;
-                spawn = false;
-            }
-            
-            entero_imprimir_centrado(renderer, (int)tiempo_reactor + 1, VENTANA_ANCHO/2, 32*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
-
-            ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true);
-            float margen_nivel_x = nivel_get_extremo_x(nivel_actual, false);
-
-            alto_nivel_y = nivel_get_extremo_y(nivel_actual, true);
-            float margen_nivel_y = nivel_get_extremo_y(nivel_actual, false);
+            margen_nivel_y = nivel_get_extremo_y(nivel_actual, false);
 
             escala_nivel = VENTANA_ALTO * 1.0 / alto_nivel_y;
             
             if(VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x) < escala_nivel)
                 escala_nivel = VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x);
-            
-            main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, 0, 0, 0);
 
-            if(main_disparo_pego(lista_disparos, reactor_get_figura(reactor_5), 10, false)){
-                nivel_reactor_destruir(nivel_5);
-                spawn = true;
-                score[0] += nivel_get_bonus(nivel_actual);
-                score[1] -= nivel_get_bonus(nivel_actual);
-                nivel = 0;
-            }
-
-            if((tiempo_reactor-= DT) <= 0){
-                vidas--;
-                tiempo_reactor = TIEMPO_REACTOR;
-                spawn = true;
-                nivel = 0;
-            }
-
-            nave_imprimir(renderer, nave, escala_nivel, 0, 0, 0, 0);
-        }
-
-        if(nivel != 0){
-            if(distancia_punto_a_figura(nivel_get_figura(nivel_actual), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){
-                vidas--;
-                spawn = true;
-                continue;
-            }
-            if(nivel_get_infinito(nivel_actual)){
-                nave_escudo_setear_angulo(nave, 0);
-            } else {
-                if(nave_get_pos_y(nave) < VENTANA_ALTO/3){
+            if(nivel == 4){
+                if(spawn){
+                    nave_setear_velocidad(nave, 0, 0);
+                    nave_setear_posicion(nave, (VENTANA_ANCHO/2), 1000, 0);
+                    spawn = false;
+                }
+                
+                if(nave_get_pos_x(nave) < 0){
+                    nave_setear_posicion(nave, ancho_nivel_x + margen_nivel_x, nave_get_pos_y(nave), nave_get_angulo(nave));
+                }
+                if(nave_get_pos_x(nave) > ancho_nivel_x + margen_nivel_x){
+                    nave_setear_posicion(nave, 0, nave_get_pos_y(nave), nave_get_angulo(nave));
+                }
+                if(nave_get_pos_y(nave) < 0){
+                    vidas--;
+                    spawn = true;
+                }
+                if(nave_get_pos_y(nave) < (alto_nivel_y + margen_nivel_y)/3){
                     nave_escudo_setear_angulo(nave, PI);
-                } else if(nave_get_pos_y(nave) > 2*VENTANA_ALTO/3){
+                } else if(nave_get_pos_y(nave) > 2*(alto_nivel_y + margen_nivel_y)/3){
                     nave_escudo_setear_angulo(nave, 0);
-                } else if(nave_get_pos_x(nave) < VENTANA_ANCHO/3){
+                } else if(nave_get_pos_x(nave) < (ancho_nivel_x + margen_nivel_x)/3){
                     nave_escudo_setear_angulo(nave, PI/2);
-                } else if(nave_get_pos_x(nave) > 2*VENTANA_ANCHO/3){
+                } else if(nave_get_pos_x(nave) > 2*(ancho_nivel_x + margen_nivel_x)/3){
                     nave_escudo_setear_angulo(nave, -PI/2);
                 }
+                nave_acercar_direccion(nave, G, -PI/2, DT);
             }
-            if(nave_get_pos_y(nave) > VENTANA_ALTO/ESCALA_MINIMA){
-                nivel = 0;
-                spawn = true;
-                continue;
+            if(nivel == 5){
+                if(spawn){
+                    nave_setear_velocidad(nave, 0, 0);
+                    nave_setear_posicion(nave, (VENTANA_ANCHO/2)/escala_nivel, (VENTANA_ALTO/2)/escala_nivel, 0);
+                    tiempo_reactor = TIEMPO_REACTOR;
+                    spawn = false;
+                }
+                
+                entero_imprimir_centrado(renderer, (int)tiempo_reactor + 1, VENTANA_ANCHO/2, 32*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+
+                if(reactor_destruido == false){
+                    reactor_imprimir(renderer, reactor, escala_nivel, 0, 0, 0, 0);
+                    if(main_disparo_pego(lista_disparos, reactor_get_figura(reactor), 10, false)){
+                        reactor_destruir(reactor);
+                        score[0] += nivel_get_bonus(nivel_actual);
+                        score[1] -= nivel_get_bonus(nivel_actual);
+                        reactor_destruido = true;
+                    }
+                }
+
+                if((tiempo_reactor-= DT) <= 0){
+                    vidas--;
+                    tiempo_reactor = TIEMPO_REACTOR;
+                    spawn = true;
+                    nivel = 0;
+                }
             }
+            main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
+            main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
+            nave_imprimir(renderer, nave, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
         }
 
-        if(nivel != 5 && nivel != 0) nave_acercar_direccion(nave, G, -PI/2, DT);
+        if(nivel_actual != NULL && distancia_punto_a_figura(nivel_get_figura(nivel_actual), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){
+            vidas--;
+            spawn = true;
+        }
+
+        if(nivel != 0 && nave_get_pos_y(nave) > VENTANA_ALTO/ESCALA_MINIMA){
+            nivel = 0;
+            nivel_actual = NULL;
+            spawn = true;
+        }
 
         if(vidas == 0) break;
         if(nave_get_combustible(nave) <= 0) break;
         
-        if(nivel != 0){
-            if(nivel_get_infinito(nivel_actual)){
-                main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, 0, (-centro + VENTANA_ANCHO/2/escala_nivel) * escala_nivel, 0);
-            } else {
-                main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, 0, 0, 0);
-            }
-        } else {
-            main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, 0, 0, 0);
-        }
-
         if(disparo_leido == NULL){
             fprintf(stderr, "Error en la memoria");
             break;
@@ -825,7 +797,6 @@ int main() {
             if(main_disparo_pego(lista_disparos, nave_get_figura_principal(nave), 5, true)){
                 vidas--;
                 spawn = true;
-                continue;
             }
         }
 

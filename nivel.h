@@ -16,17 +16,12 @@ typedef struct nivel nivel_t;
 ** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
 ** PRE: se le da un puntero a reactor, puede ser NULL
 */
-nivel_t *nivel_crear(figura_t *figura, reactor_t *reactor, int bonus);
+nivel_t *nivel_crear(figura_t *figura, int bonus);
 
 /*
 ** Devuelve la figura del nivel dado.
 */
 figura_t *nivel_get_figura(nivel_t *nivel);
-
-/*
-** Avisa al TDA nivel que este ya no posee un reactor.
-*/
-void nivel_reactor_destruir(nivel_t *nivel);
 
 /*
 ** Devuelve el extremo en "x" del nivel

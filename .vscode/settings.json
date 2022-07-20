@@ -17,6 +17,7 @@
         "caracteres.h": "c",
         "disparo.h": "c",
         "combustible.h": "c",
-        "torreta.h": "c"
+        "torreta.h": "c",
+        "stddef.h": "c"
     }
 }
