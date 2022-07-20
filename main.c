@@ -766,7 +766,6 @@ int main() {
                     vidas--;
                     tiempo_reactor = TIEMPO_REACTOR;
                     spawn = true;
-                    nivel = 0;
                 }
             }
             main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
@@ -779,7 +778,7 @@ int main() {
             spawn = true;
         }
 
-        if(nivel != 0 && nave_get_pos_y(nave) > VENTANA_ALTO/ESCALA_MINIMA){
+        if(nivel_actual != NULL && nave_get_pos_y(nave) > VENTANA_ALTO/ESCALA_MINIMA){
             nivel = 0;
             nivel_actual = NULL;
             spawn = true;
