@@ -30,7 +30,7 @@ nivel_t *nivel_crear(figura_t *figura, reactor_t *reactor, int bonus){
         return NULL;
     } 
 
-    nivel->infinito = figura->infinito;
+    nivel->infinito = figura_get_infinito(figura);
 
     nivel->torretas = lista_crear();
     if(nivel->torretas == NULL){
@@ -70,7 +70,7 @@ int nivel_get_bonus(nivel_t *nivel){
     return nivel->bonus;
 }
 
-bool nivel_es_infinito(nivel_t *nivel){
+bool nivel_get_infinito(nivel_t *nivel){
     return nivel->infinito;
 }
 
@@ -91,10 +91,6 @@ void nivel_destruir(nivel_t *nivel){
     if(nivel->reactor != NULL) reactor_destruir(nivel->reactor);
 }
 
-
-nivel_t *nivel_clonar(const nivel_t *nivel){
-    return nivel_crear(nivel->fig, nivel->reactor, nivel->bonus);
-}
 
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
 

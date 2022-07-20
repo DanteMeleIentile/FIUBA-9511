@@ -15,7 +15,6 @@
 #define X 0
 #define Y 1
 
-
 char *nombre_icono[] = {
     [ICONO] = "Icono", 
     [NIVEL] = "Nivel", 
@@ -27,7 +26,13 @@ char *nombre_icono[] = {
     [REACTOR] = "Reactor",
 };
 
-
+struct figura{
+    char nombre[20];
+    figura_tipo_t tipo;
+    bool infinito;
+    size_t cant_polilineas;
+    polilinea_t **polilineas;
+};
 
 const char* figura_tipo_a_cadena(figura_tipo_t figura){
     return nombre_icono[figura];
@@ -81,6 +86,10 @@ figura_t *figura_clonar(const figura_t *figura){
     
     figura_setear_polilinea(fig, vector_polilineas);
     return fig;
+}
+
+bool figura_get_infinito(figura_t *figura){
+    return figura->infinito;
 }
 
 bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
@@ -233,6 +242,6 @@ float distancia_punto_a_figura(figura_t *figura, float x, float y){
         distancia = distancia_punto_a_polilinea(figura->polilineas[i], x, y);
         if(distancia < distancia_actual) distancia_actual = distancia;
     }
-    return distancia;
+    return distancia_actual;
 }
 

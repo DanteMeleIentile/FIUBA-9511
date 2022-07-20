@@ -1,40 +1,55 @@
-#include <SDL2/SDL.h>
 
-#include "planeta.h"
 #include "figura.h"
 #include "nave.h"
 #include "fisicas.h"
+#include "planeta.h"
 
-planeta_t planeta_crear(figura_t *figura, double x, double y){
-    planeta_t planeta;
-    planeta.figura = figura;
-    planeta_set_pos(&planeta, x, y);
+#define X 0
+#define Y 1
+
+struct planeta {
+    figura_t *fig;
+    float pos[2];
+};
+
+planeta_t *planeta_crear(figura_t *figura, float x, float y){
+    planeta_t *planeta = malloc(sizeof(planeta_t));
+    if(planeta == NULL) return NULL;
+    planeta->fig = figura_clonar(figura);
+    if(planeta->fig == NULL){
+        free(planeta);
+        return NULL;
+    }
+    planeta_set_pos(planeta, x, y);
+
+    figura_trasladar(planeta->fig, planeta->pos[X], planeta->pos[Y]);
     return planeta;
 }
 
 //GETTERS:
 
-double planeta_get_pos_x(planeta_t planeta){
-    return planeta.x;
+float planeta_get_pos_x(planeta_t *planeta){
+    return planeta->pos[X];
 }
 
-double planeta_get_pos_y(planeta_t planeta){
-    return planeta.y;
+float planeta_get_pos_y(planeta_t *planeta){
+    return planeta->pos[Y];
 }
 
-void planeta_set_pos(planeta_t *planeta, double x, double y){
-    planeta->x = x;
-    planeta->y = y;
+void planeta_set_pos(planeta_t *planeta, float x, float y){
+    planeta->pos[X] = x;
+    planeta->pos[Y] = y;
 }
 
-void planeta_imprimir(SDL_Renderer *renderer, planeta_t planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
-    figura_t *planeta_fig = figura_clonar(planeta.figura);
-
-    figura_trasladar(planeta_fig, planeta.x, planeta.y);
-    figura_imprimir(renderer, planeta_fig, escala, escala_x, escala_y, tras_x, tras_y);
-    figura_destruir(planeta_fig);
+void planeta_imprimir(SDL_Renderer *renderer, planeta_t *planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+    figura_imprimir(renderer, planeta->fig, escala, escala_x, escala_y, tras_x, tras_y);
 }
 
-double distancia_a_planeta(planeta_t planeta, double pos_x, double pos_y){
-    return distancia_entre_puntos(pos_x, pos_y, planeta.x, planeta.y);
+double distancia_a_planeta(planeta_t *planeta, float pos_x, float pos_y){
+    return distancia_entre_puntos(pos_x, pos_y, planeta->pos[X], planeta->pos[Y]);
+}
+
+void planeta_destruir(planeta_t *planeta){
+    figura_destruir(planeta->fig);
+    free(planeta);
 }

@@ -18,7 +18,6 @@ typedef struct nivel nivel_t;
 */
 nivel_t *nivel_crear(figura_t *figura, reactor_t *reactor, int bonus);
 
-
 /*
 ** Devuelve la figura del nivel dado.
 */
@@ -34,7 +33,6 @@ void nivel_reactor_destruir(nivel_t *nivel);
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
 float nivel_get_extremo_x(nivel_t *nivel, bool mayor);
-
 
 /*
 ** Devuelve el extremo en "x" del nivel
@@ -60,12 +58,7 @@ int nivel_get_bonus(nivel_t *nivel);
 /*
 ** Devuelve si true si el nivel es infinito y false si no lo es.
 */
-bool nivel_es_infinito(nivel_t *nivel);
-
-/*
-** Devuelve un nivel clonado en memoria nueva. Caso contrario, devuelve NULL
-*/
-nivel_t *nivel_clonar(const nivel_t *nivel);
+bool nivel_get_infinito(nivel_t *nivel);
 
 /*
 **Imprime un "nivel" con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".

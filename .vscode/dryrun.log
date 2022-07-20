@@ -1,5 +1,20 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
-make: Nothing to be done for 'all'.
+gcc -Wall -std=c99 -pedantic -g3 -c main.c
+gcc -Wall -std=c99 -pedantic -g3 -c color.c
+gcc -Wall -std=c99 -pedantic -g3 -c figura.c
+gcc -Wall -std=c99 -pedantic -g3 -c lectura.c
+gcc -Wall -std=c99 -pedantic -g3 -c polilinea.c
+gcc -Wall -std=c99 -pedantic -g3 -c lista.c
+gcc -Wall -std=c99 -pedantic -g3 -c fisicas.c
+gcc -Wall -std=c99 -pedantic -g3 -c planeta.c
+gcc -Wall -std=c99 -pedantic -g3 -c nave.c
+gcc -Wall -std=c99 -pedantic -g3 -c disparo.c
+gcc -Wall -std=c99 -pedantic -g3 -c nivel.c
+gcc -Wall -std=c99 -pedantic -g3 -c torreta.c
+gcc -Wall -std=c99 -pedantic -g3 -c combustible.c
+gcc -Wall -std=c99 -pedantic -g3 -c reactor.c
+gcc -Wall -std=c99 -pedantic -g3 -c caracteres.c
+gcc -Wall -std=c99 -pedantic -g3 main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o -lSDL2 -lm -o Gravitar
 make: Leaving directory '/home/leanshiza/Documents/GitHub/FIUBA-9511'
  

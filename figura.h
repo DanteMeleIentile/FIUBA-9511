@@ -11,6 +11,7 @@
 /* 
 ** Etiquetas para cada tipo de figura
 */
+
 typedef enum {
     ICONO = 0,
     NIVEL = 1,
@@ -22,16 +23,9 @@ typedef enum {
     REACTOR = 7,
 } figura_tipo_t;
 
+struct figura;
 
-typedef struct{
-    char nombre[20];
-    figura_tipo_t tipo;
-    bool infinito;
-    size_t cant_polilineas;
-    polilinea_t **polilineas;
-} figura_t;
-
-
+typedef struct figura figura_t;
 
 /* 
 ** Devuelve el nombre de la figura
@@ -47,6 +41,11 @@ figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, s
 ** Devuelve una copia de figura en memoria nueva
 */
 figura_t *figura_clonar(const figura_t *figura);
+
+/*  
+** Devuelve "true" si el nivel es infinito y "false" si no lo es
+*/
+bool figura_get_infinito(figura_t *figura);
 
 /*
 ** Apunta el puntero "polilineas" de la "figura" a un arreglo de cant_polilineas "polilineas". Si no puede retorna false

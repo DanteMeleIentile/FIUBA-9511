@@ -13,7 +13,7 @@
 struct torreta {
     figura_t *fig;
     figura_t *fig_disparo;
-    double pos[2];
+    float pos[2];
     double angulo;
     double angulo_apuntado;
     double cooldown;
