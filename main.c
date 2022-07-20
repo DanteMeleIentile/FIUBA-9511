@@ -684,6 +684,8 @@ int main() {
                 spawn = false;
             }
 
+            computar_escala_y_centro(nave, &escala_nivel, &centro);
+
             if(nave_get_pos_x(nave) > nivel_get_extremo_x(nivel_actual, true)){
                 nave_setear_posicion(nave, nivel_get_extremo_x(nivel_1, false), nave_get_pos_y(nave), nave_get_angulo(nave));
                 centro -= ancho_nivel_x;
