@@ -20,6 +20,11 @@
 
 /* Estructura de las polilineas */
 
+struct polilinea {
+    float (*puntos)[2];
+    size_t n;
+    uint8_t r,g,b; 
+};
 
 polilinea_t *polilinea_crear_vacia(size_t n){
     polilinea_t *polilinea = malloc(sizeof(polilinea_t));
@@ -56,7 +61,7 @@ polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c){
     return polilinea;
 }
 
-float polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor){
+float polilinea_get_extremo_x(const polilinea_t *polilinea, bool mayor){
     float aux = 0; 
     for(size_t i = 0; i < polilinea->n; i++){
         if(i == 0){
@@ -72,7 +77,7 @@ float polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor){
     return aux;
 }
 
-float polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor){
+float polilinea_get_extremo_y(const polilinea_t *polilinea, bool mayor){
     float aux = 0; 
     for(size_t i = 0; i < polilinea->n; i++){
         if(i == 0){
@@ -87,6 +92,10 @@ float polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor){
         
     }
     return aux;
+}
+
+color_t polilinea_get_color(const polilinea_t *polilinea){
+    return color_crear(polilinea->r, polilinea->g, polilinea->b);
 }
 
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
@@ -109,33 +118,26 @@ bool polilinea_setear_color(polilinea_t *polilinea, color_t color) {
 
 
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
-    color_t c = color_crear_valor(polilinea->r, polilinea->g, polilinea->b);
+    color_t c = color_crear(polilinea->r, polilinea->g, polilinea->b); 
     return polilinea_crear((const float(*)[DIMENSION])(polilinea->puntos), polilinea->n, c);
 }
 
-void trasladar(float polilinea[][2], size_t n, float dx, float dy) {
-    for(int i = 0; i < n; i+=1){
-        polilinea[i][X] += dx;
-        polilinea[i][Y] += dy;
+void polilinea_trasladar(polilinea_t *polilinea, float dx, float dy) {
+    for(int i = 0; i < polilinea->n; i+=1){
+        polilinea->puntos[i][X] += dx;
+        polilinea->puntos[i][Y] += dy;
     }
 }
 
-void rotar(float polilinea[][2], size_t n, double rad) {
+void polilinea_rotar(polilinea_t *polilinea, double rad) {
     double accx;
     double accy;
 
-    for(int i = 0; i < n; i++){
-        accx = polilinea[i][X];
-        accy = polilinea[i][Y];
-        polilinea[i][X] = accx * cos(rad) - accy * sin(rad);
-        polilinea[i][Y] = accx * sin(rad) + accy * cos(rad);
-    }
-}
-
-void escalar(float polilinea[][2], size_t n, float escala){
-    for(int i = 0; i < n; i+=1){
-        polilinea[i][X] *= escala;
-        polilinea[i][Y] *= escala;
+    for(int i = 0; i < polilinea->n; i++){
+        accx = polilinea->puntos[i][X];
+        accy = polilinea->puntos[i][Y];
+        polilinea->puntos[i][X] = accx * cos(rad) - accy * sin(rad);
+        polilinea->puntos[i][Y] = accx * sin(rad) + accy * cos(rad);
     }
 }
 

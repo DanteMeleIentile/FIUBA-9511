@@ -519,7 +519,7 @@ int main() {
     bool avanzar = false;
 
     size_t nivel = 0;
-    int vidas = 1000;
+    int vidas = JUEGO_VIDAS;
     int score[2] = {0, SCORE_NEXT_SHIP};
     
     double tiempo_reactor = TIEMPO_REACTOR;
@@ -647,7 +647,7 @@ int main() {
 
         cadena_imprimir_centrado(renderer, cadena, VENTANA_ANCHO/4, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
         cadena_imprimir_centrado(renderer, "FUEL", VENTANA_ANCHO/2, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
-
+        printf("HOLA\n");
         sprintf(cadena, "%d", score[0]);
 
         cadena_imprimir_centrado(renderer, cadena, 3*VENTANA_ANCHO/4, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
@@ -904,10 +904,12 @@ int main() {
             if(nivel !=5 && lista_largo(nivel_get_lista_torretas(nivel_actual)) == 0){
                 score[0] += nivel_get_bonus(nivel_actual);
                 score[1] -= nivel_get_bonus(nivel_actual);
+                nivel_set_bonus(nivel_actual, 0);
             }
             if(nivel == 5 && reactor_destruido){
                 score[0] += nivel_get_bonus(nivel_actual);
                 score[1] -= nivel_get_bonus(nivel_actual);
+                nivel_set_bonus(nivel_actual, 0);
             }
             nivel = 0;
             nivel_actual = NULL;

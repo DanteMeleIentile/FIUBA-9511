@@ -11,6 +11,7 @@
 #include "figura.h"
 #include "lista.h"
 
+#define DIMENSION 2
 #define X 0
 #define Y 1
 
@@ -68,8 +69,7 @@ figura_t *figura_clonar(const figura_t *figura){
     }
 
     for(size_t j = 0; j < fig->cant_polilineas; j++){
-        color_t c = color_crear_valor(figura->polilineas[j]->r, figura->polilineas[j]->g, figura->polilineas[j]->b);
-        vector_polilineas[j] = polilinea_crear((const float(*)[2])figura->polilineas[j]->puntos, figura->polilineas[j]->n, c); //Iguala cada componente de las polilineas de cada figura leida del archivo
+        vector_polilineas[j] = polilinea_clonar(figura->polilineas[j]); //Iguala cada componente de las polilineas de cada figura leida del archivo
 
         if(vector_polilineas[j] == NULL){
             if(j >= 1){
@@ -146,13 +146,13 @@ void figura_destruir(figura_t *figura){
 
 void figura_rotar(figura_t *figura, double rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
-        rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
+        polilinea_rotar(figura->polilineas[i], rad);
     }
 }
 
 void figura_trasladar(figura_t *figura, float dx, float dy){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
-        trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, dx, dy);
+        polilinea_trasladar(figura->polilineas[i], dx, dy);
     }
 }
 

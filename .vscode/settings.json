@@ -19,6 +19,7 @@
         "combustible.h": "c",
         "torreta.h": "c",
         "stddef.h": "c",
-        "reactor.h": "c"
+        "reactor.h": "c",
+        "stdio.h": "c"
     }
 }

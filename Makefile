@@ -1,6 +1,6 @@
 PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -std=c99 -pedantic -g3
+CFLAGS = -Wall -Werror -std=c99 -pedantic -g3
 SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)

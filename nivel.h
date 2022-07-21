@@ -56,6 +56,11 @@ int nivel_get_bonus(const nivel_t *nivel);
 bool nivel_get_infinito(const nivel_t *nivel);
 
 /*
+** Setea el bonus del nivel.
+*/
+void nivel_set_bonus(nivel_t *nivel, int n);
+
+/*
 ** Libera la memoria del nivel.
 */
 void nivel_destruir(nivel_t *nivel);

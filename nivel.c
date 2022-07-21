@@ -11,7 +11,6 @@
 #define X 0
 #define Y 1
 
-
 struct nivel {
     figura_t *fig;
     bool infinito;
@@ -78,6 +77,10 @@ float nivel_get_extremo_x(const nivel_t *nivel, bool mayor){
 
 float nivel_get_extremo_y(const nivel_t *nivel, bool mayor){
     return figura_get_extremo_y(nivel->fig, mayor);
+}
+
+void nivel_set_bonus(nivel_t *nivel, int n){
+    nivel->bonus = n;
 }
 
 void nivel_destruir(nivel_t *nivel){

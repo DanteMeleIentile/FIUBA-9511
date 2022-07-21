@@ -563,9 +563,7 @@ const size_t cant_puntos_caracteres[] = {
 void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, double escala, color_t color){
 	size_t len = strlen(cadena);
 	if(len == 0) return;
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
+	uint8_t r,g,b;
 	color_a_rgb(color, &r, &g, &b);
 
 	for(size_t i = 0; i < len; i++){
@@ -590,9 +588,7 @@ void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float 
 void cadena_imprimir(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, double escala, color_t color){
 	size_t len = strlen(cadena);
 	if(len == 0) return;
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
+	uint8_t r,g,b;
 	color_a_rgb(color, &r, &g, &b);
 
 	for(size_t i = 0; i < len; i++){
