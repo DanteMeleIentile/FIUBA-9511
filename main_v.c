@@ -17,6 +17,16 @@
 #include "combustible.h"
 #include "reactor.h"
 
+figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){ // Esta funcion como que ya está clonando
+        figura_t *fig = NULL;
+        for (size_t i = 0; i < n; i++){
+            if(strcmp(nombre, figura_get_nombre(vector_figuras[i])) == 0){
+                fig = vector_figuras[i];
+                break;
+            }
+        } 
+        return fig;
+    }
 
 int main() {
 
@@ -132,11 +142,38 @@ int main() {
     const size_t cant_figuras = cant;
 
     fclose(f1);
-//Terminamos de leer el archivo 
+
+    //Terminamos de leer el archivo 
+    
 
 //Creación de entidades (Referencias a las figuras del vector_figuras para no buscarlas nuevamente por cada dt)
+    figura_t *reactor_leido = encontrar_figura("REACTOR", vector_figuras, cant_figuras);
 
     //EN DE MAIN
+    planeta_t *base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
+    planeta_t *estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
+    planeta_t *planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
+    planeta_t *planeta2 = planeta_crear(encontrar_figura("PLANETA2", vector_figuras, cant_figuras), 671, 145);
+    planeta_t *planeta3 = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), 110, 79);
+    planeta_t *planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
+    planeta_t *planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
+
+    reactor_t *reactor = reactor_crear(reactor_leido, 815, 309, 0);
+
+
+
+    planeta_destruir(base);
+    planeta_destruir(estrella);
+    planeta_destruir(planeta1);
+    planeta_destruir(planeta2);
+    planeta_destruir(planeta3);
+    planeta_destruir(planeta4);
+    planeta_destruir(planeta5);
+
+    reactor_destruir(reactor);
+
+
+
 
     for(size_t i = 0; i < cant_figuras; i++){
         figura_destruir(vector_figuras[i]);

@@ -867,7 +867,9 @@ int main() {
     nivel_destruir(nivel_3);
     nivel_destruir(nivel_4);
     nivel_destruir(nivel_5);
+    
     if(!reactor_destruido) reactor_destruir(reactor);
+
     planeta_destruir(base);
     planeta_destruir(estrella);
     planeta_destruir(planeta1);
