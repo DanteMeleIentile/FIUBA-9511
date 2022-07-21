@@ -48,7 +48,7 @@ int main() {
     size_t cant = 0;
 //Comenzamos a leer el archivo para sacar las figuras que tiene adentro
     for(size_t i = 0; leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
-        if(i != 0){
+        if(i >= 1){
             figura_t **aux = realloc(vector_figuras, (i + 1) * sizeof(figura_t*)); //Agrega una componente a "vector_figuras" hasta que no pueda leer mas figuras
             if(aux == NULL){
                 for(size_t j = 0; j < (i+1); j++){
@@ -61,7 +61,6 @@ int main() {
                 return 1;
             }
             vector_figuras = aux;
-
         }
         vector_figuras[i] = figura_crear(nombre, tipo, infinito, cant_polilineas); //Iguala cada componente a la figura leida del archivo
         if(vector_figuras[i] == NULL){
@@ -111,7 +110,7 @@ int main() {
 
         figura_setear_polilinea(vector_figuras[i], vector_polilineas);
 
-       /* if(!figura_setear_polilinea(vector_figuras[i], vector_polilineas)){
+        if(!figura_setear_polilinea(vector_figuras[i], vector_polilineas)){
             fprintf(stderr, "Error de memoria.");
 
             for(size_t j = 0; j < cant_polilineas; j++){
@@ -125,7 +124,7 @@ int main() {
             free(vector_figuras);
 
             return 1; // ERROR 
-        }*/
+        }
 
         cant++;
     }
@@ -142,6 +141,7 @@ int main() {
     for(size_t i = 0; i < cant_figuras; i++){
         figura_destruir(vector_figuras[i]);
     }
+    free(vector_figuras);
 
     return 0;
 }

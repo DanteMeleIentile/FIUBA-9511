@@ -63,4 +63,4 @@ valgrind-log-file:
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=error.log --suppressions=suppressions_20221_tp1.supp -s ./$(PROGRAM)
 
 valgrind:
-	valgrind --leak-check=full --track-origins=yes --show-reachable=yes -s ./$(PROGRAM)
+	valgrind  ./$(PROGRAM)
