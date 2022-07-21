@@ -749,9 +749,6 @@ int main() {
                     nave_escudo_setear_angulo(nave, -PI/2);
                 }
                 nave_acercar_direccion(nave, G, -PI/2, DT);
-                main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
-                main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
-                nave_imprimir(renderer, nave, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
             }
             if(nivel == 5){
                 if(spawn){
@@ -782,10 +779,10 @@ int main() {
                     tiempo_reactor = TIEMPO_REACTOR;
                     spawn = true;
                 }
-                main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, 0, 0, 0);
-                main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, 0, 0, 0);
-                nave_imprimir(renderer, nave, escala_nivel, 0, 0, 0, 0);
             }
+            main_disparo_en_pantalla(renderer, lista_disparos, disparo_leido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
+            main_nivel_en_pantalla(renderer, nivel_actual, nave, lista_disparos, torreta_leida, torreta_disparo_leida, combustible_leido, score, escudo_prendido, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
+            nave_imprimir(renderer, nave, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
         }
 
         if(nivel_actual != NULL && distancia_punto_a_figura(nivel_get_figura(nivel_actual), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){

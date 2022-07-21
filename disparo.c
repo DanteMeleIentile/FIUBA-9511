@@ -30,13 +30,9 @@ disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y,
     disparo->vel[Y] = vel_y;
 
     disparo->angulo = angulo;
-    
     disparo->tiempo = 0;
-
     disparo->friendly = friendly;
-
     disparo->fig = NULL;
-    
     return disparo;
 }
 
