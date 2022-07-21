@@ -90,7 +90,7 @@ void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo);
 float distancia_punto_a_figura(figura_t *figura, float x, float y);
 
 /*
-** Libera la memoria de la figura dada.
+** Libera la memoria de la figura dada. Es importante destacar que también eli
 */
 void figura_destruir(figura_t *figura);
 

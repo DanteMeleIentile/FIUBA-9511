@@ -31,7 +31,7 @@ polilinea_t *polilinea_crear_vacia(size_t n);
 polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c);
 
 /*
-** Destruye una polilinea creada mediante "polilinea_crear_vacia". Devuelve NULL en caso de falla.
+** Destruye una polilinea creada mediante "polilinea_crear_vacia" o "polilinea_crear"
 */
 void polilinea_destruir(polilinea_t *polilinea);
 

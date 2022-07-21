@@ -1,7 +1,5 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
-gcc -Wall -std=c99 -pedantic -g3 -c main_v.c
- 
-gcc -Wall -std=c99 -pedantic -g3 main_v.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o -lSDL2 -lm -o Gravitar
+make: Nothing to be done for 'all'.
 make: Leaving directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
  

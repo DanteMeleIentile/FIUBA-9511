@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "polilinea.h"
 #include "lista.h"
@@ -48,28 +49,41 @@ int main() {
 //Comenzamos a leer el archivo para sacar las figuras que tiene adentro
     for(size_t i = 0; leer_encabezado_figura(f1, nombre, &tipo, &infinito, &cant_polilineas); i++){
         if(i != 0){
-            vector_figuras = realloc(vector_figuras, (i + 1) * sizeof(figura_t*)); //Agrega una componente a "vector_figuras" hasta que no pueda leer mas figuras
-            if(vector_figuras == NULL){
+            figura_t **aux = realloc(vector_figuras, (i + 1) * sizeof(figura_t*)); //Agrega una componente a "vector_figuras" hasta que no pueda leer mas figuras
+            if(aux == NULL){
+                for(size_t j = 0; j < (i+1); j++){
+                    figura_destruir(vector_figuras[j]);
+                }
+                free(vector_figuras);
+
+                fprintf(stderr, "Error de memoria");
                 fclose(f1);
                 return 1;
             }
+            vector_figuras = aux;
+
         }
         vector_figuras[i] = figura_crear(nombre, tipo, infinito, cant_polilineas); //Iguala cada componente a la figura leida del archivo
-
         if(vector_figuras[i] == NULL){
             if(i >= 1){
-                for(size_t m = 0; m < i; m++){
-                    figura_destruir(vector_figuras[m]);
+                for(size_t j = 0; j < (i+1); j++){
+                    figura_destruir(vector_figuras[j]);
                 }
+                free(vector_figuras);
                 fclose(f1);
                 return 1;
             }
+            free(vector_figuras);
+            fclose(f1);
+            return 1;
         }
 
-        polilinea_t **vector_polilineas = malloc(sizeof(polilinea_t*) * cant_polilineas); //Creamos un puntero que apunta a un vector "vector_polilineas" de "cant_polilineas"z polilinea_t
-
+        polilinea_t **vector_polilineas = malloc(sizeof(polilinea_t*) * cant_polilineas); //Creamos un puntero que apunta a un vector "vector_polilineas" de "cant_polilineas" polilinea_t
         if(vector_polilineas == NULL){
             fprintf(stderr, "Error de memoria");
+            for(size_t j = 0; j < (i+1); j++){
+                figura_destruir(vector_figuras[j]);
+            }
             free(vector_figuras);
             fclose(f1);
             return 1;
@@ -84,16 +98,34 @@ int main() {
                     }
                 }
                 free(vector_polilineas);
+
+                for(size_t k = 0; k < (i+1); k++){
+                    figura_destruir(vector_figuras[j]);
+                }
                 free(vector_figuras);
+
                 fclose(f1);
                 return 1;
             }
         }
 
-        if(!figura_setear_polilinea(vector_figuras[i], vector_polilineas)){
-            fprintf(stderr, "ERROR");
+        figura_setear_polilinea(vector_figuras[i], vector_polilineas);
+
+       /* if(!figura_setear_polilinea(vector_figuras[i], vector_polilineas)){
+            fprintf(stderr, "Error de memoria.");
+
+            for(size_t j = 0; j < cant_polilineas; j++){
+                polilinea_destruir(vector_polilineas[j]);
+            }
+            free(vector_polilineas);
+
+            for(size_t k = 0; k < i; k++){
+                figura_destruir(vector_figuras[k]);
+            }
+            free(vector_figuras);
+
             return 1; // ERROR 
-        }
+        }*/
 
         cant++;
     }
