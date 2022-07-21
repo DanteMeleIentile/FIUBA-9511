@@ -157,11 +157,6 @@ void figura_trasladar(figura_t *figura, float dx, float dy){
     }
 }
 
-void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo){
-    figura_rotar(figura, angulo);
-    figura_trasladar(figura, dx, dy);
-}
-
 float distancia_punto_a_figura(figura_t *figura, float x, float y){
     float distancia;
     float distancia_actual;

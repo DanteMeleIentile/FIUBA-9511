@@ -45,10 +45,11 @@ torreta_t *torreta_crear(const figura_t *figura1, const figura_t *figura2, doubl
 
     torreta->cooldown = cooldown;
 
-    figura_rototrasladar(torreta->fig, torreta->pos[X], torreta->pos[Y], torreta->angulo);
-    figura_rototrasladar(torreta->fig_disparo, torreta->pos[X], torreta->pos[Y], torreta->angulo);
+    figura_rotar(torreta->fig, torreta->angulo);
+    figura_rotar(torreta->fig_disparo, torreta->angulo);
 
-
+    figura_trasladar(torreta->fig, torreta->pos[X], torreta->pos[Y]);
+    figura_trasladar(torreta->fig_disparo, torreta->pos[X], torreta->pos[Y]);
     return torreta;
 }
 

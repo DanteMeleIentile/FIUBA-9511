@@ -10,6 +10,7 @@
 struct reactor {
     figura_t *fig;
     float pos[2];
+    double angulo;
 };
 
 reactor_t *reactor_crear(figura_t *figura, float x, float y, double angulo){
@@ -21,10 +22,15 @@ reactor_t *reactor_crear(figura_t *figura, float x, float y, double angulo){
         free(reactor);
         return NULL;
     }
-    figura_rototrasladar(reactor->fig, x, y, angulo);
 
     reactor->pos[X] = x;
     reactor->pos[Y] = y;
+
+    reactor->angulo = angulo;
+
+    figura_trasladar(reactor->fig, reactor->pos[X], reactor->pos[Y]);
+    figura_rotar(reactor->fig, reactor->angulo);
+    
     return reactor;
 }
 

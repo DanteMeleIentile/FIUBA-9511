@@ -49,10 +49,13 @@ bool disparo_act_figura(disparo_t *disparo, const figura_t *figura){
         free(disparo);
         return false;
     }
-
-    figura_rotar(disparo->fig, disparo->angulo);
-    figura_trasladar(disparo->fig, disparo->pos[X], disparo->pos[Y]);
-
+    if(disparo->angulo != 0){
+        figura_rotar(disparo->fig, disparo->angulo);
+    }
+    
+    if(!(disparo->pos[X] == 0 && disparo->pos[Y] == 0)){
+        figura_trasladar(disparo->fig, disparo->pos[X], disparo->pos[Y]);
+    }
     return true;
 }
 

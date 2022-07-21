@@ -44,6 +44,8 @@ nave_t *nave_crear(int cant_combustible){
     nave->vel[X] = 0;
     nave->vel[Y] = 0;
 
+    nave->estado = 0;
+
     nave->cant_combustible = cant_combustible;
 
     nave->fig = NULL;
@@ -159,11 +161,19 @@ bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nav
         return false;
     }
 
-    figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
-    figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
-    figura_rototrasladar(nave->fig_escudo, nave->pos[X], nave->pos[Y], nave->angulo);
-    figura_rototrasladar(nave->fig_escudo_nivel, nave->pos[X], nave->pos[Y], nave->angulo_escudo);
+    if(nave->angulo != 0){
+        figura_rotar(nave->fig, nave->angulo);
+        figura_rotar(nave->fig_chorro, nave->angulo);
+        figura_rotar(nave->fig_escudo, nave->angulo);
+        figura_rotar(nave->fig_escudo_nivel, nave->angulo);
+    }
 
+    if(!(nave->pos[X] == 0 && nave->pos[Y] == 0)){
+        figura_trasladar(nave->fig, nave->pos[X], nave->pos[Y]);
+        figura_trasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y]);
+        figura_trasladar(nave->fig_escudo, nave->pos[X], nave->pos[Y]);
+        figura_trasladar(nave->fig_escudo_nivel, nave->pos[X], nave->pos[Y]);
+    }
     return true;
 }
 

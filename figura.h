@@ -81,11 +81,6 @@ void figura_rotar(figura_t *figura, double rad);
 */
 void figura_trasladar(figura_t *figura, float dx, float dy);
 
-/*
-** Dada una figura, le suma las coordenadas "x" e "y" rotada un angulo "rad".
-*/
-void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo);
-
 //Da la distancia más cercana entre el punto y la figura
 float distancia_punto_a_figura(figura_t *figura, float x, float y);
 

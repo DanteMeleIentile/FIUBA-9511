@@ -25,7 +25,8 @@ combustible_t *combustible_crear(const figura_t *figura, float pos_x, float pos_
     combustible->pos[Y] = pos_y;
     combustible->angulo = angulo;
 
-    figura_rototrasladar(combustible->fig, combustible->pos[X], combustible->pos[Y], combustible->angulo);
+    figura_trasladar(combustible->fig, combustible->pos[X], combustible->pos[Y]);
+    figura_rotar(combustible->fig, combustible->angulo);
 
     return combustible;
 }
