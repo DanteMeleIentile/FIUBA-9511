@@ -39,7 +39,7 @@ void planeta_set_pos(planeta_t *planeta, float x, float y);
 ** PRE: El planeta fue creado y posee una figura.
 ** POST: NINGÚN parámetro del planeta se modifica luego de imprimirlo en pantalla
 */
-void planeta_imprimir(SDL_Renderer *renderer, planeta_t *planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
+void planeta_imprimir(SDL_Renderer *renderer, const planeta_t *planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 /*
 ** Devuelve la distancia entre la nave y la figura del planeta.

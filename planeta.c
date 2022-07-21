@@ -41,7 +41,7 @@ void planeta_set_pos(planeta_t *planeta, float x, float y){
     planeta->pos[Y] = y;
 }
 
-void planeta_imprimir(SDL_Renderer *renderer, planeta_t *planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+void planeta_imprimir(SDL_Renderer *renderer, const planeta_t *planeta, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     figura_imprimir(renderer, planeta->fig, escala, escala_x, escala_y, tras_x, tras_y);
 }
 

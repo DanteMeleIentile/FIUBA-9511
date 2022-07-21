@@ -155,7 +155,7 @@ void nivel_disparo_impacto(lista_t *lista_disparos, nivel_t *nivel, double dmin)
         if(distancia_punto_a_figura(nivel_get_figura(nivel), disparo_get_pos_x(disp_act), disparo_get_pos_y(disp_act)) <= dmin){
             disparo_destruir(disp_act);
             lista_iter_borrar(iter);
-            break;
+            continue;
         }
         lista_iter_avanzar(iter);
     }
@@ -165,6 +165,10 @@ void nivel_disparo_impacto(lista_t *lista_disparos, nivel_t *nivel, double dmin)
 //Itera dentro de la lista enlazada de combustibles
 bool lista_iterar_combustibles(SDL_Renderer *renderer, lista_t *lista_combustible, nave_t *nave, const figura_t *combustible_fig, bool escudo, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     lista_iter_t *iter = lista_iter_crear(lista_combustible);
+    nave_escudo_setear_angulo(nave, 0);
+    combustible_t *combustible_apuntado = NULL;
+    float menor_distancia;
+    float distancia;
     bool absorbido = false;
     if(iter == NULL){
         fprintf(stderr, "Error en memoria\n");
@@ -175,17 +179,30 @@ bool lista_iterar_combustibles(SDL_Renderer *renderer, lista_t *lista_combustibl
         combustible_t *comb_act = lista_iter_ver_actual(iter);
         if(comb_act == NULL){
             fprintf(stderr, "Error en memoria\n");
-            combustible_fig = NULL;
             lista_iter_destruir(iter);
             return false;
         }
+        distancia = distancia_entre_puntos(nave_get_pos_x(nave), nave_get_pos_y(nave), combustible_get_pos_x(comb_act), combustible_get_pos_y(comb_act));
+        if(i == 0){
+            menor_distancia = distancia;
+            combustible_apuntado = comb_act;
+        } else if(distancia < menor_distancia){
+            menor_distancia = distancia;
+            combustible_apuntado = comb_act;
+        }
         if(distancia_entre_puntos(nave_get_pos_x(nave), nave_get_pos_y(nave), combustible_get_pos_x(comb_act), combustible_get_pos_y(comb_act)) <= escala * DMIN_ESCUDO && escudo){
+            combustible_destruir(comb_act);
             lista_iter_borrar(iter);
             absorbido = true;
+            continue;
         } 
         combustible_imprimir(renderer, comb_act, escala, escala_x, escala_y, tras_x, tras_y);
         lista_iter_avanzar(iter);
     }
+    if(combustible_apuntado != NULL){
+        nave_escudo_apuntar(nave, combustible_get_pos_x(combustible_apuntado), combustible_get_pos_y(combustible_apuntado));
+    }
+
     lista_iter_destruir(iter);
     return absorbido;
 }
@@ -205,7 +222,7 @@ bool lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista
         if(torreta_get_cooldown(torreta_act) <= 0 && torreta_apuntar(torreta_act, nave_get_pos_x(nave), nave_get_pos_y(nave)) && distancia_entre_puntos(nave_get_pos_x(nave), nave_get_pos_y(nave), torreta_get_pos_x(torreta_act), torreta_get_pos_y(torreta_act)) < (500 * escala)){
             double a = (VEL_DISPARO * cos(torreta_get_angulo_apuntado(torreta_act)));
             double b = (VEL_DISPARO * sin(torreta_get_angulo_apuntado(torreta_act)));
-            disparo_t *disparo_buf = disparo_crear(torreta_get_pos_x(torreta_act), torreta_get_pos_y(torreta_act), a, b, torreta_get_angulo_apuntado(torreta_act), false);
+            disparo_t *disparo_buf = disparo_crear(torreta_get_pos_x(torreta_act)+20*cos(torreta_get_angulo(torreta_act)+PI/2), torreta_get_pos_y(torreta_act)+20*sin(torreta_get_angulo(torreta_act)+PI/2), a, b, torreta_get_angulo_apuntado(torreta_act), false);
             if(!lista_insertar_ultimo(lista_disparos, disparo_buf) || disparo_buf == NULL) return false;
             torreta_set_cooldown(torreta_act, COOLDOWN_TORRETA);
         } else if(torreta_get_cooldown(torreta_act) <= 7*COOLDOWN_TORRETA/8) torreta_imprimir(renderer, torreta_act, escala, escala_x, escala_y, tras_x, tras_y, false);
@@ -425,7 +442,7 @@ int main() {
         error_memoria = true;
     }
 
-    nave_t *nave = nave_crear(10);
+    nave_t *nave = nave_crear(JUEGO_COMBUSTIBLE_INICIAL);
     if(nave == NULL){
         fprintf(stderr, "Error de memoria");
         error_memoria = true;
@@ -502,7 +519,7 @@ int main() {
     bool avanzar = false;
 
     size_t nivel = 0;
-    int vidas = 5;
+    int vidas = 1000;
     int score[2] = {0, SCORE_NEXT_SHIP};
     
     double tiempo_reactor = TIEMPO_REACTOR;
@@ -522,9 +539,8 @@ int main() {
 
     // END código del alumno
     unsigned int ticks = SDL_GetTicks();
-    int iter = 0;
-    while(!error_memoria && iter <= 1) {
-        iter++;
+
+    while(!error_memoria) {
         if(SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT)
                 break;
@@ -625,7 +641,7 @@ int main() {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0x00);
 
         // BEGIN código del alumno
- 
+
         char cadena[15];
         sprintf(cadena, "%d", nave_get_combustible(nave));
 
@@ -765,14 +781,14 @@ int main() {
                 nivel = 5;
                 continue;
             }
-            if(!disparo_en_pantalla(renderer, lista_disparos, disparo_fig, escala_nivel, 0, 0, 0, 0)){
+            if(!disparo_en_pantalla(renderer, lista_disparos, disparo_fig, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0)){
                 error_memoria = true;
                 break;
             }
             nave_imprimir(renderer, nave, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0);
         }
 
-        if(nivel_actual != NULL && nivel_get_infinito(nivel_actual)){
+        if(nivel != 0 && nivel_actual != NULL && nivel_get_infinito(nivel_actual)){
             ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true) - nivel_get_extremo_x(nivel_actual, false);
 
             if(spawn == true){
@@ -801,7 +817,6 @@ int main() {
                 centro += ancho_nivel_x;
             }
 
-            nave_escudo_setear_angulo(nave, 0);
             if(!disparo_en_pantalla(renderer, lista_disparos, disparo_fig, escala_nivel, 0, 0, (-centro + VENTANA_ANCHO/2/escala_nivel) * escala_nivel, 0)){
                 error_memoria = true;
                 break;
@@ -811,7 +826,7 @@ int main() {
             nave_imprimir(renderer, nave, escala_nivel, 0, 0, (-centro + VENTANA_ANCHO/2/escala_nivel) * escala_nivel, 0);
         }
 
-        if(nivel_actual != NULL && !nivel_get_infinito(nivel_actual)){
+        if(nivel != 0 && nivel_actual != NULL && !nivel_get_infinito(nivel_actual)){
             
             ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true);    //contempla el margen izquierdo
             alto_nivel_y = nivel_get_extremo_y(nivel_actual, true);     //contempla el margen inferior
@@ -842,15 +857,7 @@ int main() {
                     spawn = true;
                     continue;
                 }
-                if(nave_get_pos_y(nave) < (alto_nivel_y + margen_nivel_y)/3){
-                    nave_escudo_setear_angulo(nave, PI);
-                } else if(nave_get_pos_y(nave) > 2*(alto_nivel_y + margen_nivel_y)/3){
-                    nave_escudo_setear_angulo(nave, 0);
-                } else if(nave_get_pos_x(nave) < (ancho_nivel_x + margen_nivel_x)/3){
-                    nave_escudo_setear_angulo(nave, PI/2);
-                } else if(nave_get_pos_x(nave) > 2*(ancho_nivel_x + margen_nivel_x)/3){
-                    nave_escudo_setear_angulo(nave, -PI/2);
-                }
+
                 nave_acercar_direccion(nave, G, -PI/2, DT);
             }
             if(nivel == 5){
@@ -905,7 +912,6 @@ int main() {
             nivel = 0;
             nivel_actual = NULL;
             spawn = true;
-            continue;
         }
 
         if(vidas == 0) break;
@@ -920,9 +926,11 @@ int main() {
         }
 
         if(disparo && listo_para_disparar){
-            double c = (VEL_DISPARO * cos(nave_get_angulo(nave)));
-            double d = VEL_DISPARO * sin(nave_get_angulo(nave));
-            disparo_t *disparo_buf = disparo_crear(nave_get_pos_x(nave), nave_get_pos_y(nave), c, d, nave_get_angulo(nave), true);
+            double coseno = cos(nave_get_angulo(nave));
+            double seno = sin(nave_get_angulo(nave));
+            double c = (VEL_DISPARO * coseno) + nave_get_vel_x(nave);
+            double d = (VEL_DISPARO * seno) + nave_get_vel_x(nave);
+            disparo_t *disparo_buf = disparo_crear(nave_get_pos_x(nave)+7*coseno, nave_get_pos_y(nave)+7*seno, c, d, nave_get_angulo(nave), true);
             if(!lista_insertar_ultimo(lista_disparos, disparo_buf) || disparo_buf == NULL){
                 error_memoria = true;
                 break;

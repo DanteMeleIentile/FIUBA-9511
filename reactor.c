@@ -28,8 +28,8 @@ reactor_t *reactor_crear(figura_t *figura, float x, float y, double angulo){
 
     reactor->angulo = angulo;
 
-    figura_trasladar(reactor->fig, reactor->pos[X], reactor->pos[Y]);
     figura_rotar(reactor->fig, reactor->angulo);
+    figura_trasladar(reactor->fig, reactor->pos[X], reactor->pos[Y]);
     
     return reactor;
 }
@@ -46,7 +46,7 @@ figura_t *reactor_get_figura(reactor_t *reactor){
     return reactor->fig;
 }
 
-void reactor_imprimir(SDL_Renderer *renderer, reactor_t *reactor, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+void reactor_imprimir(SDL_Renderer *renderer, const reactor_t *reactor, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     figura_imprimir(renderer, reactor->fig, escala, escala_x, escala_y, tras_x, tras_y);
 }
 

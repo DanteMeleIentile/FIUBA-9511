@@ -10,7 +10,6 @@
 #include "polilinea.h"
 #include "figura.h"
 #include "lista.h"
-#include "config.h"
 
 #define X 0
 #define Y 1
@@ -88,7 +87,7 @@ figura_t *figura_clonar(const figura_t *figura){
     return fig;
 }
 
-bool figura_get_infinito(figura_t *figura){
+bool figura_get_infinito(const figura_t *figura){
     return figura->infinito;
 }
 
@@ -98,7 +97,7 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
     return true;
 }
 
-float figura_get_extremo_x(figura_t *figura, bool mayor){
+float figura_get_extremo_x(const figura_t *figura, bool mayor){
     float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
@@ -115,7 +114,7 @@ float figura_get_extremo_x(figura_t *figura, bool mayor){
     return aux;
 }
 
-float figura_get_extremo_y(figura_t *figura, bool mayor){
+float figura_get_extremo_y(const figura_t *figura, bool mayor){
     float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
@@ -157,7 +156,7 @@ void figura_trasladar(figura_t *figura, float dx, float dy){
     }
 }
 
-float distancia_punto_a_figura(figura_t *figura, float x, float y){
+float distancia_punto_a_figura(const figura_t *figura, float x, float y){
     float distancia;
     float distancia_actual;
     distancia = distancia_punto_a_polilinea(figura->polilineas[0], x, y);

@@ -1,7 +1,8 @@
 #include <math.h>
 
 #include "fisicas.h"
-#include "config.h"
+
+#define PI 3.14159265358979323846
 
 double computar_velocidad(double vi, double a, double dt){
     return (vi + a * dt);

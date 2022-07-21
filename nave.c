@@ -5,11 +5,9 @@
 
 #include "nave.h"
 #include "figura.h"
-#include "config.h"
 #include "fisicas.h"
 
-#define MASCARA_ESTADO 0x0F //00001111
-
+#define PI 3.14159265358979323846
 #define X 0
 #define Y 1
 
@@ -62,6 +60,14 @@ float nave_get_pos_x(nave_t *nave){
 
 float nave_get_pos_y(nave_t *nave){
     return nave->pos[Y];
+}
+
+float nave_get_vel_x(nave_t *nave){
+    return nave->vel[X];
+}
+
+float nave_get_vel_y(nave_t *nave){
+    return nave->vel[Y];
 }
 
 double nave_get_angulo(nave_t *nave){
@@ -165,7 +171,7 @@ bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nav
         figura_rotar(nave->fig, nave->angulo);
         figura_rotar(nave->fig_chorro, nave->angulo);
         figura_rotar(nave->fig_escudo, nave->angulo);
-        figura_rotar(nave->fig_escudo_nivel, nave->angulo);
+        figura_rotar(nave->fig_escudo_nivel, nave->angulo_escudo);
     }
 
     if(!(nave->pos[X] == 0 && nave->pos[Y] == 0)){
@@ -251,6 +257,12 @@ void nave_sumar_combustible(nave_t *nave, int combustible){
     nave->cant_combustible += combustible;
 }
 
+bool nave_escudo_apuntar(nave_t *nave, float x_objetivo, float y_objetivo){
+    double angulo = computar_angulo(x_objetivo, y_objetivo, nave->pos[X], nave->pos[Y]);    
+    nave->angulo_escudo = angulo - PI/2;
+    return true;
+}
+
 void nave_destruir(nave_t *nave){
     if(nave == NULL) return;
     if(nave->fig != NULL){
@@ -262,7 +274,7 @@ void nave_destruir(nave_t *nave){
     free(nave);
 }
 
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+void nave_imprimir(SDL_Renderer *renderer, const nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     if((nave->estado % 2)){
         figura_imprimir(renderer, nave->fig_chorro, escala, escala_x, escala_y, tras_x, tras_y);
     } else {
