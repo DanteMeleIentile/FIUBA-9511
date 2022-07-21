@@ -6,6 +6,8 @@
 #include "config.h"
 #include "lista.h"
 #include "reactor.h"
+#include "torreta.h"
+#include "combustible.h"
 
 #define X 0
 #define Y 1
@@ -81,6 +83,8 @@ float nivel_get_extremo_y(nivel_t *nivel, bool mayor){
 
 void nivel_destruir(nivel_t *nivel){
     figura_destruir(nivel->fig);
+    lista_destruir(nivel->torretas, (void (*)(void*))torreta_destruir);
+    lista_destruir(nivel->combustibles, (void (*)(void*))combustible_destruir);
 }
 
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float escala_x, float escala_y, float tras_x, float tras_y){

@@ -46,7 +46,7 @@ void planeta_imprimir(SDL_Renderer *renderer, planeta_t *planeta, float escala, 
 }
 
 double distancia_a_planeta(planeta_t *planeta, float pos_x, float pos_y){
-    return distancia_entre_puntos(pos_x, pos_y, planeta->pos[X], planeta->pos[Y]);
+    return distancia_punto_a_figura(planeta->fig, pos_x, pos_y);
 }
 
 void planeta_destruir(planeta_t *planeta){

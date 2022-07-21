@@ -17,8 +17,6 @@ typedef struct disparo disparo_t;
 */
 disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y, double angulo, bool friendly);
 
-//GETTERS
-
 /*
 ** Devuelve el tiempo que el disparo estuvo vivo
 ** PRE: el disparo fue creado
@@ -45,25 +43,20 @@ bool disparo_friendly(disparo_t *disparo);
 */
 double distancia_a_disparo(disparo_t *disparo, double pos_x, double pos_y);
 
-//SETTERS
-
 /*
 ** Aumenta el tiempo del disparo dado en "t" unidades
 */
 void disparo_aumentar_tiempo(disparo_t *disparo, double t);
-
 
 /*
 ** Destruye el disparo dado
 */
 void disparo_destruir(disparo_t *disparo);
 
-
 /*
 ** Dado el renderer de SDL, un disparo y una escala, dibuja.
 */
 void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
-
 
 /*
 ** avanza en la posicion del disparo según su velocidad.

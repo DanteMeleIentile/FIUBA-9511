@@ -46,6 +46,11 @@ nave_t *nave_crear(int cant_combustible){
 
     nave->cant_combustible = cant_combustible;
 
+    nave->fig = NULL;
+    nave->fig_chorro = NULL;
+    nave->fig_escudo = NULL;
+    nave->fig_escudo_nivel = NULL;
+
     return nave;
 }
 
@@ -124,20 +129,18 @@ void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
 
 void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig){
 
-//CHEQUEAR MEMORIA
-
+    if(nave->fig != NULL){
+        figura_destruir(nave->fig);
+        figura_destruir(nave->fig_chorro);
+        figura_destruir(nave->fig_escudo);
+        figura_destruir(nave->fig_escudo_nivel);
+    }
 
     nave->fig = figura_clonar(nave_fig);
     nave->fig_chorro = figura_clonar(nave_mas_chorro_fig);
     nave->fig_escudo = figura_clonar(escudo_fig);
     nave->fig_escudo_nivel = figura_clonar(escudo_nivel_fig);
 
-/*     if(nave->fig != NULL){
-        figura_destruir(nave->fig);
-        figura_destruir(nave->fig_chorro);
-        figura_destruir(nave->fig_escudo);
-        figura_destruir(nave->fig_escudo_nivel);
-    } */
 
     figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
@@ -219,6 +222,16 @@ void nave_sumar_combustible(nave_t *nave, int combustible){
     nave->cant_combustible += combustible;
 }
 
+void nave_destruir(nave_t *nave){
+    if(nave->fig != NULL){
+        figura_destruir(nave->fig);
+        figura_destruir(nave->fig_chorro);
+        figura_destruir(nave->fig_escudo);
+        figura_destruir(nave->fig_escudo_nivel);
+    }
+    free(nave);
+}
+
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     if((nave->estado % 2)){
         figura_imprimir(renderer, nave->fig_chorro, escala, escala_x, escala_y, tras_x, tras_y);
@@ -232,4 +245,3 @@ void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float esc
         figura_imprimir(renderer, nave->fig_escudo_nivel, escala, escala_x, escala_y, tras_x, tras_y);
     }
 }
-

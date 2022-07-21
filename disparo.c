@@ -34,6 +34,8 @@ disparo_t *disparo_crear(double pos_x, double pos_y, double vel_x, double vel_y,
     disparo->tiempo = 0;
 
     disparo->friendly = friendly;
+
+    disparo->fig = NULL;
     
     return disparo;
 }
@@ -44,9 +46,7 @@ void disparo_avanzar(disparo_t *disparo, double dt){
 }
 
 bool disparo_act_figura(disparo_t *disparo, figura_t *figura){
-/*     if(disparo->fig != NULL){
-        figura_destruir(disparo->fig);
-    } */
+    if(disparo->fig != NULL) figura_destruir(disparo->fig);
     disparo->fig = figura_clonar(figura);
 
     if(disparo->fig == NULL){
@@ -55,17 +55,17 @@ bool disparo_act_figura(disparo_t *disparo, figura_t *figura){
     }
 
     figura_rotar(disparo->fig, disparo->angulo);
-
     figura_trasladar(disparo->fig, disparo->pos[X], disparo->pos[Y]);
 
     return true;
 }
 
 void disparo_destruir(disparo_t *disparo){
-    figura_destruir(disparo->fig);
-    free(disparo);
+    if(disparo != NULL){
+        if(disparo->fig != NULL) figura_destruir(disparo->fig);
+        free(disparo);
+    }
 }
-
 
 double disparo_get_tiempo(disparo_t *disparo){
     return disparo->tiempo;
@@ -90,7 +90,6 @@ double distancia_a_disparo(disparo_t *disparo, double pos_x, double pos_y){
 void disparo_aumentar_tiempo(disparo_t *disparo, double t){
     disparo->tiempo += t;
 }
-
 
 void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     figura_imprimir(renderer, disparo->fig, escala, escala_x, escala_y, tras_x, tras_y);

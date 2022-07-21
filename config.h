@@ -29,16 +29,18 @@
 #define TIEMPO_MAX_DISPAROS 2
 #define VEL_DISPARO 150
 
-#define COOLDOWN_NAVE 0.5
+#define COOLDOWN_NAVE 0.2
 #define COOLDOWN_TORRETA 3
 
 #define SCORE_NEXT_SHIP 10000
 
-#define TIEMPO_REACTOR 25
+#define TIEMPO_REACTOR 90
 
 #define DT (1.0/JUEGO_FPS)
 
 #define ESCALA_NIVEL_0 1
+
+#define DMIN 7
 
 #endif // _CONFIG_H_
 

@@ -19,11 +19,12 @@ combustible_t *combustible_crear(float pos_x, float pos_y, double angulo){
     combustible->pos[X] = pos_x;
     combustible->pos[Y] = pos_y;
     combustible->angulo = angulo;
+    combustible->fig = NULL;
     return combustible;
 }
 
 bool combustible_act_figura(combustible_t *combustible, figura_t *figura){
-/*     if(combustible->fig != NULL) figura_destruir(combustible->fig); */
+    if(combustible->fig != NULL) figura_destruir(combustible->fig);
     combustible->fig = figura_clonar(figura);
 
     if(combustible->fig == NULL) return false;
@@ -37,6 +38,13 @@ float combustible_get_pos_x(combustible_t *combustible){
 
 float combustible_get_pos_y(combustible_t *combustible){
     return combustible->pos[Y];
+}
+
+void combustible_destruir(combustible_t *combustible){
+    if(combustible != NULL){
+        if(combustible->fig != NULL) figura_destruir(combustible->fig);
+        free(combustible);
+    }
 }
 
 void combustible_imprimir(SDL_Renderer *renderer, combustible_t *combustible, float escala, float escala_x, float escala_y, float tras_x, float tras_y){

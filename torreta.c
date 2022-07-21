@@ -30,6 +30,8 @@ torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angul
     torreta->angulo_apuntado = 0;
 
     torreta->cooldown = cooldown;
+    torreta->fig = NULL;
+    torreta->fig_disparo = NULL;
 
     return torreta;
 }
@@ -78,6 +80,9 @@ bool torreta_apuntar(torreta_t *torreta, float x_objetivo, float y_objetivo){
 }
 
 bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo){
+    if(torreta->fig != NULL) figura_destruir(torreta->fig);
+    if(torreta->fig_disparo != NULL) figura_destruir(torreta->fig_disparo);
+
     torreta->fig = figura_clonar(fig);
 
     if(torreta->fig == NULL) return false;
@@ -101,9 +106,10 @@ void torreta_setear_en_lugar(torreta_t *torreta, float pos_x, float pos_y, doubl
 }
 
 void torreta_destruir(torreta_t *torreta){
-    figura_destruir(torreta->fig);
-    figura_destruir(torreta->fig_disparo);
-
+    if(torreta->fig != NULL){
+        figura_destruir(torreta->fig);
+        figura_destruir(torreta->fig_disparo);
+    }
     free(torreta);
 }
 

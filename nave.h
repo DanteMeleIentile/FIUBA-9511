@@ -118,6 +118,11 @@ void nave_invertir_vel_y(nave_t *nave);
 void nave_sumar_combustible(nave_t *nave, int combustible);
 
 /*
+** Libera la memoria de la nave.
+*/
+void nave_destruir(nave_t *nave);
+
+/*
 ** Dibuja la nave en pantalla segun sus parametros.
 */
 void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y);

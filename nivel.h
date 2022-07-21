@@ -56,10 +56,15 @@ int nivel_get_bonus(nivel_t *nivel);
 bool nivel_get_infinito(nivel_t *nivel);
 
 /*
+** Libera la memoria del nivel.
+*/
+void nivel_destruir(nivel_t *nivel);
+
+/*
 **Imprime un "nivel" con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".
 ** Si el nivel es infinito, se imprimirá una copia de la figura del nivel a izquierda y a derecha ubicada según la coordenada máxima y mínima de la misma en el eje x. Esta funcionalidad tiene el objetivo de dar la ilusión de niveles infinitos. 
-**PRE: El nivel fue creado y posee una figura.
-**POST: NINGÚN parámetro del nivel se modifica luego de imprimirlo en pantalla
+** PRE: El nivel fue creado y posee una figura.
+** POST: NINGÚN parámetro del nivel se modifica luego de imprimirlo en pantalla
 */
 void nivel_imprimir(SDL_Renderer *renderer, nivel_t *nivel, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 

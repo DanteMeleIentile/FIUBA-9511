@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
+#include <SDL2/SDL.h>
 
 #define DIMENSION 2
 #define X 0
@@ -87,13 +88,6 @@ float polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor){
     }
     return aux;
 }
-
-
-void polilinea_destruir(polilinea_t *polilinea){
-    free(polilinea->puntos);
-    free(polilinea);
-}
-
 
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
     if (polilinea->n <= pos){  //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL'
@@ -204,10 +198,20 @@ float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py){
     return acc_d;
 }
 
-void polilinea_printf(polilinea_t *polilinea){
-    printf("EL COLOR ES %d  %d  %d\n", polilinea->r, polilinea->g, polilinea->b);
-    printf("CANT PUNTOS %zd\n", polilinea->n);
-    for(size_t i = 0; i < polilinea->n; i++){
-        printf("POLILINEA %zd ( %.7f , %.7f )\n", polilinea->n, polilinea->puntos[i][X], polilinea->puntos[i][Y]);
+void polilinea_destruir(polilinea_t *polilinea){
+    free(polilinea->puntos);
+    free(polilinea);
+}
+
+void polilinea_imprimir(SDL_Renderer *renderer, const polilinea_t *polilinea, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
+    SDL_SetRenderDrawColor(renderer, polilinea->r, polilinea->g, polilinea->b, 0xFF);
+    for(size_t z = 0; z < polilinea->n - 1; z++){
+        SDL_RenderDrawLine(
+        renderer,
+        ((polilinea->puntos[z][X] - escala_x) * escala + escala_x + tras_x),
+        (-(polilinea->puntos[z][Y] - escala_y) * escala - escala_y + VENTANA_ALTO - tras_y),
+        ((polilinea->puntos[z+1][X] - escala_x) * escala + escala_x + tras_x),
+        (-(polilinea->puntos[z+1][Y] - escala_y) * escala - escala_y + VENTANA_ALTO - tras_y)
+        );
     }
 }

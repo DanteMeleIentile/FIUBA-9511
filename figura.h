@@ -66,57 +66,38 @@ float figura_get_extremo_x(figura_t *figura, bool mayor);
 */
 float figura_get_extremo_y(figura_t *figura, bool mayor);
 
+/*
+** Devuelve el nombre de la figura dada.
+*/
 char *figura_get_nombre(figura_t *figura);
 
 /*
-** Destruye figuras
+** Dada una figura, la rota un angulo "rad".
 */
-void figura_destruir(figura_t *figura);
-
-/*
-** Dada una figura de nombre "nombre" y una lista_t "lista", agrega a "lista" un nodo con dato = "nombre".
-** PRE: Lista creada utilizando funciones del TDA lista.
-** POST: El último elemento de la lista apunta a NULL 
-*/
-void figura_agregar_en_lista(char *nombre, lista_t *lista);
-
-/*
-** Dada una figura de nombre "nombre" y una lista_t "lista", ELIMINA de "lista" EL PRIMER nodo con dato = "nombre".
-** PRE: Lista creada utilizando funciones del TDA lista.
-** POST: El último elemento de la lista apunta a NULL 
-*/
-//EVALIUAR FUNCION PARA ELIMINAR TODAS LAS ENTIDADES CON "NOMBRE"
-void figura_eliminar_en_lista(char *nombre, lista_t *lista);
-
-void figura_eliminar_en_lista_nombre(char *nombre, lista_t *lista);
-
-/*
-**Imprime una "figura" con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".
-**PRE: -
-**POST: La figura NO se modifica luego de imprimirla en pantalla
-*/
-void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
-
-//Rota la figura dada un angulo "rad"
 void figura_rotar(figura_t *figura, double rad);
 
-//Traslada la figura dada una distancia "dx" en coordenada "x" y una distancia "dy" en coordenada "y"
+/*
+** Dada una figura, le suma las coordenadas "x" e "y".
+*/
 void figura_trasladar(figura_t *figura, float dx, float dy);
 
-//Traslada y rota la figura con los mismos parametros que las anteriores 2 funciones
+/*
+** Dada una figura, le suma las coordenadas "x" e "y" rotada un angulo "rad".
+*/
 void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo);
-
-//Escala la figura  según su posición
-void figura_escalar(figura_t *figura, float pos_x, float pos_y, float escala);
 
 //Da la distancia más cercana entre el punto y la figura
 float distancia_punto_a_figura(figura_t *figura, float x, float y);
 
 /*
-** Dada una figura, la setea en unas coordenadas "x" e "y" rotada un angulo "rad" y escalada por "escala".
-** PRE: Lista creada utilizando funciones del TDA lista.
-** POST: El último elemento de la lista apunta a NULL 
+** Libera la memoria de la figura dada.
 */
-//figura_t *rototrasladar_figura(figura_t *figura, float dx, float dy, float rad, float escala, float posicion_x, float posicion_y);
+void figura_destruir(figura_t *figura);
+
+/*
+**Imprime una "figura" con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".
+*/
+void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
+
 
 #endif

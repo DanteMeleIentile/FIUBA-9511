@@ -41,7 +41,7 @@ disparo.o: disparo.c disparo.h figura.h fisicas.h
 nivel.o: nivel.c nivel.h figura.h
 	$(CC) $(CFLAGS) -c nivel.c
 
-torreta.o: torreta.c torreta.h figura.h fisicas.h config.h
+torreta.o: torreta.c torreta.h figura.h fisicas.h
 	$(CC) $(CFLAGS) -c torreta.c
 
 caracteres.o: caracteres.c caracteres.h color.h
@@ -63,4 +63,4 @@ valgrind-log-file:
 	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=error.log --suppressions=suppressions_20221_tp1.supp -s ./$(PROGRAM)
 
 valgrind:
-	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=suppressions_20221_tp1.supp ./$(PROGRAM)
+	valgrind --leak-check=full --suppressions=suppressions_20221_tp1.supp ./$(PROGRAM)
