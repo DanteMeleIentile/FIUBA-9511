@@ -41,7 +41,7 @@ void disparo_avanzar(disparo_t *disparo, double dt){
     disparo->pos[Y] = computar_posicion(disparo->pos[Y], disparo->vel[Y], dt);
 }
 
-bool disparo_act_figura(disparo_t *disparo, figura_t *figura){
+bool disparo_act_figura(disparo_t *disparo, const figura_t *figura){
     if(disparo->fig != NULL) figura_destruir(disparo->fig);
     disparo->fig = figura_clonar(figura);
 
@@ -57,10 +57,9 @@ bool disparo_act_figura(disparo_t *disparo, figura_t *figura){
 }
 
 void disparo_destruir(disparo_t *disparo){
-    if(disparo != NULL){
-        if(disparo->fig != NULL) figura_destruir(disparo->fig);
-        free(disparo);
-    }
+    if(disparo == NULL) return;
+    if(disparo->fig != NULL) figura_destruir(disparo->fig);
+    free(disparo);
 }
 
 double disparo_get_tiempo(disparo_t *disparo){

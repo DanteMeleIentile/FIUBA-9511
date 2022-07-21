@@ -75,7 +75,7 @@ void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel);
 ** Actualiza las 2 figuras de la nave según los parametros de la misma (posición y ángulo).
 ** PRE: La nave fue creada.
 */
-void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig);
+bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nave_mas_chorro_fig, const figura_t *escudo_fig, const figura_t *escudo_nivel_fig);
 
 /*
 ** Rota la nave dada según angulo y actualiza los valores de la nave.

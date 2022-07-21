@@ -11,12 +11,12 @@ typedef struct combustible combustible_t;
 /*
 ** Crea un combustible en la posicion dada.
 */
-combustible_t *combustible_crear(float pos_x, float pos_y, double angulo);
+combustible_t *combustible_crear(const figura_t *figura, float pos_x, float pos_y, double angulo);
 
 /*
 ** actualiza la figura del combustible.
 */
-bool combustible_act_figura(combustible_t *combustible, figura_t *figura);
+//bool combustible_act_figura(combustible_t *combustible, figura_t *figura);
 
 /*
 ** Devuelve la posicion en "x" del combustible.

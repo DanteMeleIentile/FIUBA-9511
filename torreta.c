@@ -20,9 +20,23 @@ struct torreta {
     bool estado;
 };
 
-torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angulo){
+torreta_t *torreta_crear(const figura_t *figura1, const figura_t *figura2, double cooldown, float pos_x, float pos_y, double angulo){
     torreta_t *torreta = malloc(sizeof(torreta_t));
     if(torreta == NULL) return NULL;
+
+    torreta->fig = figura_clonar(figura1);
+
+    if(torreta->fig == NULL){
+        free(torreta);
+        return NULL;
+    }
+    torreta->fig_disparo = figura_clonar(figura2);
+
+    if(torreta->fig_disparo == NULL){
+        figura_destruir(torreta->fig_disparo);
+        free(torreta);
+        return NULL;
+    }
 
     torreta->pos[X] = pos_x;
     torreta->pos[Y] = pos_y;
@@ -30,8 +44,10 @@ torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angul
     torreta->angulo_apuntado = 0;
 
     torreta->cooldown = cooldown;
-    torreta->fig = NULL;
-    torreta->fig_disparo = NULL;
+
+    figura_rototrasladar(torreta->fig, torreta->pos[X], torreta->pos[Y], torreta->angulo);
+    figura_rototrasladar(torreta->fig_disparo, torreta->pos[X], torreta->pos[Y], torreta->angulo);
+
 
     return torreta;
 }
@@ -78,7 +94,7 @@ bool torreta_apuntar(torreta_t *torreta, float x_objetivo, float y_objetivo){
     torreta->angulo_apuntado = angulo;
     return true;
 }
-
+/* 
 bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo){
     if(torreta->fig != NULL) figura_destruir(torreta->fig);
     if(torreta->fig_disparo != NULL) figura_destruir(torreta->fig_disparo);
@@ -97,7 +113,7 @@ bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo
     figura_rototrasladar(torreta->fig_disparo, torreta->pos[X], torreta->pos[Y], torreta->angulo);
     return true;
 }
-
+ */
 void torreta_setear_en_lugar(torreta_t *torreta, float pos_x, float pos_y, double angulo){
     torreta->pos[X] = pos_x;
     torreta->pos[Y] = pos_y;
@@ -106,6 +122,7 @@ void torreta_setear_en_lugar(torreta_t *torreta, float pos_x, float pos_y, doubl
 }
 
 void torreta_destruir(torreta_t *torreta){
+    if(torreta == NULL) return;
     if(torreta->fig != NULL){
         figura_destruir(torreta->fig);
         figura_destruir(torreta->fig_disparo);

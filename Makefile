@@ -38,7 +38,7 @@ nave.o: nave.c nave.h figura.h fisicas.h
 disparo.o: disparo.c disparo.h figura.h fisicas.h
 	$(CC) $(CFLAGS) -c disparo.c
 
-nivel.o: nivel.c nivel.h figura.h
+nivel.o: nivel.c nivel.h figura.h torreta.h combustible.h
 	$(CC) $(CFLAGS) -c nivel.c
 
 torreta.o: torreta.c torreta.h figura.h fisicas.h

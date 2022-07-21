@@ -137,6 +137,7 @@ char *figura_get_nombre(figura_t *figura){
 }
 
 void figura_destruir(figura_t *figura){
+    if(figura == NULL) return;
     for(size_t i = 0; (i < figura->cant_polilineas); i++){
         polilinea_destruir(figura->polilineas[i]);
     }

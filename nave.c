@@ -127,7 +127,7 @@ void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){
     }
 }
 
-void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig){
+bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nave_mas_chorro_fig, const figura_t *escudo_fig, const figura_t *escudo_nivel_fig){
 
     if(nave->fig != NULL){
         figura_destruir(nave->fig);
@@ -137,15 +137,34 @@ void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro
     }
 
     nave->fig = figura_clonar(nave_fig);
+    if(nave->fig == NULL){
+        return false;
+    }
     nave->fig_chorro = figura_clonar(nave_mas_chorro_fig);
+    if(nave->fig == NULL){
+        figura_destruir(nave->fig);
+        return false;
+    }
     nave->fig_escudo = figura_clonar(escudo_fig);
+    if(nave->fig_escudo == NULL){
+        figura_destruir(nave->fig);
+        figura_destruir(nave->fig_chorro);
+        return false;
+    }
     nave->fig_escudo_nivel = figura_clonar(escudo_nivel_fig);
-
+    if(nave->fig_escudo_nivel == NULL){
+        figura_destruir(nave->fig);
+        figura_destruir(nave->fig_chorro);
+        figura_destruir(nave->fig_escudo);
+        return false;
+    }
 
     figura_rototrasladar(nave->fig, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_escudo, nave->pos[X], nave->pos[Y], nave->angulo);
     figura_rototrasladar(nave->fig_escudo_nivel, nave->pos[X], nave->pos[Y], nave->angulo_escudo);
+
+    return true;
 }
 
 void nave_rotar(nave_t *nave, double angulo){
@@ -223,6 +242,7 @@ void nave_sumar_combustible(nave_t *nave, int combustible){
 }
 
 void nave_destruir(nave_t *nave){
+    if(nave == NULL) return;
     if(nave->fig != NULL){
         figura_destruir(nave->fig);
         figura_destruir(nave->fig_chorro);

@@ -13,7 +13,7 @@ struct reactor {
 };
 
 reactor_t *reactor_crear(figura_t *figura, float x, float y, double angulo){
-    reactor_t *reactor = malloc(sizeof(reactor));
+    reactor_t *reactor = malloc(sizeof(reactor_t));
     if(reactor == NULL) return NULL;
 
     reactor->fig = figura_clonar(figura);
@@ -45,6 +45,7 @@ void reactor_imprimir(SDL_Renderer *renderer, reactor_t *reactor, float escala, 
 }
 
 void reactor_destruir(reactor_t *reactor){
+    if(reactor == NULL) return;
     figura_destruir(reactor->fig);
     free(reactor);
 }

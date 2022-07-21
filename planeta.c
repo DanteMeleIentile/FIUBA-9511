@@ -50,6 +50,7 @@ double distancia_a_planeta(planeta_t *planeta, float pos_x, float pos_y){
 }
 
 void planeta_destruir(planeta_t *planeta){
+    if(planeta == NULL) return;
     figura_destruir(planeta->fig);
     free(planeta);
 }

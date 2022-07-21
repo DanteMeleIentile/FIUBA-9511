@@ -199,6 +199,7 @@ float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py){
 }
 
 void polilinea_destruir(polilinea_t *polilinea){
+    if(polilinea == NULL) return;
     free(polilinea->puntos);
     free(polilinea);
 }

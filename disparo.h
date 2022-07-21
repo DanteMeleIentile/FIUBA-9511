@@ -67,6 +67,6 @@ void disparo_avanzar(disparo_t *disparo, double dt);
 ** Actualiza la figura del disparo según los parametros de del mismo (posición y ángulo).
 ** PRE: El disparo fue creado.
 */
-bool disparo_act_figura(disparo_t *disparo, figura_t *figura);
+bool disparo_act_figura(disparo_t *disparo, const figura_t *figura);
 
 #endif

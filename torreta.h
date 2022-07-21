@@ -12,7 +12,7 @@ typedef struct torreta torreta_t;
 /*
 ** Crea la torreta en posicion y rotacion pedidas
 */
-torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angulo);
+torreta_t *torreta_crear(const figura_t *figura1, const figura_t *figura2, double cooldown, float pos_x, float pos_y, double angulo);
 
 /*
 ** Devuelve la posicion en "x" de la torreta
@@ -70,7 +70,7 @@ bool torreta_apuntar(torreta_t *torreta, float x_objetivo, float y_objetivo);
 ** PRE: La torreta fue creada.
 ** El angulo de apuntado son +90 y -90 grados
 */
-bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo);
+//bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo);
 
 /*
 ** Destruye la torreta dada
