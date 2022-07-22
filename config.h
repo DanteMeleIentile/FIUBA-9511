@@ -28,9 +28,9 @@
 #define Y 1
 
 #define TIEMPO_MAX_DISPAROS 2
-#define VEL_DISPARO 150
+#define VEL_DISPARO 200
 
-#define COOLDOWN_NAVE 0
+#define COOLDOWN_NAVE 0.2
 #define COOLDOWN_TORRETA 3
 
 #define SCORE_NEXT_SHIP 10000
