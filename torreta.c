@@ -20,9 +20,23 @@ struct torreta {
     bool estado;
 };
 
-torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angulo){
+torreta_t *torreta_crear(const figura_t *figura1, const figura_t *figura2, double cooldown, float pos_x, float pos_y, double angulo){
     torreta_t *torreta = malloc(sizeof(torreta_t));
     if(torreta == NULL) return NULL;
+
+    torreta->fig = figura_clonar(figura1);
+
+    if(torreta->fig == NULL){
+        free(torreta);
+        return NULL;
+    }
+    torreta->fig_disparo = figura_clonar(figura2);
+
+    if(torreta->fig_disparo == NULL){
+        figura_destruir(torreta->fig_disparo);
+        free(torreta);
+        return NULL;
+    }
 
     torreta->pos[X] = pos_x;
     torreta->pos[Y] = pos_y;
@@ -30,9 +44,12 @@ torreta_t *torreta_crear(double cooldown, float pos_x, float pos_y, double angul
     torreta->angulo_apuntado = 0;
 
     torreta->cooldown = cooldown;
-    torreta->fig = NULL;
-    torreta->fig_disparo = NULL;
 
+    figura_rotar(torreta->fig, torreta->angulo);
+    figura_rotar(torreta->fig_disparo, torreta->angulo);
+
+    figura_trasladar(torreta->fig, torreta->pos[X], torreta->pos[Y]);
+    figura_trasladar(torreta->fig_disparo, torreta->pos[X], torreta->pos[Y]);
     return torreta;
 }
 
@@ -79,25 +96,6 @@ bool torreta_apuntar(torreta_t *torreta, float x_objetivo, float y_objetivo){
     return true;
 }
 
-bool torreta_act_figura(torreta_t *torreta, figura_t *fig, figura_t *fig_disparo){
-    if(torreta->fig != NULL) figura_destruir(torreta->fig);
-    if(torreta->fig_disparo != NULL) figura_destruir(torreta->fig_disparo);
-
-    torreta->fig = figura_clonar(fig);
-
-    if(torreta->fig == NULL) return false;
-    torreta->fig_disparo = figura_clonar(fig_disparo);
-
-    if(torreta->fig_disparo == NULL){
-        figura_destruir(fig);
-        return false;
-    }
-
-    figura_rototrasladar(torreta->fig, torreta->pos[X], torreta->pos[Y], torreta->angulo);
-    figura_rototrasladar(torreta->fig_disparo, torreta->pos[X], torreta->pos[Y], torreta->angulo);
-    return true;
-}
-
 void torreta_setear_en_lugar(torreta_t *torreta, float pos_x, float pos_y, double angulo){
     torreta->pos[X] = pos_x;
     torreta->pos[Y] = pos_y;
@@ -106,6 +104,7 @@ void torreta_setear_en_lugar(torreta_t *torreta, float pos_x, float pos_y, doubl
 }
 
 void torreta_destruir(torreta_t *torreta){
+    if(torreta == NULL) return;
     if(torreta->fig != NULL){
         figura_destruir(torreta->fig);
         figura_destruir(torreta->fig_disparo);
@@ -113,7 +112,7 @@ void torreta_destruir(torreta_t *torreta){
     free(torreta);
 }
 
-void torreta_imprimir(SDL_Renderer *renderer, torreta_t *torreta, float escala, float escala_x, float escala_y, float tras_x, float tras_y, bool disparo){
+void torreta_imprimir(SDL_Renderer *renderer, const torreta_t *torreta, float escala, float escala_x, float escala_y, float tras_x, float tras_y, bool disparo){
     if(disparo){
         figura_imprimir(renderer, torreta->fig_disparo, escala, escala_x, escala_y, tras_x, tras_y);
     }else{

@@ -18,6 +18,8 @@
         "disparo.h": "c",
         "combustible.h": "c",
         "torreta.h": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "reactor.h": "c",
+        "stdio.h": "c"
     }
 }

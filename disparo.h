@@ -56,7 +56,7 @@ void disparo_destruir(disparo_t *disparo);
 /*
 ** Dado el renderer de SDL, un disparo y una escala, dibuja.
 */
-void disparo_imprimir(SDL_Renderer *renderer, disparo_t *disparo, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
+void disparo_imprimir(SDL_Renderer *renderer, const disparo_t *disparo, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 /*
 ** avanza en la posicion del disparo según su velocidad.
@@ -67,6 +67,6 @@ void disparo_avanzar(disparo_t *disparo, double dt);
 ** Actualiza la figura del disparo según los parametros de del mismo (posición y ángulo).
 ** PRE: El disparo fue creado.
 */
-bool disparo_act_figura(disparo_t *disparo, figura_t *figura);
+bool disparo_act_figura(disparo_t *disparo, const figura_t *figura);
 
 #endif

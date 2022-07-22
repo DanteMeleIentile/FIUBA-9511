@@ -19,7 +19,7 @@ float reactor_get_pos_x(reactor_t *reactor);
 
 float reactor_get_pos_y(reactor_t *reactor);
 
-void reactor_imprimir(SDL_Renderer *renderer, reactor_t *reactor, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
+void reactor_imprimir(SDL_Renderer *renderer, const reactor_t *reactor, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 /*
 ** Destruye el reactor dado;

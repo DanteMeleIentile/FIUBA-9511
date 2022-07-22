@@ -10,8 +10,8 @@
 #include "polilinea.h"
 #include "figura.h"
 #include "lista.h"
-#include "config.h"
 
+#define DIMENSION 2
 #define X 0
 #define Y 1
 
@@ -69,8 +69,7 @@ figura_t *figura_clonar(const figura_t *figura){
     }
 
     for(size_t j = 0; j < fig->cant_polilineas; j++){
-        color_t c = color_crear_valor(figura->polilineas[j]->r, figura->polilineas[j]->g, figura->polilineas[j]->b);
-        vector_polilineas[j] = polilinea_crear((const float(*)[2])figura->polilineas[j]->puntos, figura->polilineas[j]->n, c); //Iguala cada componente de las polilineas de cada figura leida del archivo
+        vector_polilineas[j] = polilinea_clonar(figura->polilineas[j]); //Iguala cada componente de las polilineas de cada figura leida del archivo
 
         if(vector_polilineas[j] == NULL){
             if(j >= 1){
@@ -88,7 +87,7 @@ figura_t *figura_clonar(const figura_t *figura){
     return fig;
 }
 
-bool figura_get_infinito(figura_t *figura){
+bool figura_get_infinito(const figura_t *figura){
     return figura->infinito;
 }
 
@@ -98,7 +97,7 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas){
     return true;
 }
 
-float figura_get_extremo_x(figura_t *figura, bool mayor){
+float figura_get_extremo_x(const figura_t *figura, bool mayor){
     float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
@@ -115,7 +114,7 @@ float figura_get_extremo_x(figura_t *figura, bool mayor){
     return aux;
 }
 
-float figura_get_extremo_y(figura_t *figura, bool mayor){
+float figura_get_extremo_y(const figura_t *figura, bool mayor){
     float aux = 0;
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         if(i == 0){
@@ -137,6 +136,7 @@ char *figura_get_nombre(figura_t *figura){
 }
 
 void figura_destruir(figura_t *figura){
+    if(figura == NULL) return;
     for(size_t i = 0; (i < figura->cant_polilineas); i++){
         polilinea_destruir(figura->polilineas[i]);
     }
@@ -146,22 +146,17 @@ void figura_destruir(figura_t *figura){
 
 void figura_rotar(figura_t *figura, double rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
-        rotar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, rad);
+        polilinea_rotar(figura->polilineas[i], rad);
     }
 }
 
 void figura_trasladar(figura_t *figura, float dx, float dy){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
-        trasladar(figura->polilineas[i]->puntos, figura->polilineas[i]->n, dx, dy);
+        polilinea_trasladar(figura->polilineas[i], dx, dy);
     }
 }
 
-void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo){
-    figura_rotar(figura, angulo);
-    figura_trasladar(figura, dx, dy);
-}
-
-float distancia_punto_a_figura(figura_t *figura, float x, float y){
+float distancia_punto_a_figura(const figura_t *figura, float x, float y){
     float distancia;
     float distancia_actual;
     distancia = distancia_punto_a_polilinea(figura->polilineas[0], x, y);

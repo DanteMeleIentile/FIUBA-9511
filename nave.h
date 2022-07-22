@@ -27,6 +27,16 @@ float nave_get_pos_x(nave_t *nave);
 float nave_get_pos_y(nave_t *nave);
 
 /*
+** Devuelve la velocidad en "x" de la nave.
+*/
+float nave_get_vel_x(nave_t *nave);
+
+/*
+** Devuelve la velocidad en "y" de la nave.
+*/
+float nave_get_vel_y(nave_t *nave);
+
+/*
 ** Devuelve el angulo de la nave.
 */
 double nave_get_angulo(nave_t *nave);
@@ -75,17 +85,12 @@ void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel);
 ** Actualiza las 2 figuras de la nave según los parametros de la misma (posición y ángulo).
 ** PRE: La nave fue creada.
 */
-void nave_act_figura(nave_t *nave, figura_t *nave_fig, figura_t *nave_mas_chorro_fig, figura_t *escudo_fig, figura_t *escudo_nivel_fig);
+bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nave_mas_chorro_fig, const figura_t *escudo_fig, const figura_t *escudo_nivel_fig);
 
 /*
 ** Rota la nave dada según angulo y actualiza los valores de la nave.
 */
 void nave_rotar(nave_t *nave, double angulo);
-
-/*
-** Setea el angulo del escudo dentro de un nivel.
-*/
-void nave_escudo_setear_angulo(nave_t *nave, double angulo);
 
 /*
 ** Avanza en dirección a la punta de la nave con acc "aceleracion" en un tiempo dt. Actualiza los valores de velocidad de la nave. 
@@ -118,6 +123,16 @@ void nave_invertir_vel_y(nave_t *nave);
 void nave_sumar_combustible(nave_t *nave, int combustible);
 
 /*
+** Setea el angulo del escudo dentro de un nivel.
+*/
+void nave_escudo_setear_angulo(nave_t *nave, double angulo);
+
+/*
+** Apunta el escudo hacia el objetivo dado
+*/
+bool nave_escudo_apuntar(nave_t *nave, float x_objetivo, float y_objetivo);
+
+/*
 ** Libera la memoria de la nave.
 */
 void nave_destruir(nave_t *nave);
@@ -125,7 +140,7 @@ void nave_destruir(nave_t *nave);
 /*
 ** Dibuja la nave en pantalla segun sus parametros.
 */
-void nave_imprimir(SDL_Renderer *renderer, nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
+void nave_imprimir(SDL_Renderer *renderer, const nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 
 #endif

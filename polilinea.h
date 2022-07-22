@@ -6,20 +6,11 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
-/*
-** La estructura que se define para las polilineas es de tipo:
-**
-** +--------+
-** | PUNTOS | -> Puntos de la polilinea
-** +--------+
-** |   N    | -> Cantidad de puntos de la polilinea
-** +--------+
-*/
-typedef struct {
-    float (*puntos)[2];
-    size_t n;
-    uint8_t r,g,b; 
-} polilinea_t;
+
+struct polilinea;
+
+typedef struct polilinea polilinea_t;
+
 /*
 ** Crea una polilinea de n sin inicializar las coordenadas
 */
@@ -31,21 +22,27 @@ polilinea_t *polilinea_crear_vacia(size_t n);
 polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c);
 
 /*
-** Destruye una polilinea creada mediante "polilinea_crear_vacia". Devuelve NULL en caso de falla.
-*/
-void polilinea_destruir(polilinea_t *polilinea);
-
-/*
 ** Devuelve el extremo en "x" de la polilinea
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-float polilinea_get_extremo_x(polilinea_t *polilinea, bool mayor);
+float polilinea_get_extremo_x(const polilinea_t *polilinea, bool mayor);
 
 /*
 ** Devuelve el extremo en "y" de la polilinea
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-float polilinea_get_extremo_y(polilinea_t *polilinea, bool mayor);
+float polilinea_get_extremo_y(const polilinea_t *polilinea, bool mayor);
+
+/*
+** Devuelve el color de la polilinea;
+*/
+color_t polilinea_get_color(const polilinea_t *polilinea);
+
+/*
+** Devuelve la cantidad de puntos que tiene la polilinea;
+*/
+size_t polilinea_get_n(polilinea_t *polilinea);
+
 /*
 ** De ser posible, asigna un punto de coordenadas "x" e "y" en la posición "pos" de la polilinea "polilinea". Caso contrario devuelve false;
 */
@@ -69,22 +66,20 @@ bool polilinea_setear_color(polilinea_t *polilinea, color_t color);
 /*
 ** Traslada la polilinea "polilinea" de longitud "n" en "x" dx unidades y en "y" dy unidades
 */
-void trasladar(float polilinea[][2], size_t n, float dx, float dy);
+void polilinea_trasladar(polilinea_t *polilinea, float dx, float dy);
 
 /*
 ** Rota la polilinea "polilinea" de longitud "n" un angulo "rad" en radianes
 */
-void rotar(float polilinea[][2], size_t n, double rad);
-
-/*
-** Escala la polilinea segun el origen
-*/
-void escalar(float polilinea[][2], size_t n, float escala);
-
-float calcular_distancia(float px, float py, float qx, float qy);
+void polilinea_rotar(polilinea_t *polilinea, double rad);
 
 float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py);
 
 void polilinea_imprimir(SDL_Renderer *renderer, const polilinea_t *polilinea, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
+
+/*
+** Destruye una polilinea creada mediante "polilinea_crear_vacia" o "polilinea_crear"
+*/
+void polilinea_destruir(polilinea_t *polilinea);
 
 #endif

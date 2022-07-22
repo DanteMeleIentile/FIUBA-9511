@@ -45,7 +45,7 @@ figura_t *figura_clonar(const figura_t *figura);
 /*  
 ** Devuelve "true" si el nivel es infinito y "false" si no lo es
 */
-bool figura_get_infinito(figura_t *figura);
+bool figura_get_infinito(const figura_t *figura);
 
 /*
 ** Apunta el puntero "polilineas" de la "figura" a un arreglo de cant_polilineas "polilineas". Si no puede retorna false
@@ -58,13 +58,13 @@ bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 ** Devuelve el extremo en "x" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-float figura_get_extremo_x(figura_t *figura, bool mayor);
+float figura_get_extremo_x(const figura_t *figura, bool mayor);
 
 /*
 ** Devuelve el extremo en "y" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
-float figura_get_extremo_y(figura_t *figura, bool mayor);
+float figura_get_extremo_y(const figura_t *figura, bool mayor);
 
 /*
 ** Devuelve el nombre de la figura dada.
@@ -81,16 +81,11 @@ void figura_rotar(figura_t *figura, double rad);
 */
 void figura_trasladar(figura_t *figura, float dx, float dy);
 
-/*
-** Dada una figura, le suma las coordenadas "x" e "y" rotada un angulo "rad".
-*/
-void figura_rototrasladar(figura_t *figura, float dx, float dy, double angulo);
-
 //Da la distancia más cercana entre el punto y la figura
-float distancia_punto_a_figura(figura_t *figura, float x, float y);
+float distancia_punto_a_figura(const figura_t *figura, float x, float y);
 
 /*
-** Libera la memoria de la figura dada.
+** Libera la memoria de la figura dada. Es importante destacar que también eli
 */
 void figura_destruir(figura_t *figura);
 

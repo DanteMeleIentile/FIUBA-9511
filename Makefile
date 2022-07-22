@@ -1,6 +1,6 @@
 PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -std=c99 -pedantic -g3
+CFLAGS = -Wall -Werror -std=c99 -pedantic -g3
 SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)
@@ -14,7 +14,7 @@ main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
 color.o: color.c color.h 
 	$(CC) $(CFLAGS) -c color.c
 
-polilinea.o: polilinea.c color.h
+polilinea.o: polilinea.c color.h fisicas.h
 	$(CC) $(CFLAGS) -c polilinea.c
 
 lectura.o: lectura.c polilinea.h
@@ -38,7 +38,7 @@ nave.o: nave.c nave.h figura.h fisicas.h
 disparo.o: disparo.c disparo.h figura.h fisicas.h
 	$(CC) $(CFLAGS) -c disparo.c
 
-nivel.o: nivel.c nivel.h figura.h
+nivel.o: nivel.c nivel.h figura.h torreta.h combustible.h
 	$(CC) $(CFLAGS) -c nivel.c
 
 torreta.o: torreta.c torreta.h figura.h fisicas.h
@@ -54,13 +54,13 @@ reactor.o: reactor.c reactor.h figura.h nivel.h
 	$(CC) $(CFLAGS) -c reactor.c
 
 clean:
-	rm -vf *.o main
+	rm -vf *.o main_v
 
 exe:
 	./$(PROGRAM)
 
-valgrind-log-file:
-	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=error.log --suppressions=suppressions_20221_tp1.supp -s ./$(PROGRAM)
+valgrind-sup:
+	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=suppressions_20221_tp1.supp ./$(PROGRAM)
 
 valgrind:
-	valgrind --leak-check=full --suppressions=suppressions_20221_tp1.supp ./$(PROGRAM)
+	valgrind  ./$(PROGRAM)
