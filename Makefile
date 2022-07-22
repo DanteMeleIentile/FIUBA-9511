@@ -5,16 +5,16 @@ SDLFLAGS = -lSDL2 -lm
 
 all: $(PROGRAM)
 
-$(PROGRAM): main_v.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o
-	$(CC) $(CFLAGS) main_v.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o $(SDLFLAGS) -o $(PROGRAM)
+$(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o
+	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o $(SDLFLAGS) -o $(PROGRAM)
 
-main_v.o: main_v.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
-	$(CC) $(CFLAGS) -c main_v.c
+main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
+	$(CC) $(CFLAGS) -c main.c
 	
 color.o: color.c color.h 
 	$(CC) $(CFLAGS) -c color.c
 
-polilinea.o: polilinea.c color.h
+polilinea.o: polilinea.c color.h fisicas.h
 	$(CC) $(CFLAGS) -c polilinea.c
 
 lectura.o: lectura.c polilinea.h

@@ -6,15 +6,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
-/*
-** La estructura que se define para las polilineas es de tipo:
-**
-** +--------+
-** | PUNTOS | -> Puntos de la polilinea
-** +--------+
-** |   N    | -> Cantidad de puntos de la polilinea
-** +--------+
-*/
 
 struct polilinea;
 
@@ -81,8 +72,6 @@ void polilinea_trasladar(polilinea_t *polilinea, float dx, float dy);
 ** Rota la polilinea "polilinea" de longitud "n" un angulo "rad" en radianes
 */
 void polilinea_rotar(polilinea_t *polilinea, double rad);
-
-float calcular_distancia(float px, float py, float qx, float qy);
 
 float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py);
 

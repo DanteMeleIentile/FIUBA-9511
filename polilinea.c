@@ -186,7 +186,7 @@ float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py){
             punto_cercano_y = ay + k * (by - ay);
         }
         }
-        distancia = calcular_distancia(px , py , punto_cercano_x, punto_cercano_y);
+        distancia = distancia_entre_puntos(px , py , punto_cercano_x, punto_cercano_y);
 
         if(!i)
             acc_d = distancia;
