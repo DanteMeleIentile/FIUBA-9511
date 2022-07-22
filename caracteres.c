@@ -621,6 +621,3 @@ void entero_imprimir_centrado(SDL_Renderer *renderer, int numero, float pos_x, f
 	sprintf(cadena, "%d", numero);
 	cadena_imprimir_centrado(renderer, cadena, pos_x, pos_y, escala, color);
 }
-
-
-

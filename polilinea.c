@@ -16,6 +16,7 @@
 
 #include "polilinea.h"
 #include "color.h"
+#include "fisicas.h"
 
 
 /* Estructura de las polilineas */
@@ -141,13 +142,9 @@ void polilinea_rotar(polilinea_t *polilinea, double rad) {
     }
 }
 
-float calcular_distancia(float px, float py, float qx, float qy){
-    return sqrt(pow(px-qx,2) + pow(py-qy,2));
-}
-
 float calcular_parametro(float ax, float ay, float bx, float by, float px, float py) {
 
-    double k = ((px - ax) * (bx - ax) + (py - ay) * (by - ay))/ pow(calcular_distancia(bx, by, ax, ay),2); 
+    double k = ((px - ax) * (bx - ax) + (py - ay) * (by - ay))/ pow(distancia_entre_puntos(bx, by, ax, ay),2); 
 
     return k;
 }
