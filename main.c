@@ -837,8 +837,14 @@ int main() {
             spawn = true;
         }
 
-        if(vidas == 0) break;
-        if(nave_get_combustible(nave) <= 0) break;
+        if(vidas == 0){
+            printf("GAME OVER.\n");
+            break;
+        }
+        if(nave_get_combustible(nave) <= 0){
+            printf("GAME OVER\nTE QUEDASTE SIN COMBUSTIBLE.\n");
+            break;
+        }
 
         if(!nave_estado_escudo(nave) && nivel != 0){
             if(disparo_pego(lista_disparos, nave_get_figura_principal(nave), 5, true)){

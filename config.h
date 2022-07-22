@@ -45,4 +45,3 @@
 #define DMIN_ESCUDO 70
 
 #endif // _CONFIG_H_
-

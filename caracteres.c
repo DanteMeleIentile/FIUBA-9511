@@ -355,18 +355,6 @@ const int caracter_espacio[1][2] = {
 	{0, 0},
 };
 
-/* const int caracter_nave[9][2] = {
-	{0, 8},
-	{-6, -1},
-	{-4, -4},
-	{-2, -4}, 
-	{-0, -2},
-	{2, -4},
-	{4, -4},
-	{6, -1},
-	{0, 8},
-}; */
-
 const int caracter_nave[9][2] = {
 	{0, -8}, 
 	{6, 1}, 
@@ -560,7 +548,7 @@ const size_t cant_puntos_caracteres[] = {
 	[NAVE] = 9,
 };
 
-void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, double escala, color_t color){
+void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, float escala, color_t color){
 	size_t len = strlen(cadena);
 	if(len == 0) return;
 	uint8_t r,g,b;
@@ -585,7 +573,8 @@ void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float 
 	}
 }
 
-void cadena_imprimir(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, double escala, color_t color){
+
+void cadena_imprimir(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, float escala, color_t color){
 	size_t len = strlen(cadena);
 	if(len == 0) return;
 	uint8_t r,g,b;
@@ -610,13 +599,13 @@ void cadena_imprimir(SDL_Renderer *renderer, const char *cadena, float pos_x, fl
 	}
 }
 
-void entero_imprimir(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, double escala, color_t color){
+void entero_imprimir(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, float escala, color_t color){
 	char cadena[15];
 	sprintf(cadena, "%d", numero);
 	cadena_imprimir(renderer, cadena, pos_x, pos_y, escala, color);
 }
 
-void entero_imprimir_centrado(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, double escala, color_t color){
+void entero_imprimir_centrado(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, float escala, color_t color){
 	char cadena[15];
 	sprintf(cadena, "%d", numero);
 	cadena_imprimir_centrado(renderer, cadena, pos_x, pos_y, escala, color);

@@ -9,7 +9,7 @@ struct combustible;
 typedef struct combustible combustible_t;
 
 /*
-** Crea un combustible en la posicion dada.
+** Crea un combustible en la posicion y ángulo dado.
 */
 combustible_t *combustible_crear(const figura_t *figura, float pos_x, float pos_y, double angulo);
 
@@ -33,4 +33,4 @@ void combustible_destruir(combustible_t *combustible);
 */
 void combustible_imprimir(SDL_Renderer *renderer, const combustible_t *combustible, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
-#endif
+#endif //COMBUSTIBLE_H

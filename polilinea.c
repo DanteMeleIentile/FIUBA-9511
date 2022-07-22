@@ -46,7 +46,6 @@ polilinea_t *polilinea_crear_vacia(size_t n){
     return polilinea;
 }
 
-
 polilinea_t *polilinea_crear(const float puntos[][2], size_t n, color_t c){
 
     polilinea_t *polilinea = polilinea_crear_vacia(n);
@@ -100,7 +99,7 @@ color_t polilinea_get_color(const polilinea_t *polilinea){
 }
 
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y){
-    if (polilinea->n <= pos){  //Confío que la persona que utiliza la función garantiza 'polilinea->puntos != NULL'
+    if (polilinea->n <= pos){
         return false;
     }
     polilinea->puntos[pos][X] = x;
@@ -116,7 +115,6 @@ bool polilinea_setear_color(polilinea_t *polilinea, color_t color) {
         polilinea->b = b;
     return true;
 }
-
 
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea){
     color_t c = color_crear(polilinea->r, polilinea->g, polilinea->b); 
@@ -142,15 +140,12 @@ void polilinea_rotar(polilinea_t *polilinea, double rad) {
     }
 }
 
-float calcular_parametro(float ax, float ay, float bx, float by, float px, float py) {
-
+static float calcular_parametro(float ax, float ay, float bx, float by, float px, float py) {
     double k = ((px - ax) * (bx - ax) + (py - ay) * (by - ay))/ pow(distancia_entre_puntos(bx, by, ax, ay),2); 
-
     return k;
 }
 
 float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py){
-
     float punto_cercano_x;
     float punto_cercano_y;
     float ax;
@@ -197,12 +192,6 @@ float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py){
     return acc_d;
 }
 
-void polilinea_destruir(polilinea_t *polilinea){
-    if(polilinea == NULL) return;
-    free(polilinea->puntos);
-    free(polilinea);
-}
-
 void polilinea_imprimir(SDL_Renderer *renderer, const polilinea_t *polilinea, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     SDL_SetRenderDrawColor(renderer, polilinea->r, polilinea->g, polilinea->b, 0xFF);
     for(size_t z = 0; z < polilinea->n - 1; z++){
@@ -214,4 +203,9 @@ void polilinea_imprimir(SDL_Renderer *renderer, const polilinea_t *polilinea, fl
         (-(polilinea->puntos[z+1][Y] - escala_y) * escala - escala_y + VENTANA_ALTO - tras_y)
         );
     }
+}
+void polilinea_destruir(polilinea_t *polilinea){
+    if(polilinea == NULL) return;
+    free(polilinea->puntos);
+    free(polilinea);
 }

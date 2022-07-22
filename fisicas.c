@@ -4,11 +4,11 @@
 
 #define PI 3.14159265358979323846
 
-double computar_velocidad(double vi, double a, double dt){
+float computar_velocidad(float vi, float a, double dt){
     return (vi + a * dt);
 }
 
-double computar_posicion(float pi, double vi, double dt){
+float computar_posicion(float pi, float vi, double dt){
     return (pi + vi * dt);
 }
 
@@ -17,7 +17,7 @@ double computar_angulo(float x_centro, float y_centro, float x_movil, float y_mo
 
 }
 
-double distancia_entre_puntos(float x1, float y1, float x2, float y2){
+float distancia_entre_puntos(float x1, float y1, float x2, float y2){
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 

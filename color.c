@@ -1,7 +1,7 @@
-#include "color.h"
-
 #include <stdbool.h>
 #include <stdint.h>
+
+#include "color.h"
 
 color_t color_crear(bool r, bool g, bool b){
     return ( (r << 2) | (g << 1) | (b) );

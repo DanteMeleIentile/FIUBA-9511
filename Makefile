@@ -56,11 +56,8 @@ reactor.o: reactor.c reactor.h figura.h nivel.h
 clean:
 	rm -vf *.o main_v
 
-exe:
+run:
 	./$(PROGRAM)
 
-valgrind-sup:
-	valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --suppressions=suppressions_20221_tp1.supp ./$(PROGRAM)
-
 valgrind:
-	valgrind  ./$(PROGRAM)
+	valgrind ./$(PROGRAM)

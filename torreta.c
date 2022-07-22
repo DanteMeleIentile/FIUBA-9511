@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 #include "torreta.h"
@@ -61,11 +61,11 @@ void torreta_restar_cooldown(torreta_t *torreta, double t){
     torreta->cooldown -= t;
 }
 
-double torreta_get_pos_x(torreta_t *torreta){
+float torreta_get_pos_x(torreta_t *torreta){
     return torreta->pos[X];
 }
 
-double torreta_get_pos_y(torreta_t *torreta){
+float torreta_get_pos_y(torreta_t *torreta){
     return torreta->pos[Y];
 }
 

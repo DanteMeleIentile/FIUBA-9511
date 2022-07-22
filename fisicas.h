@@ -2,14 +2,14 @@
 #define FISICAS_H
 
 /*
-** calcula cuánto debe cambiar la velocidad dada según la aceleracion y el intervalo de tiempo.
+** Calcula cuánto debe cambiar la velocidad dada según la aceleracion y el intervalo de tiempo.
 */
-double computar_velocidad(double v, double a, double dt);
+float computar_velocidad(float v, float a, double dt);
 
 /*
 ** calcula cuánto debe cambiar la posicion dada según la velocidad y el intervalo de tiempo.
 */
-double computar_posicion(float pi, double vi, double dt);
+float computar_posicion(float pi, float vi, double dt);
 
 /*
 ** Calcula el angulo entre 2 puntos
@@ -21,6 +21,6 @@ double computar_angulo(float x_centro, float y_centro, float x_movil, float y_mo
 /*
 ** Calcula la distancia entre dos puntos.
 */
-double distancia_entre_puntos(float x1, float y1, float x2, float y2);
+float distancia_entre_puntos(float x1, float y1, float x2, float y2);
 
-#endif
+#endif //FISICAS_H

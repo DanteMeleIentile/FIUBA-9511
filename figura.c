@@ -5,7 +5,6 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 
-
 #include "polilinea.h"
 #include "polilinea.h"
 #include "figura.h"
@@ -34,9 +33,6 @@ struct figura{
     polilinea_t **polilineas;
 };
 
-const char* figura_tipo_a_cadena(figura_tipo_t figura){
-    return nombre_icono[figura];
-}
 
 figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, size_t cant_polilineas){
     figura_t *fig = malloc(sizeof(figura_t));
@@ -69,7 +65,7 @@ figura_t *figura_clonar(const figura_t *figura){
     }
 
     for(size_t j = 0; j < fig->cant_polilineas; j++){
-        vector_polilineas[j] = polilinea_clonar(figura->polilineas[j]); //Iguala cada componente de las polilineas de cada figura leida del archivo
+        vector_polilineas[j] = polilinea_clonar(figura->polilineas[j]);
 
         if(vector_polilineas[j] == NULL){
             if(j >= 1){
@@ -135,15 +131,6 @@ char *figura_get_nombre(figura_t *figura){
     return figura->nombre;
 }
 
-void figura_destruir(figura_t *figura){
-    if(figura == NULL) return;
-    for(size_t i = 0; (i < figura->cant_polilineas); i++){
-        polilinea_destruir(figura->polilineas[i]);
-    }
-    free(figura->polilineas);
-    free(figura);
-}
-
 void figura_rotar(figura_t *figura, double rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         polilinea_rotar(figura->polilineas[i], rad);
@@ -175,3 +162,11 @@ void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escal
     }
 }
 
+void figura_destruir(figura_t *figura){
+    if(figura == NULL) return;
+    for(size_t i = 0; (i < figura->cant_polilineas); i++){
+        polilinea_destruir(figura->polilineas[i]);
+    }
+    free(figura->polilineas);
+    free(figura);
+}

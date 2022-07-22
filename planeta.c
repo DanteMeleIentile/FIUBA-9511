@@ -1,4 +1,3 @@
-
 #include "figura.h"
 #include "nave.h"
 #include "fisicas.h"
@@ -26,8 +25,6 @@ planeta_t *planeta_crear(figura_t *figura, float x, float y){
     return planeta;
 }
 
-//GETTERS:
-
 float planeta_get_pos_x(planeta_t *planeta){
     return planeta->pos[X];
 }
@@ -45,7 +42,7 @@ void planeta_imprimir(SDL_Renderer *renderer, const planeta_t *planeta, float es
     figura_imprimir(renderer, planeta->fig, escala, escala_x, escala_y, tras_x, tras_y);
 }
 
-double distancia_a_planeta(planeta_t *planeta, float pos_x, float pos_y){
+float distancia_a_planeta(planeta_t *planeta, float pos_x, float pos_y){
     return distancia_punto_a_figura(planeta->fig, pos_x, pos_y);
 }
 

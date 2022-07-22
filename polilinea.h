@@ -39,11 +39,6 @@ float polilinea_get_extremo_y(const polilinea_t *polilinea, bool mayor);
 color_t polilinea_get_color(const polilinea_t *polilinea);
 
 /*
-** Devuelve la cantidad de puntos que tiene la polilinea;
-*/
-size_t polilinea_get_n(polilinea_t *polilinea);
-
-/*
 ** De ser posible, asigna un punto de coordenadas "x" e "y" en la posición "pos" de la polilinea "polilinea". Caso contrario devuelve false;
 */
 bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y);
@@ -52,11 +47,6 @@ bool polilinea_setear_punto(polilinea_t *polilinea, size_t pos, float x, float y
 **Devuelve una copia de una polilinea dada en memoria nueva.
 */
 polilinea_t *polilinea_clonar(const polilinea_t *polilinea);
-
-/*
-** Devuelve una copia de una polilinea dada en memoria nueva.
-*/
-polilinea_t *polilinea_crear_vector(const polilinea_t *polilinea);
 
 /*
 ** Setea el color de la polilinea al determinado por "color"
@@ -73,13 +63,20 @@ void polilinea_trasladar(polilinea_t *polilinea, float dx, float dy);
 */
 void polilinea_rotar(polilinea_t *polilinea, double rad);
 
+/*
+** Devuelve la distancia menor entre el punto (px; py) y la polilinea dada.
+*/
 float distancia_punto_a_polilinea(polilinea_t *polilinea, float px, float py);
 
+/*
+**Imprime una polilinea con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".
+** PRE: La polilinea fue creada.
+*/
 void polilinea_imprimir(SDL_Renderer *renderer, const polilinea_t *polilinea, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
 /*
-** Destruye una polilinea creada mediante "polilinea_crear_vacia" o "polilinea_crear"
+** Libera la memoria de una polilinea dada.
 */
 void polilinea_destruir(polilinea_t *polilinea);
 
-#endif
+#endif //POLILINEA_H

@@ -1,8 +1,9 @@
-#ifndef _LETRAS_H_
-#define _LETRAS_H_
+#ifndef CARACTERES_H
+#define CARACTERES_H
+
+#include <SDL2/SDL.h>
 
 #include "color.h"
-#include <SDL2/SDL.h>
 
 
 #define CARACTER_ANCHO 6
@@ -58,23 +59,23 @@ extern const int caracter_nave[9][2];
 /*
 ** Imprime "cadena" en la pantalla escalado "escala" y en la posición dada.
 */
-void cadena_imprimir(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, double escala, color_t color);
+void cadena_imprimir(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, float escala, color_t color);
 
 /*
-** Imprime "cadena" en la pantalla escalado "escala" y en la posición dada y centrado a esa posicion.
+** Imprime "cadena" en la pantalla escalado "escala" y centrado en la posición dada.
 */
-void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, double escala, color_t color);
+void cadena_imprimir_centrado(SDL_Renderer *renderer, const char *cadena, float pos_x, float pos_y, float escala, color_t color);
 
 /*
 ** Imprime "numero" en la pantalla escalado "escala" y en la posición dada.
-** PRE: el numero no puede superar las 15 cifras
-*/
-void entero_imprimir(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, double escala, color_t color);
-
-/*
-** Imprime "numero" en la pantalla escalado "escala" y en la posición dada y centrado a esa posicion.
 ** PRE: el numero no puede superar las 15 cifras.
 */
-void entero_imprimir_centrado(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, double escala, color_t color);
+void entero_imprimir(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, float escala, color_t color);
 
-#endif // _LETRAS_H_
+/*
+** Imprime "numero" en la pantalla escalado "escala" y centrado en la posición dada.
+** PRE: el numero no puede superar las 15 cifras.
+*/
+void entero_imprimir_centrado(SDL_Renderer *renderer, int numero, float pos_x, float pos_y, float escala, color_t color);
+
+#endif // CARACTERES_H

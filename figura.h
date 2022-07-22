@@ -27,10 +27,6 @@ struct figura;
 
 typedef struct figura figura_t;
 
-/* 
-** Devuelve el nombre de la figura
-*/
-const char* figura_tipo_a_cadena(figura_tipo_t figura);
 
 /*  
 ** Crea una figura con nombre = nombre, con tipo = tipo, si es infinita o no y con "cant_polilineas" polilineas. El puntero polilineas apunta a null. Si falla, devuelve null
@@ -38,12 +34,12 @@ const char* figura_tipo_a_cadena(figura_tipo_t figura);
 figura_t *figura_crear(const char nombre[], figura_tipo_t tipo, bool infinito, size_t cant_polilineas);
 
 /*  
-** Devuelve una copia de figura en memoria nueva
+** Devuelve una copia de figura en memoria nueva.
 */
 figura_t *figura_clonar(const figura_t *figura);
 
 /*  
-** Devuelve "true" si el nivel es infinito y "false" si no lo es
+** Devuelve "true" si el figura es infinita. Caso contrario, "false".
 */
 bool figura_get_infinito(const figura_t *figura);
 
@@ -55,13 +51,13 @@ bool figura_get_infinito(const figura_t *figura);
 bool figura_setear_polilinea(figura_t *figura, polilinea_t **polilineas);
 
 /*
-** Devuelve el extremo en "x" de la figura
+** Devuelve un extremo en "x" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
 float figura_get_extremo_x(const figura_t *figura, bool mayor);
 
 /*
-** Devuelve el extremo en "y" de la figura
+** Devuelve un extremo en "y" de la figura
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
 */
 float figura_get_extremo_y(const figura_t *figura, bool mayor);
@@ -77,22 +73,23 @@ char *figura_get_nombre(figura_t *figura);
 void figura_rotar(figura_t *figura, double rad);
 
 /*
-** Dada una figura, le suma las coordenadas "x" e "y".
+** Dada una figura, la traslada las coordenadas "x" e "y".
 */
 void figura_trasladar(figura_t *figura, float dx, float dy);
 
-//Da la distancia más cercana entre el punto y la figura
-float distancia_punto_a_figura(const figura_t *figura, float x, float y);
-
 /*
-** Libera la memoria de la figura dada. Es importante destacar que también eli
+** Devuelve la distancia más cercana entre el punto y la figura.
 */
-void figura_destruir(figura_t *figura);
+float distancia_punto_a_figura(const figura_t *figura, float x, float y);
 
 /*
 **Imprime una "figura" con una "escala" determinada. El centro desde el cual se escalará esta determinado por las coordenadas "escala_x; escala_y". La traslación dada a la hora de dibujar estará determinada por "tras_x; tras_y".
 */
 void figura_imprimir(SDL_Renderer *renderer, const figura_t *figura, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
+/*
+** Libera la memoria de la figura dada.
+*/
+void figura_destruir(figura_t *figura);
 
-#endif
+#endif //FIGURA_H

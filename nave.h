@@ -7,6 +7,7 @@
 
 
 // INVARIANTES: Angulo se encuentra en radianes, entre 0 y 2 PI
+
 struct nave;
 
 typedef struct nave nave_t;
@@ -42,7 +43,7 @@ float nave_get_vel_y(nave_t *nave);
 double nave_get_angulo(nave_t *nave);
 
 /*
-** Devuelve la figura principal de la nave dada.
+** Devuelve la figura principal (en uso/actual) de la nave dada.
 */
 figura_t *nave_get_figura_principal(nave_t *nave);
 
@@ -72,17 +73,17 @@ void nave_setear_posicion(nave_t *nave, float x, float y, double angulo);
 void nave_setear_velocidad(nave_t *nave, float vel_x, float vel_y);
 
 /*
-** Enciende su respectiva opcion.
+** Enciende su respectivo estado.
 */
 void nave_prender(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel);
 
 /*
-** Enciende su respectiva opcion
+** Apaga su respectivo estado.
 */
 void nave_apagar(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel);
 
 /*
-** Actualiza las 2 figuras de la nave según los parametros de la misma (posición y ángulo).
+** Actualiza las figuras de la nave.
 ** PRE: La nave fue creada.
 */
 bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nave_mas_chorro_fig, const figura_t *escudo_fig, const figura_t *escudo_nivel_fig);
@@ -133,14 +134,13 @@ void nave_escudo_setear_angulo(nave_t *nave, double angulo);
 bool nave_escudo_apuntar(nave_t *nave, float x_objetivo, float y_objetivo);
 
 /*
-** Libera la memoria de la nave.
-*/
-void nave_destruir(nave_t *nave);
-
-/*
 ** Dibuja la nave en pantalla segun sus parametros.
 */
 void nave_imprimir(SDL_Renderer *renderer, const nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y);
 
+/*
+** Libera la memoria de la nave dada.
+*/
+void nave_destruir(nave_t *nave);
 
-#endif
+#endif //NAVE_H

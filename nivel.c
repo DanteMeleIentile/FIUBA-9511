@@ -83,14 +83,6 @@ void nivel_set_bonus(nivel_t *nivel, int n){
     nivel->bonus = n;
 }
 
-void nivel_destruir(nivel_t *nivel){
-    if(nivel == NULL) return;
-    figura_destruir(nivel->fig);
-    lista_destruir(nivel->torretas, (void (*)(void*))torreta_destruir);
-    lista_destruir(nivel->combustibles, (void (*)(void*))combustible_destruir);
-    free(nivel);
-}
-
 void nivel_imprimir(SDL_Renderer *renderer, const nivel_t *nivel, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     figura_imprimir(renderer, nivel->fig, escala, escala_x, escala_y, tras_x, tras_y);
     if(nivel->infinito){
@@ -101,4 +93,12 @@ void nivel_imprimir(SDL_Renderer *renderer, const nivel_t *nivel, float escala, 
         //Impresión a izquierda
         figura_imprimir(renderer, nivel->fig, escala, escala_x, escala_y, tras_x + shift_izq, tras_y);
     }
+}
+
+void nivel_destruir(nivel_t *nivel){
+    if(nivel == NULL) return;
+    figura_destruir(nivel->fig);
+    lista_destruir(nivel->torretas, (void (*)(void*))torreta_destruir);
+    lista_destruir(nivel->combustibles, (void (*)(void*))combustible_destruir);
+    free(nivel);
 }

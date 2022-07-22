@@ -1,13 +1,12 @@
 #ifndef LECTURA_H
 #define LECTURA_H
 
-#include "polilinea.h"
-#include "figura.h"
-
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 
+#include "polilinea.h"
+#include "figura.h"
 
 /*
 ** Recibe un archivo "f" y, de ser posible, devuelve el "nombre", el "tipo", si es de tipo infinito y la cantidad de polilíneas asociadas a una figura junto con un "true" que indica el exito de la lectura. Caso contrario, devuelve "false".
@@ -19,4 +18,4 @@ bool leer_encabezado_figura(FILE *f, char nombre[], figura_tipo_t *tipo, bool *i
 */
 polilinea_t *leer_polilinea(FILE *f);
 
-#endif
+#endif //LECTURA_H

@@ -1,11 +1,11 @@
+#include <stdbool.h> 
+#include <stdint.h> 
+#include <stdio.h> 
+
 #include "lectura.h"
 #include "polilinea.h"
 #include "figura.h"
 #include "color.h"
-
-#include <stdbool.h> 
-#include <stdint.h> 
-#include <stdio.h> 
 
 
 #define MASK_TIPO 0x07  // 0000 0111

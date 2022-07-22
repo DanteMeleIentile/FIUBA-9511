@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 
-
 #include "nave.h"
 #include "figura.h"
 #include "fisicas.h"
@@ -30,7 +29,6 @@ static double DEG_A_RAD(double grados){
 }
 
 nave_t *nave_crear(int cant_combustible){
-    //Evaluar necesidad de memoría dinámica
     nave_t *nave = malloc(sizeof(nave_t));
     if(nave == NULL) return NULL;
 
@@ -263,17 +261,6 @@ bool nave_escudo_apuntar(nave_t *nave, float x_objetivo, float y_objetivo){
     return true;
 }
 
-void nave_destruir(nave_t *nave){
-    if(nave == NULL) return;
-    if(nave->fig != NULL){
-        figura_destruir(nave->fig);
-        figura_destruir(nave->fig_chorro);
-        figura_destruir(nave->fig_escudo);
-        figura_destruir(nave->fig_escudo_nivel);
-    }
-    free(nave);
-}
-
 void nave_imprimir(SDL_Renderer *renderer, const nave_t *nave, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
     if((nave->estado % 2)){
         figura_imprimir(renderer, nave->fig_chorro, escala, escala_x, escala_y, tras_x, tras_y);
@@ -286,4 +273,15 @@ void nave_imprimir(SDL_Renderer *renderer, const nave_t *nave, float escala, flo
     } else if((nave->estado >> 2) % 2){
         figura_imprimir(renderer, nave->fig_escudo_nivel, escala, escala_x, escala_y, tras_x, tras_y);
     }
+}
+
+void nave_destruir(nave_t *nave){
+    if(nave == NULL) return;
+    if(nave->fig != NULL){
+        figura_destruir(nave->fig);
+        figura_destruir(nave->fig_chorro);
+        figura_destruir(nave->fig_escudo);
+        figura_destruir(nave->fig_escudo_nivel);
+    }
+    free(nave);
 }
