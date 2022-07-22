@@ -765,7 +765,7 @@ int main() {
             if(spawn == true){
                 centro = ancho_nivel_x/2;
                 nave_setear_velocidad(nave, 0, 0);
-                nave_setear_posicion(nave, ancho_nivel_x/2, 1000, 0);
+                nave_setear_posicion(nave, ancho_nivel_x/2, 1000, -PI/2);
                 spawn = false;
                 lista_destruir(lista_disparos, (void (*)(void*))disparo_destruir);
                 lista_disparos = lista_crear();
@@ -906,8 +906,8 @@ int main() {
         if(disparo && listo_para_disparar){
             double coseno = cos(nave_get_angulo(nave));
             double seno = sin(nave_get_angulo(nave));
-            double c = (VEL_DISPARO * coseno) + nave_get_vel_x(nave);
-            double d = (VEL_DISPARO * seno) + nave_get_vel_x(nave);
+            double c = (VEL_DISPARO * coseno);
+            double d = (VEL_DISPARO * seno);
             disparo_t *disparo_buf = disparo_crear(nave_get_pos_x(nave)+7*coseno, nave_get_pos_y(nave)+7*seno, c, d, nave_get_angulo(nave), true);
             if(!lista_insertar_ultimo(lista_disparos, disparo_buf) || disparo_buf == NULL){
                 error_memoria = true;
