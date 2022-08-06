@@ -26,7 +26,6 @@
 
 #define X 0
 #define Y 1
-
 #define ANG 2
 
 #define TIEMPO_MAX_DISPAROS 2

@@ -123,13 +123,15 @@ size_t cant_por_tipo(figura_tipo_t tipo, const figura_t **vector_figuras, size_t
     return cant;
 }
 
-//Función para crear torretas y combustibles en el nivel elegido y en su respectiva posicion y angulo
+//Función para crear torretas y combustibles en el nivel elegido y en su respectiva posicion y angulo. En caso de error devuelve false
 bool inicializar_listas_nivel(lista_t *lista_niveles, const figura_t *torreta, const figura_t *torreta_disparo, const figura_t *combustible){
     size_t cant_torretas_actual = 0;
     size_t cant_combustibles_actual = 0;
+    
     lista_iter_t *iter = lista_iter_crear(lista_niveles);
     if(iter == NULL) return false;
-    for(size_t i = 0; i < lista_largo(lista_niveles); i++){
+
+    for(size_t i = 1; i < lista_largo(lista_niveles); i++){ // "i" empieza en 1 pues existe el NIVELO = 0
         nivel_t *nivel_actual = lista_iter_ver_actual(iter);
         nivel_set_bonus(nivel_actual, tabla_bonus[i]);
 
@@ -143,7 +145,7 @@ bool inicializar_listas_nivel(lista_t *lista_niveles, const figura_t *torreta, c
 
         for(size_t j = cant_combustibles_actual; j < cant_combustibles_actual + tabla_cant_combustibles[i]; j++){
             combustible_t *combustible_buf = combustible_crear(combustible, tabla_ubicacion_combustibles[j][X], tabla_ubicacion_combustibles[j][Y], tabla_ubicacion_combustibles[j][ANG]);
-            if(combustible_buf == NULL || !lista_insertar_ultimo(nivel_get_lista_torretas(nivel_actual), combustible_buf)){
+            if(combustible_buf == NULL || !lista_insertar_ultimo(nivel_get_lista_combustibles(nivel_actual), combustible_buf)){
                 lista_iter_destruir(iter);
                 return false;
             }
@@ -157,7 +159,6 @@ bool inicializar_listas_nivel(lista_t *lista_niveles, const figura_t *torreta, c
     printf("CANT COMBUS = %zd\n", cant_combustibles_actual);
     lista_iter_destruir(iter);
     return true;
-
 }
 
 //Indica si hay un disparo en pantalla.
@@ -495,9 +496,12 @@ int main() {
 
     //Creación de niveles
     lista_t *lista_niveles = lista_crear();
+    if(lista_niveles == NULL) error_memoria = true;
+
 
     //Es importante que estén ordenados
     size_t cant_niveles = cant_por_tipo(NIVEL, (const figura_t(**)) vector_figuras, cant_figuras);
+    printf("cant niveles %ld\n", cant_niveles);
     nivel_t *vector_niveles[] = {
         nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), NIVEL1),
         nivel_crear(encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras), NIVEL2),
@@ -688,11 +692,13 @@ int main() {
             if(iter_niveles == NULL){
                 error_memoria = true;
             }
+
             for(size_t i = 0; i < lista_largo(lista_niveles); i++){
                 printf("ADENTRO\n");
                 if(nivel_get_id(lista_iter_ver_actual(iter_niveles)) == nivel){
                     nivel_actual = lista_iter_ver_actual(iter_niveles);
                     printf("SALIO\n");
+                    printf("%ld\n", nivel);
                     break;
                 }
                 lista_iter_avanzar(iter_niveles);
@@ -815,7 +821,6 @@ int main() {
         }
 
         if(nivel_actual != NULL && !nivel_get_infinito(nivel_actual)){
-            
             ancho_nivel_x = nivel_get_extremo_x(nivel_actual, true);    //contempla el margen izquierdo
             alto_nivel_y = nivel_get_extremo_y(nivel_actual, true);     //contempla el margen inferior
 
