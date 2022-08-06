@@ -19,7 +19,7 @@
 
 #define G 10
 
-#define NAVE_ROTACION_PASO (PI/20)
+#define NAVE_ROTACION_PASO (PI * 2)
 #define NAVE_ACELERACION (10*G)
 
 #define NAVE_ANGULO_INICIAL (PI/2)

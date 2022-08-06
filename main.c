@@ -598,17 +598,17 @@ int main() {
 
         if(chorro_prendido){
             nave_sumar_combustible(nave, -JUEGO_COMBUSTIBLE_POT_X_SEG * DT);
-        }
+        }   
         if(escudo_prendido){
             nave_sumar_combustible(nave, -JUEGO_COMBUSTIBLE_ESC_X_SEG * DT);
         }
 
         if(rotacion_antihoraria){
-            nave_rotar(nave, + NAVE_ROTACION_PASO);
+            nave_rotar(nave, + NAVE_ROTACION_PASO * DT); //Depende de DT pues se comporta como una velocidad ángular
         }
 
         if(rotacion_horaria){
-            nave_rotar(nave, - NAVE_ROTACION_PASO);
+            nave_rotar(nave, - NAVE_ROTACION_PASO * DT); //Depende de DT pues se comporta como una velocidad ángular    
         } 
 
         if(avanzar){
@@ -757,6 +757,8 @@ int main() {
             if(VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x) < escala_nivel)
                 escala_nivel = VENTANA_ANCHO * 1.0 / (ancho_nivel_x + margen_nivel_x);
 
+            nave_acercar_direccion(nave, G, -PI/2, DT);
+            
             if(nivel == 4){
                 if(spawn){
                     nave_setear_velocidad(nave, 0, 0);
@@ -764,8 +766,6 @@ int main() {
                     spawn = false;
                 }
                 
-
-                nave_acercar_direccion(nave, G, -PI/2, DT);
             }
             if(nivel == 5){
                 if(spawn){
