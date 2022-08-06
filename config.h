@@ -27,6 +27,8 @@
 #define X 0
 #define Y 1
 
+#define ANG 2
+
 #define TIEMPO_MAX_DISPAROS 2
 #define VEL_DISPARO 200
 
@@ -43,5 +45,7 @@
 
 #define DMIN 7
 #define DMIN_ESCUDO 70
+
+#define CANT_NIVELES 5
 
 #endif // _CONFIG_H_

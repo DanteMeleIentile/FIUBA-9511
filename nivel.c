@@ -18,7 +18,7 @@ struct nivel {
     int bonus;
 };
 
-nivel_t *nivel_crear(const figura_t *figura, int bonus){
+nivel_t *nivel_crear(const figura_t *figura){
     nivel_t *nivel = malloc(sizeof(nivel_t));
     if(nivel == NULL) return NULL;
 
@@ -44,8 +44,6 @@ nivel_t *nivel_crear(const figura_t *figura, int bonus){
         free(nivel);
         return NULL;
     }
-
-    nivel->bonus = bonus;
 
     return nivel;
 }

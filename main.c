@@ -17,8 +17,86 @@
 #include "combustible.h"
 #include "reactor.h"
 
+typedef enum tabla_niveles{
+    NIVEL1,
+    NIVEL2,
+    NIVEL3,
+    NIVEL4,
+    NIVEL5,
+};
 
-//Dado un vector y un nombre. Encuentra la figura de ese nombre. Si no la encuentra devuelve NULL.
+const int tabla_bonus[] = {
+    [NIVEL1] = 2000,
+    [NIVEL2] = 4000,
+    [NIVEL3] = 6000,
+    [NIVEL4] = 8000,
+    [NIVEL5] = 9000,
+};
+
+const size_t tabla_cant_torretas[] = {
+    [NIVEL1] = 2,
+    [NIVEL2] = 4,
+    [NIVEL3] = 6,
+    [NIVEL4] = 8,
+    [NIVEL5] = 0,
+};
+
+const size_t tabla_cant_combustibles[] = {
+    [NIVEL1] = 2,
+    [NIVEL2] = 2,
+    [NIVEL3] = 3,
+    [NIVEL4] = 4,
+    [NIVEL5] = 0,
+};
+
+const float tabla_ubicacion_torretas[][3] = {
+    {916, 75, -0.66},
+    {1425, 159, 0.66},
+
+    {423, 195, -0.66},
+    {806, 215, -0.33},
+    {1254, 153, 0.66},
+    {1587, 223, 2.23},
+
+    {70, 46, 0},
+    {506, 12, 0},
+    {952, 12, 0},
+    {1385, 12, 0},
+    {757, 210, 3.14},
+    {1161, 210, 3.14},
+
+    {257, 440, 0.66},
+    {719, 674, 2.23},
+    {985, 565, 0},
+    {1125, 417, 3.8},
+    {862, 163, 3.8},
+    {626, 323, 2.23}, 
+    {505, 331, 3.8},
+    {378, 296, 2.23},
+
+};
+
+const float tabla_ubicacion_combustibles[][3] = {
+    {1064, 13, 0},
+    {1685, 113, 0},
+
+    {482, 94, 0},
+    {1751, 247, 0},
+
+    {820, 46, 0},
+    {1196, 68, 0},
+    {1602, 46, 0},
+
+    {188, 429, 0},
+    {667, 600, 0},
+    {1054, 404, 3.14},
+    {574, 344, 3.14},
+};
+
+
+
+
+//Dado un vector, su longitud y un nombre, encuentra la figura de ese nombre. Si no la encuentra devuelve NULL.
 figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){
     figura_t *fig = NULL;
     for (size_t i = 0; i < n; i++){
@@ -30,82 +108,63 @@ figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){
     return fig;
 }
 
-//Función para crear torretas y combustibles en el nivel elegido y en su respectiva posicion y angulo
-void inicializar_listas_nivel(nivel_t *nivel, size_t numero_nivel, const figura_t *torreta, const figura_t *torreta_disparo, const figura_t *combustible, bool *error_memoria){
-    torreta_t *torreta_buf;
-    combustible_t *combustible_buf;
-    if(numero_nivel == 1){
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 916, 75, -0.66);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 1425, 159, 0.66);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 1064, 13, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 1685, 113, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-    }
-    if(numero_nivel == 2){
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 423, 195, -0.66);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 806, 215, -0.33);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 1254, 153, 0.66);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 1587, 223, 2.23);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 482, 94, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 1751, 247, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-    }
-    if(numero_nivel == 3){
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 70, 46, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 506, 12, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 952, 12, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 1385, 12, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 757, 210, 3.14);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 1161, 210, 3.14);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 820, 46, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 1196, 68, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 1602, 46, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-    }
-    if(numero_nivel == 4){
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 257, 440, 0.66);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 719, 674, 2.23);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 985, 565, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 1125, 417, 3.8);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 862, 163, 3.8);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 626, 323, 2.23);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 505, 331, 3.8);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, 378, 296, 2.23);
-        if(!lista_insertar_ultimo(nivel_get_lista_torretas(nivel), torreta_buf) || torreta_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 188, 429, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 667, 600, 0);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 1054, 404, 3.14);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-        combustible_buf = combustible_crear(combustible, 574, 344, 3.14);
-        if(!lista_insertar_ultimo(nivel_get_lista_combustibles(nivel), combustible_buf) || combustible_buf == NULL) *error_memoria = true;
-    }
+//Dado un vector, su longitud y un tipo, devuelve un vector con todas las figuras de ese tipo. En caso de error devuelve NULL.
+figura_t **vector_tipo_figura(figura_tipo_t tipo, const figura_t **vector_figuras, size_t n, size_t *cant){
+    size_t cant_buf = 0;
+    figura_t **vector = malloc(sizeof(figura_t*) * 1);
+    if(vector == NULL) return NULL;
+
+    for (size_t i = 0; i < n; i++){
+        if(figura_get_tipo(vector_figuras[i]) == tipo){
+            if(i >= 1){
+                figura_t **aux = realloc(vector, sizeof(figura_t*) * (i + 1));
+                if(aux == NULL){
+                    free(vector);
+                    return NULL;
+                } 
+            }
+            vector[i] = vector_figuras[i];
+            cant_buf++;
+        }
+    } 
+    *cant = cant_buf;
+    return vector;
 }
 
+//Función para crear torretas y combustibles en el nivel elegido y en su respectiva posicion y angulo
+bool inicializar_listas_nivel(lista_t *lista_niveles, const figura_t *torreta, const figura_t *torreta_disparo, const figura_t *combustible){
+    size_t cant_torretas_actual = 0;
+    size_t cant_combustibles_actual = 0;
+    lista_iter_t *iter = lista_iter_crear(lista_niveles);
+    if(iter == NULL) return false;
+    for(size_t i = 0; i < lista_largo(lista_niveles); i++){
+        nivel_t *nivel_actual = lista_iter_ver_actual(iter);
+        nivel_set_bonus(nivel_actual, tabla_bonus[i]);
+
+        for(size_t j = cant_torretas_actual; j < cant_torretas_actual + tabla_cant_torretas[i]; j++){
+            torreta_t *torreta_buf = torreta_crear(torreta, torreta_disparo, COOLDOWN_TORRETA, tabla_ubicacion_torretas[j][X], tabla_ubicacion_torretas[j][Y], tabla_ubicacion_torretas[j][ANG]);
+            if(torreta_buf == NULL || !lista_insertar_ultimo(nivel_get_lista_torretas(nivel_actual), torreta_buf)){
+                lista_iter_destruir(iter);
+                return false;
+            }
+        }
+
+        for(size_t j = cant_combustibles_actual; j < cant_combustibles_actual + tabla_cant_combustibles[i]; j++){
+            combustible_t *combustible_buf = combustible_crear(combustible, tabla_ubicacion_combustibles[j][X], tabla_ubicacion_combustibles[j][Y], tabla_ubicacion_combustibles[j][ANG]);
+            if(combustible_buf == NULL || !lista_insertar_ultimo(nivel_get_lista_torretas(nivel_actual), combustible_buf)){
+                lista_iter_destruir(iter);
+                return false;
+            }
+        }
+
+        cant_torretas_actual += tabla_cant_torretas[i];
+        cant_combustibles_actual += tabla_cant_combustibles[i];
+        lista_iter_avanzar(iter);
+    }
+    lista_iter_destruir(iter);
+    return true;
+
+}
 
 //Indica si hay un disparo en pantalla.
 bool disparo_en_pantalla(SDL_Renderer *renderer, lista_t *lista_disparos, const figura_t *disparo_fig, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
@@ -440,25 +499,23 @@ int main() {
     const figura_t *torreta_fig= encontrar_figura("TORRETA", vector_figuras, cant_figuras);
     const figura_t *torreta_disparo_fig = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
 
+    lista_t *lista_niveles = lista_crear();
+    
     //Creación de niveles
-    nivel_t *nivel_1 = nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), 2000);
-    if(nivel_1 == NULL) error_memoria = true;
-    inicializar_listas_nivel(nivel_1, 1, torreta_fig, torreta_disparo_fig, combustible_fig, &error_memoria);
+    size_t cant_niveles = 0; 
 
-    nivel_t *nivel_2 = nivel_crear(encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras), 4000);
-    if(nivel_2 == NULL) error_memoria = true;
-    inicializar_listas_nivel(nivel_2, 2, torreta_fig, torreta_disparo_fig, combustible_fig, &error_memoria);
+    vector_figura_niveles = fig
 
-    nivel_t *nivel_3 = nivel_crear(encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras), 6000);
-    if(nivel_3 == NULL) error_memoria = true;
-    inicializar_listas_nivel(nivel_3, 3, torreta_fig, torreta_disparo_fig, combustible_fig, &error_memoria);
+    for(size_t i = 0; i < cant_niveles){
+        nivel_t *nivel_buf = nivel_crear(vector_figura_niveles[i]);
 
-    nivel_t *nivel_4 = nivel_crear(encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras), 8000);
-    if(nivel_4 == NULL) error_memoria = true;
-    inicializar_listas_nivel(nivel_4, 4, torreta_fig, torreta_disparo_fig, combustible_fig, &error_memoria);
+        if(nivel_buf == NULL || !lista_insertar_ultimo(lista_niveles, nivel_buf)){
+            error_memoria = true;
+            break;
+        }
+    }
 
-    nivel_t *nivel_5 = nivel_crear(encontrar_figura("NIVEL1R", vector_figuras, cant_figuras), 9000);
-    if(nivel_5 == NULL) error_memoria = true;
+    if(!inicializar_listas_nivel(lista_niveles, torreta_fig, torreta_disparo_fig, combustible_fig)) error_memoria = true;
 
     nivel_t *nivel_actual = NULL;
 
@@ -913,11 +970,7 @@ int main() {
 
     reactor_destruir(reactor);
 
-    nivel_destruir(nivel_1);
-    nivel_destruir(nivel_2);
-    nivel_destruir(nivel_3);
-    nivel_destruir(nivel_4);
-    nivel_destruir(nivel_5);
+    lista_destruir(lista_niveles, (void (*)(void*))nivel_destruir);
 
     for(size_t i = 0; i < cant_figuras; i++){
         figura_destruir(vector_figuras[i]);

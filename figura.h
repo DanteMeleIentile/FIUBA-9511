@@ -68,6 +68,11 @@ float figura_get_extremo_y(const figura_t *figura, bool mayor);
 char *figura_get_nombre(figura_t *figura);
 
 /*
+** Devuelve el tipo de la figura dada.
+*/
+figura_tipo_t figura_get_tipo(figura_t *figura);
+
+/*
 ** Dada una figura, la rota un angulo "rad".
 */
 void figura_rotar(figura_t *figura, double rad);

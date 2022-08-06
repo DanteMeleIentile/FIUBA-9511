@@ -16,7 +16,7 @@ typedef struct nivel nivel_t;
 ** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
 ** Obs: Crea una lista enlazada para los combustibles y las torretas.
 */
-nivel_t *nivel_crear(const figura_t *figura, int bonus);
+nivel_t *nivel_crear(const figura_t *figura);
 
 /*
 ** Devuelve la figura del nivel dado.

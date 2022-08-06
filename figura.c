@@ -130,6 +130,10 @@ char *figura_get_nombre(figura_t *figura){
     return figura->nombre;
 }
 
+figura_tipo_t figura_get_tipo(figura_t *figura){
+    return figura->tipo;
+}
+
 void figura_rotar(figura_t *figura, double rad){
     for(size_t i = 0; i < figura->cant_polilineas; i++){
         polilinea_rotar(figura->polilineas[i], rad);
