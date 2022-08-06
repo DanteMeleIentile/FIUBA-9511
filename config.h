@@ -35,7 +35,7 @@
 
 #define SCORE_NEXT_SHIP 10000
 
-#define TIEMPO_REACTOR 90
+#define TIEMPO_REACTOR 25
 
 #define DT (1.0/JUEGO_FPS)
 

@@ -133,13 +133,13 @@ bool disparo_en_pantalla(SDL_Renderer *renderer, lista_t *lista_disparos, const 
 
 
 //Evualua el impacto de un disparo de una lista contra una figura.
-bool disparo_pego(lista_t *lista_disparos, figura_t *figura, double dmin, bool friendly){
+bool disparo_pego(lista_t *lista_disparos, figura_t *figura, bool friendly){
     lista_iter_t *iter = lista_iter_crear(lista_disparos);
 
     for(size_t i = 0; i < lista_largo(lista_disparos); i++){
         disparo_t *disp_act = lista_iter_ver_actual(iter);
         if((disparo_friendly(disp_act) && !friendly) || (!disparo_friendly(disp_act) && friendly)){
-            if(distancia_punto_a_figura(figura, disparo_get_pos_x(disp_act), disparo_get_pos_y(disp_act)) <= dmin){
+            if(distancia_punto_a_figura(figura, disparo_get_pos_x(disp_act), disparo_get_pos_y(disp_act)) <= DMIN){
                 disparo_destruir(disp_act);
                 lista_iter_borrar(iter);
                 lista_iter_destruir(iter);
@@ -154,11 +154,11 @@ bool disparo_pego(lista_t *lista_disparos, figura_t *figura, double dmin, bool f
 
 
 //Evualua el impacto de un disparo de una lista contra un nivel.
-void nivel_disparo_impacto(lista_t *lista_disparos, nivel_t *nivel, double dmin){
+void nivel_disparo_impacto(lista_t *lista_disparos, nivel_t *nivel){
     lista_iter_t *iter = lista_iter_crear(lista_disparos);
     for(size_t i = 0; i < lista_largo(lista_disparos); i++){
         disparo_t *disp_act = lista_iter_ver_actual(iter);
-        if(distancia_punto_a_figura(nivel_get_figura(nivel), disparo_get_pos_x(disp_act), disparo_get_pos_y(disp_act)) <= dmin){
+        if(distancia_punto_a_figura(nivel_get_figura(nivel), disparo_get_pos_x(disp_act), disparo_get_pos_y(disp_act)) <= DMIN){
             disparo_destruir(disp_act);
             lista_iter_borrar(iter);
             continue;
@@ -210,7 +210,7 @@ bool lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista
 
     for(size_t i = 0; i < lista_largo(lista_torreta); i++){
         torreta_t *torreta_act = lista_iter_ver_actual(iter);
-        if(disparo_pego(lista_disparos, torreta_get_figura_principal(torreta_act), DMIN, false)){
+        if(disparo_pego(lista_disparos, torreta_get_figura_principal(torreta_act), false)){
             torreta_destruir(torreta_act);
             lista_iter_borrar(iter);
             score[0] += 250;
@@ -236,7 +236,7 @@ bool lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista
 
 
 bool nivel_en_pantalla(SDL_Renderer *renderer, nivel_t *nivel, nave_t *nave, lista_t *lista_disparos, const figura_t *torreta_fig, const figura_t *torreta_disparo_fig, const figura_t *combustible, int *score, bool escudo, float escala, float escala_x, float escala_y, float tras_x, float tras_y){
-    nivel_disparo_impacto(lista_disparos, nivel, 4);
+    nivel_disparo_impacto(lista_disparos, nivel);
 
     lista_iter_t *iter_comb = lista_iter_crear(nivel_get_lista_combustibles(nivel));
 
@@ -764,17 +764,6 @@ int main() {
                     spawn = false;
                 }
                 
-                if(nave_get_pos_x(nave) < 0){
-                    nave_setear_posicion(nave, ancho_nivel_x + margen_nivel_x, nave_get_pos_y(nave), nave_get_angulo(nave));
-                }
-                if(nave_get_pos_x(nave) > ancho_nivel_x + margen_nivel_x){
-                    nave_setear_posicion(nave, 0, nave_get_pos_y(nave), nave_get_angulo(nave));
-                }
-                if(nave_get_pos_y(nave) <= -margen_nivel_y*escala_nivel){
-                    vidas--;
-                    spawn = true;
-                    continue;
-                }
 
                 nave_acercar_direccion(nave, G, -PI/2, DT);
             }
@@ -786,22 +775,35 @@ int main() {
                     spawn = false;
                 }
                 
-                entero_imprimir_centrado(renderer, (int)tiempo_reactor + 1, VENTANA_ANCHO/2, 32*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
-
-                if(reactor_destruido == false){
-                    reactor_imprimir(renderer, reactor, escala_nivel, 0, 0, 0, 0);
-                    if(disparo_pego(lista_disparos, reactor_get_figura(reactor), DMIN, false)){
-                        reactor_destruir(reactor);
-                        reactor_destruido = true;
+                if(nivel_get_bonus(nivel_actual) != 0){
+                    entero_imprimir_centrado(renderer, (int)tiempo_reactor + 1, VENTANA_ANCHO/2, 32*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+                    if((tiempo_reactor-= DT) <= 0){
+                        vidas--;
+                        tiempo_reactor = TIEMPO_REACTOR;
+                        spawn = true;
+                        reactor_destruido = false;
+                        continue;
                     }
                 }
 
-                if((tiempo_reactor-= DT) <= 0){
-                    vidas--;
-                    tiempo_reactor = TIEMPO_REACTOR;
-                    spawn = true;
-                    continue;
+                if(!reactor_destruido){
+                    reactor_imprimir(renderer, reactor, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0);
+                    if(disparo_pego(lista_disparos, reactor_get_figura(reactor), false)){
+                        reactor_destruido = true;
+                    }
                 }
+            }
+
+            if(nave_get_pos_x(nave) < 0){
+                nave_setear_posicion(nave, ancho_nivel_x + margen_nivel_x, nave_get_pos_y(nave), nave_get_angulo(nave));
+            }
+            if(nave_get_pos_x(nave) > ancho_nivel_x + margen_nivel_x){
+                nave_setear_posicion(nave, 0, nave_get_pos_y(nave), nave_get_angulo(nave));
+            }
+            if(nave_get_pos_y(nave) <= -margen_nivel_y*escala_nivel){
+                vidas--;
+                spawn = true;
+                continue;
             }
 
             if(!disparo_en_pantalla(renderer, lista_disparos, disparo_fig, escala_nivel, 0, margen_nivel_y*escala_nivel, 0, 0)){
@@ -818,6 +820,9 @@ int main() {
         if(nivel_actual != NULL && distancia_punto_a_figura(nivel_get_figura(nivel_actual), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){
             vidas--;
             spawn = true;
+            if(nivel == 5 && nivel_get_bonus(nivel_actual) != 0){
+                reactor_destruido = false;
+            }
             continue;
         }
 
@@ -847,7 +852,7 @@ int main() {
         }
 
         if(!nave_estado_escudo(nave) && nivel != 0){
-            if(disparo_pego(lista_disparos, nave_get_figura_principal(nave), 5, true)){
+            if(disparo_pego(lista_disparos, nave_get_figura_principal(nave), true)){
                 vidas--;
                 spawn = true;
                 continue;

@@ -1,8 +1,9 @@
-#include "caracteres.h"
-#include "color.h"
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "caracteres.h"
+#include "color.h"
 
 #define VENTANA_ANCHO 800
 #define VENTANA_ALTO 600

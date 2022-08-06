@@ -3,7 +3,6 @@
 #include <SDL2/SDL.h>
 
 #include "nivel.h"
-#include "config.h"
 #include "lista.h"
 #include "torreta.h"
 #include "combustible.h"

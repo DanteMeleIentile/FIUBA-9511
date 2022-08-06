@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+
 #include "combustible.h"
 #include "figura.h"
 

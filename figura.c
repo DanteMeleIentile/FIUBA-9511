@@ -6,7 +6,6 @@
 #include <SDL2/SDL.h>
 
 #include "polilinea.h"
-#include "polilinea.h"
 #include "figura.h"
 #include "lista.h"
 

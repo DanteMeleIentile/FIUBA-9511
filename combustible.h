@@ -2,6 +2,7 @@
 #define COMBUSTIBLE_H
 
 #include <SDL2/SDL.h>
+
 #include "figura.h"
 
 struct combustible;

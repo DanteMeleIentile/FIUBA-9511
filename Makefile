@@ -1,7 +1,7 @@
 PROGRAM = Gravitar
 CC = gcc
-CFLAGS = -Wall -Werror -std=c99 -pedantic -g3
-SDLFLAGS = -lSDL2 -lm
+CFLAGS = -Wall -Werror -std=c99 -pedantic
+SDLFLAGS = -lSDL2 -lSDL2main -lm
 
 all: $(PROGRAM)
 
@@ -38,7 +38,7 @@ nave.o: nave.c nave.h figura.h fisicas.h
 disparo.o: disparo.c disparo.h figura.h fisicas.h
 	$(CC) $(CFLAGS) -c disparo.c
 
-nivel.o: nivel.c nivel.h figura.h torreta.h combustible.h
+nivel.o: nivel.c nivel.h lista.h figura.h torreta.h combustible.h
 	$(CC) $(CFLAGS) -c nivel.c
 
 torreta.o: torreta.c torreta.h figura.h fisicas.h
