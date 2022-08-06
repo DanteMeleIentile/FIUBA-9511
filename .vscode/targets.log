@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Aug  6 13:30:49 2022
+# Make data base, printed on Sat Aug  6 14:44:51 2022
 
 # Variables
 
@@ -17,11 +17,11 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-PULSE_SERVER = tcp:172.21.144.1
+PULSE_SERVER = tcp:172.30.208.1
 # environment
 WSLENV = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-8feec17c-f94d-4878-95f9-17b3b9e05ec1.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-d4cde273-1a29-416a-8dfd-98a60260ca13.sock
 # environment
 VSCODE_CWD = /home/leanshiza
 # environment
@@ -81,7 +81,7 @@ LESS_TERMCAP_ue = [0m
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXGDXyk6/agent.391
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXqMSRdH/agent.389
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,19 +95,19 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 31610
+VSCODE_PID = 902
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/DESKTOP-8CVCUI9:@/tmp/.ICE-unix/355,unix/DESKTOP-8CVCUI9:/tmp/.ICE-unix/355
+SESSION_MANAGER = local/DESKTOP-8CVCUI9:@/tmp/.ICE-unix/353,unix/DESKTOP-8CVCUI9:/tmp/.ICE-unix/353
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-BU3Rxn51ng,guid=9a7232d465365673dd5af9ae62ee5f86
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-S5dOyrE4sj,guid=feaff30ca15da784c27c467662eea87b
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -155,7 +155,7 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # environment
 DESKTOP_SESSION = xfce
 # environment
-WSL_INTEROP = /run/WSL/12_interop
+WSL_INTEROP = /run/WSL/11_interop
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = XFCE
 # 'override' directive
@@ -171,7 +171,7 @@ USER = leanshiza
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 392
+SSH_AGENT_PID = 390
 # environment
 _ = /usr/share/code/code
 # makefile (from 'Makefile', line 3)
@@ -280,11 +280,11 @@ nave.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 # Not a target:
 lista.h:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-07-20 01:40:40.736606379
 #  File has been updated.
 #  Successfully updated.
@@ -446,14 +446,14 @@ run:
 # Not a target:
 nivel.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-06 11:47:44.19759442
+#  Last modified 2022-08-06 13:49:11.117654822
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-06 13:30:49.107645687
+#  Last modified 2022-08-06 14:04:02.247662208
 #  File has been updated.
 #  Successfully updated.
 
@@ -560,12 +560,12 @@ lista.o: lista.c lista.h
 # Not a target:
 figura.h:
 #  Implicit rule search has been done.
- 
-#  Last modified 2022-08-06 12:44:16.437622538
+#  Last modified 2022-08-06 14:00:16.047660333
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
+ 
 combustible.h:
 #  Implicit rule search has been done.
 #  Last modified 2022-07-22 12:11:46.917268713
@@ -619,6 +619,6 @@ nave.o: nave.c nave.h figura.h fisicas.h
 # strcache performance: lookups = 183 / hit rate = 65%
 # hash-table stats:
 # Load=63/8192=1%, Rehash=0, Collisions=0/183=0%
-# Finished Make data base on Sat Aug  6 13:30:49 2022
+# Finished Make data base on Sat Aug  6 14:44:51 2022
 
  

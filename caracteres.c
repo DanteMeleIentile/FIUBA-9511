@@ -411,7 +411,6 @@ typedef enum {
 	Y = 39,
 	Z = 40,
 	NAVE = 41,
-
 } caracteres_t;
 
 const char tabla_caracteres[] = { 

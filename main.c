@@ -17,15 +17,17 @@
 #include "combustible.h"
 #include "reactor.h"
 
-typedef enum tabla_niveles{
+typedef enum{
+    NIVEL0,
     NIVEL1,
     NIVEL2,
     NIVEL3,
     NIVEL4,
     NIVEL5,
-};
+} tabla_niveles ;
 
 const int tabla_bonus[] = {
+    [NIVEL0] = 0,
     [NIVEL1] = 2000,
     [NIVEL2] = 4000,
     [NIVEL3] = 6000,
@@ -34,6 +36,7 @@ const int tabla_bonus[] = {
 };
 
 const size_t tabla_cant_torretas[] = {
+    [NIVEL0] = 0,
     [NIVEL1] = 2,
     [NIVEL2] = 4,
     [NIVEL3] = 6,
@@ -42,6 +45,7 @@ const size_t tabla_cant_torretas[] = {
 };
 
 const size_t tabla_cant_combustibles[] = {
+    [NIVEL0] = 0,
     [NIVEL1] = 2,
     [NIVEL2] = 2,
     [NIVEL3] = 3,
@@ -144,11 +148,13 @@ bool inicializar_listas_nivel(lista_t *lista_niveles, const figura_t *torreta, c
                 return false;
             }
         }
-
+        
         cant_torretas_actual += tabla_cant_torretas[i];
         cant_combustibles_actual += tabla_cant_combustibles[i];
         lista_iter_avanzar(iter);
     }
+    printf("CANT TORRETAS = %zd\n", cant_torretas_actual);
+    printf("CANT COMBUS = %zd\n", cant_combustibles_actual);
     lista_iter_destruir(iter);
     return true;
 
@@ -270,7 +276,7 @@ bool lista_iterar_torretas(SDL_Renderer *renderer, lista_t *lista_torreta, lista
             disparo_t *disparo_buf = disparo_crear(torreta_get_pos_x(torreta_act)+20*cos(torreta_get_angulo(torreta_act)+PI/2), torreta_get_pos_y(torreta_act)+20*sin(torreta_get_angulo(torreta_act)+PI/2), a, b, torreta_get_angulo_apuntado(torreta_act), false);
             if(!lista_insertar_ultimo(lista_disparos, disparo_buf) || disparo_buf == NULL) return false;
             torreta_set_cooldown(torreta_act, COOLDOWN_TORRETA);
-        } else if(torreta_get_cooldown(torreta_act) <= 7*COOLDOWN_TORRETA/8) torreta_imprimir(renderer, torreta_act, escala, escala_x, escala_y, tras_x, tras_y, false);
+        }  else if(torreta_get_cooldown(torreta_act) <= 7*COOLDOWN_TORRETA/8) torreta_imprimir(renderer, torreta_act, escala, escala_x, escala_y, tras_x, tras_y, false);
         torreta_imprimir(renderer, torreta_act, escala, escala_x, escala_y, tras_x, tras_y, true);
 
         torreta_restar_cooldown(torreta_act, DT);
@@ -491,6 +497,7 @@ int main() {
     lista_t *lista_niveles = lista_crear();
 
     //Es importante que estén ordenados
+    size_t cant_niveles = cant_por_tipo(NIVEL, (const figura_t(**)) vector_figuras, cant_figuras);
     nivel_t *vector_niveles[] = {
         nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), NIVEL1),
         nivel_crear(encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras), NIVEL2),
@@ -498,8 +505,6 @@ int main() {
         nivel_crear(encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras), NIVEL4),
         nivel_crear(encontrar_figura("NIVEL1R", vector_figuras, cant_figuras), NIVEL5),
     };
-
-    size_t cant_niveles = cant_por_tipo(NIVEL, vector_figuras, cant_figuras);
 
     for(size_t i = 0; i < cant_niveles; i++){
         if(vector_niveles[i] == NULL || !lista_insertar_ultimo(lista_niveles, vector_niveles[i])){
@@ -533,7 +538,7 @@ int main() {
     bool rotacion_antihoraria = false;
     bool avanzar = false;
 
-    size_t nivel = 0;
+    size_t nivel = NIVEL0;
     int vidas = JUEGO_VIDAS;
     int score[2] = {0, SCORE_NEXT_SHIP};
     
@@ -677,7 +682,26 @@ int main() {
             }
         }
 
-        if(nivel == 0){
+        //ITERAMOS EN LA LISTA ENLAZADA DE NIVELES HASTA QUE "id" = "nivel"
+        if(nivel_actual == NULL && nivel != 0){
+            lista_iter_t *iter_niveles = lista_iter_crear(lista_niveles);
+            if(iter_niveles == NULL){
+                error_memoria = true;
+            }
+            for(size_t i = 0; i < lista_largo(lista_niveles); i++){
+                printf("ADENTRO\n");
+                if(nivel_get_id(lista_iter_ver_actual(iter_niveles)) == nivel){
+                    nivel_actual = lista_iter_ver_actual(iter_niveles);
+                    printf("SALIO\n");
+                    break;
+                }
+                lista_iter_avanzar(iter_niveles);
+            }
+            lista_iter_destruir(iter_niveles);
+            printf("TERMINO\n");
+        }
+
+        if(nivel == NIVEL0){
             if(spawn){
                 nave_setear_velocidad(nave, 0, 0);
                 nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base), 0);
@@ -718,30 +742,29 @@ int main() {
                 spawn = true;
                 continue;
             }
-//CAMBIAR DONDE ACTUALIZAMOS EL "nivel_actual"
             if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel = 1;
+                nivel = NIVEL1;
                 continue;
             }
             if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel = 2;
+                nivel = NIVEL2;
                 continue;
             }
             if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel = 3;
+                nivel = NIVEL3;
                 continue;
             }
             if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel = 4;
+                nivel = NIVEL4;
                 continue;
             }
             if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel = 5;
+                nivel = NIVEL5;
                 continue;
             }
             if(!disparo_en_pantalla(renderer, lista_disparos, disparo_fig, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0)){
@@ -749,10 +772,6 @@ int main() {
                 break;
             }
             nave_imprimir(renderer, nave, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0);
-        }
-//ITERAMOS EN LA LISTA ENLAZADA DE NIVELES HASTA QUE "id" = "nivel"
-        if(nivel_actual == NULL && nivel != 0){
-
         }
 
         if(nivel_actual != NULL && nivel_get_infinito(nivel_actual)){
@@ -810,7 +829,7 @@ int main() {
 
             nave_acercar_direccion(nave, G, -PI/2, DT);
             
-            if(nivel == 4){
+            if(nivel == NIVEL4){
                 if(spawn){
                     nave_setear_velocidad(nave, 0, 0);
                     nave_setear_posicion(nave, (ancho_nivel_x + margen_nivel_x)/4, (alto_nivel_y + margen_nivel_y) * 0.8, 0);
@@ -818,7 +837,7 @@ int main() {
                 }
                 
             }
-            if(nivel == 5){
+            if(nivel == NIVEL5){
                 if(spawn){
                     nave_setear_velocidad(nave, 0, 0);
                     nave_setear_posicion(nave, 2*(ancho_nivel_x + margen_nivel_x)/6, (alto_nivel_y + margen_nivel_y) * 0.9, 0);
@@ -871,7 +890,7 @@ int main() {
         if(nivel_actual != NULL && distancia_punto_a_figura(nivel_get_figura(nivel_actual), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){
             vidas--;
             spawn = true;
-            if(nivel == 5 && nivel_get_bonus(nivel_actual) != 0){
+            if(nivel == NIVEL5 && nivel_get_bonus(nivel_actual) != 0){
                 reactor_destruido = false;
             }
             continue;
@@ -883,12 +902,12 @@ int main() {
                 score[1] -= nivel_get_bonus(nivel_actual);
                 nivel_set_bonus(nivel_actual, 0);
             }
-            if(nivel == 5 && reactor_destruido){
+            if(nivel == NIVEL5 && reactor_destruido){
                 score[0] += nivel_get_bonus(nivel_actual);
                 score[1] -= nivel_get_bonus(nivel_actual);
                 nivel_set_bonus(nivel_actual, 0);
             }
-            nivel = 0;
+            nivel = NIVEL0;
             nivel_actual = NULL;
             spawn = true;
         }
@@ -953,6 +972,8 @@ int main() {
 
     lista_destruir(lista_disparos, (void (*)(void*))combustible_destruir);
 
+    lista_destruir(lista_niveles, (void (*)(void*))nivel_destruir);
+
     planeta_destruir(base);
     planeta_destruir(estrella);
     planeta_destruir(planeta1);
@@ -962,8 +983,6 @@ int main() {
     planeta_destruir(planeta5);
 
     reactor_destruir(reactor);
-
-    lista_destruir(lista_niveles, (void (*)(void*))nivel_destruir);
 
     for(size_t i = 0; i < cant_figuras; i++){
         figura_destruir(vector_figuras[i]);

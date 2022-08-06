@@ -130,7 +130,7 @@ char *figura_get_nombre(figura_t *figura){
     return figura->nombre;
 }
 
-figura_tipo_t figura_get_tipo(figura_t *figura){
+figura_tipo_t figura_get_tipo(const figura_t *figura){
     return figura->tipo;
 }
 
