@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Aug  5 19:07:37 2022
+# Make data base, printed on Sat Aug  6 09:41:28 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ PULSE_SERVER = tcp:172.21.144.1
 # environment
 WSLENV = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-32e3707b-1781-4934-a9a8-667038c1837f.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-f3802de6-2f41-4cc0-9b18-8a47af0e685a.sock
 # environment
 VSCODE_CWD = /home/leanshiza
 # environment
@@ -81,7 +81,7 @@ LESS_TERMCAP_ue = [0m
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXrW3EJC/agent.390
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXGDXyk6/agent.391
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,19 +95,19 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1715
+VSCODE_PID = 3070
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/DESKTOP-8CVCUI9:@/tmp/.ICE-unix/354,unix/DESKTOP-8CVCUI9:/tmp/.ICE-unix/354
+SESSION_MANAGER = local/DESKTOP-8CVCUI9:@/tmp/.ICE-unix/355,unix/DESKTOP-8CVCUI9:/tmp/.ICE-unix/355
 # automatic
 *F = $(notdir $*)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-yDJ16RQtD0,guid=c5f89faba24573ea0ee829e662ed9435
+DBUS_SESSION_BUS_ADDRESS = unix:abstract=/tmp/dbus-BU3Rxn51ng,guid=9a7232d465365673dd5af9ae62ee5f86
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -171,7 +171,7 @@ USER = leanshiza
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 391
+SSH_AGENT_PID = 392
 # environment
 _ = /usr/share/code/code
 # makefile (from 'Makefile', line 3)
@@ -213,9 +213,9 @@ XDG_MENU_PREFIX = xfce-
 
 # Directories
 
-# . (device 2064, inode 153826): 39 files, no impossibilities.
+# . (device 2064, inode 153826): 55 files, no impossibilities.
 
-# 39 files, no impossibilities in 1 directories.
+# 55 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -276,6 +276,7 @@ caracteres.o: caracteres.c caracteres.h color.h
 	$(CC) $(CFLAGS) -c caracteres.c
 
 # Not a target:
+ 
 nave.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -284,7 +285,6 @@ nave.c:
 # Not a target:
 lista.h:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-07-20 01:40:40.736606379
 #  File has been updated.
 #  Successfully updated.
@@ -453,7 +453,7 @@ nivel.h:
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 12:01:11.327265547
+#  Last modified 2022-08-05 19:20:12.202148481
 #  File has been updated.
 #  Successfully updated.
 
@@ -474,7 +474,7 @@ fisicas.h:
 main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
-#  File does not exist.
+#  Last modified 2022-08-05 19:16:37.942146705
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -490,7 +490,7 @@ main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
 # automatic
 # ^ := main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
 # automatic
-# ? := main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
+# ? := main.c
 # automatic
 # | := 
 # variable set hash-table stats:
@@ -521,7 +521,7 @@ disparo.c:
 
 Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-22 12:14:42.477269588
+#  Last modified 2022-08-05 19:16:39.932146722
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -567,7 +567,6 @@ figura.h:
 # Not a target:
 combustible.h:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-07-22 12:11:46.917268713
 #  File has been updated.
 #  Successfully updated.
@@ -613,12 +612,12 @@ nave.o: nave.c nave.h figura.h fisicas.h
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 62 / storage = 611 B / avg = 9 B
-# current buf: size = 8162 B / used = 611 B / count = 62 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 63 / storage = 626 B / avg = 9 B
+# current buf: size = 8162 B / used = 626 B / count = 63 / avg = 9 B
 
-# strcache performance: lookups = 167 / hit rate = 62%
+# strcache performance: lookups = 183 / hit rate = 65%
 # hash-table stats:
-# Load=62/8192=1%, Rehash=0, Collisions=0/167=0%
-# Finished Make data base on Fri Aug  5 19:07:37 2022
+# Load=63/8192=1%, Rehash=0, Collisions=0/183=0%
+# Finished Make data base on Sat Aug  6 09:41:28 2022
 
  

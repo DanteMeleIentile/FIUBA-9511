@@ -12,10 +12,10 @@
 
 //la variable "estado" determina cual figura utilizar
 struct nave {
-    figura_t *fig;
-    figura_t *fig_chorro;
-    figura_t *fig_escudo;
-    figura_t *fig_escudo_nivel;
+    figura_t *fig;                  //La figura principal de la nave
+    figura_t *fig_chorro;           //La figura del chorro de propulsion
+    figura_t *fig_escudo;           //La figura del escudo principal
+    figura_t *fig_escudo_nivel;     //La figura secundaria del escudo (el tractor beam para el combustible)
     float pos[2];
     float vel[2];
     double angulo;
@@ -23,6 +23,7 @@ struct nave {
     uint8_t estado;
     int cant_combustible;
 };
+
 
 static double DEG_A_RAD(double grados){
     return grados * PI / 180;
