@@ -424,13 +424,13 @@ int main() {
     planeta_t *planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
     if(planeta5 == NULL) error_memoria = true;
 
+    //Creación de entidades
     reactor_t *reactor = reactor_crear(encontrar_figura("REACTOR", vector_figuras, cant_figuras), 815, 309, 0);
     if(reactor == NULL) error_memoria = true;
 
     nave_t *nave = nave_crear(JUEGO_COMBUSTIBLE_INICIAL);
     if(nave == NULL) error_memoria = true;
 
-    //Creación de niveles
     const figura_t *nave_fig = encontrar_figura("NAVE", vector_figuras, cant_figuras);
     const figura_t *nave_chorro_fig = encontrar_figura("NAVE+CHORRO", vector_figuras, cant_figuras);
     const figura_t *escudo_fig = encontrar_figura("ESCUDO", vector_figuras, cant_figuras);
@@ -440,6 +440,7 @@ int main() {
     const figura_t *torreta_fig= encontrar_figura("TORRETA", vector_figuras, cant_figuras);
     const figura_t *torreta_disparo_fig = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
 
+    //Creación de niveles
     nivel_t *nivel_1 = nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), 2000);
     if(nivel_1 == NULL) error_memoria = true;
     inicializar_listas_nivel(nivel_1, 1, torreta_fig, torreta_disparo_fig, combustible_fig, &error_memoria);
