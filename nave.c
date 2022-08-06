@@ -183,15 +183,6 @@ bool nave_act_figura(nave_t *nave, const figura_t *nave_fig, const figura_t *nav
 }
 
 void nave_rotar(nave_t *nave, double angulo){
-    figura_trasladar(nave->fig, -nave->pos[X], -nave->pos[Y]);
-    figura_trasladar(nave->fig_chorro, -nave->pos[X], -nave->pos[Y]);
-
-    figura_rotar(nave->fig, angulo);
-    figura_rotar(nave->fig_chorro, angulo);
-
-    figura_trasladar(nave->fig, nave->pos[X], nave->pos[Y]);
-    figura_trasladar(nave->fig_chorro, nave->pos[X], nave->pos[Y]);
-
     nave->angulo += angulo;
 
     while(nave->angulo > 2 * PI)
@@ -212,11 +203,19 @@ void nave_escudo_setear_angulo(nave_t *nave, double angulo){
         nave->angulo_escudo = nave->angulo_escudo + (2 * PI);
 }
 
+/*
+** FUNCIÓN INTERNAS TDA
+** Dado el módulo de la aceleración, su ángulo y un intervalo de tiempo, computa ambas componentes de velocidad
+*/
 static void nave_aceleracion(nave_t *nave, float aceleracion, double rad, double dt){
     nave->vel[X] = computar_velocidad(nave->vel[X], aceleracion * cos(rad), dt);
     nave->vel[Y] = computar_velocidad(nave->vel[Y], aceleracion * sin(rad), dt);
 }
 
+/*
+** FUNCIÓN INTERNAS TDA
+** Dado un intervalo de tiempo, computa ambas componentes de posición según la velocidad "inicial" de la nave
+*/
 static void nave_velocidad(nave_t *nave, double dt){
     nave->pos[X] = computar_posicion(nave->pos[X], nave->vel[X], dt);
     nave->pos[Y] = computar_posicion(nave->pos[Y], nave->vel[Y], dt);
@@ -225,6 +224,11 @@ static void nave_velocidad(nave_t *nave, double dt){
 void nave_avanzar(nave_t *nave, float aceleracion, double dt){
     nave_aceleracion(nave, aceleracion, nave->angulo, dt);
     nave_velocidad(nave, dt);
+}
+
+void nave_acercar(nave_t *nave, float aceleracion, float centro_x, float centro_y, double dt){
+    double angulo = computar_angulo(nave->pos[X], nave->pos[Y], centro_x, centro_y);
+    nave_acercar_direccion(nave, aceleracion, angulo, dt);
 }
 
 void nave_acercar_direccion(nave_t *nave, float aceleracion, double angulo, double dt){
@@ -238,11 +242,6 @@ void nave_acercar_direccion(nave_t *nave, float aceleracion, double angulo, doub
     nave_velocidad(nave, dt);
 }
 
-void nave_acercar(nave_t *nave, float aceleracion, float centro_x, float centro_y, double dt){
-    double angulo = computar_angulo(nave->pos[X], nave->pos[Y], centro_x, centro_y);
-    nave_aceleracion(nave, aceleracion, angulo, dt);
-    nave_velocidad(nave, dt);
-}
 
 void nave_invertir_vel_x(nave_t *nave){
     nave->vel[X] = -nave->vel[X];
