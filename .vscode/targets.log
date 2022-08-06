@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Aug  6 09:41:28 2022
+# Make data base, printed on Sat Aug  6 13:30:49 2022
 
 # Variables
 
@@ -21,7 +21,7 @@ PULSE_SERVER = tcp:172.21.144.1
 # environment
 WSLENV = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-f3802de6-2f41-4cc0-9b18-8a47af0e685a.sock
+VSCODE_IPC_HOOK_EXTHOST = /tmp/vscode-ipc-8feec17c-f94d-4878-95f9-17b3b9e05ec1.sock
 # environment
 VSCODE_CWD = /home/leanshiza
 # environment
@@ -95,7 +95,7 @@ MAKEFILE_LIST := Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3070
+VSCODE_PID = 31610
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -276,11 +276,11 @@ caracteres.o: caracteres.c caracteres.h color.h
 	$(CC) $(CFLAGS) -c caracteres.c
 
 # Not a target:
- 
 nave.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 lista.h:
@@ -446,14 +446,14 @@ run:
 # Not a target:
 nivel.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-21 23:30:43.412764122
+#  Last modified 2022-08-06 11:47:44.19759442
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-05 19:20:12.202148481
+#  Last modified 2022-08-06 13:30:49.107645687
 #  File has been updated.
 #  Successfully updated.
 
@@ -490,7 +490,7 @@ main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h
 # automatic
 # ^ := main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
 # automatic
-# ? := main.c
+# ? := main.c figura.h config.h nivel.h
 # automatic
 # | := 
 # variable set hash-table stats:
@@ -509,7 +509,7 @@ combustible.o: combustible.c combustible.h figura.h
 # Not a target:
 config.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-22 12:09:19.82726798
+#  Last modified 2022-08-06 12:00:06.13760057
 #  File has been updated.
 #  Successfully updated.
 
@@ -521,7 +521,7 @@ disparo.c:
 
 Gravitar: main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-05 19:16:39.932146722
+#  Last modified 2022-08-06 11:14:30.967577898
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -560,7 +560,8 @@ lista.o: lista.c lista.h
 # Not a target:
 figura.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-21 23:30:43.412764122
+ 
+#  Last modified 2022-08-06 12:44:16.437622538
 #  File has been updated.
 #  Successfully updated.
 
@@ -618,6 +619,6 @@ nave.o: nave.c nave.h figura.h fisicas.h
 # strcache performance: lookups = 183 / hit rate = 65%
 # hash-table stats:
 # Load=63/8192=1%, Rehash=0, Collisions=0/183=0%
-# Finished Make data base on Sat Aug  6 09:41:28 2022
+# Finished Make data base on Sat Aug  6 13:30:49 2022
 
  

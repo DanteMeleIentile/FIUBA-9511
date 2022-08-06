@@ -108,27 +108,15 @@ figura_t *encontrar_figura(char *nombre, figura_t **vector_figuras, size_t n){
     return fig;
 }
 
-//Dado un vector, su longitud y un tipo, devuelve un vector con todas las figuras de ese tipo. En caso de error devuelve NULL.
-figura_t **vector_tipo_figura(figura_tipo_t tipo, const figura_t **vector_figuras, size_t n, size_t *cant){
-    size_t cant_buf = 0;
-    figura_t **vector = malloc(sizeof(figura_t*) * 1);
-    if(vector == NULL) return NULL;
-
+//Dado un vector, su longitud y un tipo, devuelve la cantidad de elementos de esos tipos.
+size_t cant_por_tipo(figura_tipo_t tipo, const figura_t **vector_figuras, size_t n){
+    size_t cant = 0;
     for (size_t i = 0; i < n; i++){
         if(figura_get_tipo(vector_figuras[i]) == tipo){
-            if(i >= 1){
-                figura_t **aux = realloc(vector, sizeof(figura_t*) * (i + 1));
-                if(aux == NULL){
-                    free(vector);
-                    return NULL;
-                } 
-            }
-            vector[i] = vector_figuras[i];
-            cant_buf++;
+            cant++;
         }
     } 
-    *cant = cant_buf;
-    return vector;
+    return cant;
 }
 
 //Función para crear torretas y combustibles en el nivel elegido y en su respectiva posicion y angulo
@@ -499,17 +487,22 @@ int main() {
     const figura_t *torreta_fig= encontrar_figura("TORRETA", vector_figuras, cant_figuras);
     const figura_t *torreta_disparo_fig = encontrar_figura("TORRETA+DISPARO", vector_figuras, cant_figuras);
 
-    lista_t *lista_niveles = lista_crear();
-    
     //Creación de niveles
-    size_t cant_niveles = 0; 
+    lista_t *lista_niveles = lista_crear();
 
-    vector_figura_niveles = fig
+    //Es importante que estén ordenados
+    nivel_t *vector_niveles[] = {
+        nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), NIVEL1),
+        nivel_crear(encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras), NIVEL2),
+        nivel_crear(encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras), NIVEL3),
+        nivel_crear(encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras), NIVEL4),
+        nivel_crear(encontrar_figura("NIVEL1R", vector_figuras, cant_figuras), NIVEL5),
+    };
 
-    for(size_t i = 0; i < cant_niveles){
-        nivel_t *nivel_buf = nivel_crear(vector_figura_niveles[i]);
+    size_t cant_niveles = cant_por_tipo(NIVEL, vector_figuras, cant_figuras);
 
-        if(nivel_buf == NULL || !lista_insertar_ultimo(lista_niveles, nivel_buf)){
+    for(size_t i = 0; i < cant_niveles; i++){
+        if(vector_niveles[i] == NULL || !lista_insertar_ultimo(lista_niveles, vector_niveles[i])){
             error_memoria = true;
             break;
         }
@@ -725,33 +718,29 @@ int main() {
                 spawn = true;
                 continue;
             }
+//CAMBIAR DONDE ACTUALIZAMOS EL "nivel_actual"
             if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel_actual = nivel_1;
                 nivel = 1;
                 continue;
             }
             if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel_actual = nivel_2;
                 nivel = 2;
                 continue;
             }
             if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel_actual = nivel_3;
                 nivel = 3;
                 continue;
             }
             if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel_actual = nivel_4;
                 nivel = 4;
                 continue;
             }
             if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                 spawn = true;
-                nivel_actual = nivel_5;
                 nivel = 5;
                 continue;
             }
@@ -760,6 +749,10 @@ int main() {
                 break;
             }
             nave_imprimir(renderer, nave, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0);
+        }
+//ITERAMOS EN LA LISTA ENLAZADA DE NIVELES HASTA QUE "id" = "nivel"
+        if(nivel_actual == NULL && nivel != 0){
+
         }
 
         if(nivel_actual != NULL && nivel_get_infinito(nivel_actual)){

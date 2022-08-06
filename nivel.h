@@ -16,7 +16,7 @@ typedef struct nivel nivel_t;
 ** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
 ** Obs: Crea una lista enlazada para los combustibles y las torretas.
 */
-nivel_t *nivel_crear(const figura_t *figura);
+nivel_t *nivel_crear(const figura_t *figura, size_t id);
 
 /*
 ** Devuelve la figura del nivel dado.
@@ -54,6 +54,11 @@ int nivel_get_bonus(const nivel_t *nivel);
 ** Devuelve si true si el nivel es infinito y false si no lo es.
 */
 bool nivel_get_infinito(const nivel_t *nivel);
+
+/*
+** Devuelve el id del nivel.
+*/
+size_t nivel_get_id(const nivel_t *nivel);
 
 /*
 ** Setea el bonus del nivel.

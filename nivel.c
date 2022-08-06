@@ -16,9 +16,10 @@ struct nivel {
     lista_t *torretas;
     lista_t *combustibles;
     int bonus;
+    size_t id; 
 };
 
-nivel_t *nivel_crear(const figura_t *figura){
+nivel_t *nivel_crear(const figura_t *figura, size_t id){
     nivel_t *nivel = malloc(sizeof(nivel_t));
     if(nivel == NULL) return NULL;
 
@@ -44,6 +45,8 @@ nivel_t *nivel_crear(const figura_t *figura){
         free(nivel);
         return NULL;
     }
+
+    nivel->id = id;
 
     return nivel;
 }
@@ -74,6 +77,10 @@ float nivel_get_extremo_x(const nivel_t *nivel, bool mayor){
 
 float nivel_get_extremo_y(const nivel_t *nivel, bool mayor){
     return figura_get_extremo_y(nivel->fig, mayor);
+}
+
+size_t nivel_get_id(const nivel_t *nivel){
+    return nivel->id;
 }
 
 void nivel_set_bonus(nivel_t *nivel, int n){
