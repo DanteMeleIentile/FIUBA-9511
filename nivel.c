@@ -32,15 +32,15 @@ nivel_t *nivel_crear(const figura_t *figura, int bonus){
 
     nivel->torretas = lista_crear();
     if(nivel->torretas == NULL){
-        free(nivel->fig);
+        figura_destruir(nivel->fig);
         free(nivel);
         return NULL;
     } 
 
     nivel->combustibles = lista_crear();
     if(nivel->combustibles == NULL){
-        free(nivel->torretas);
-        free(nivel->fig);
+        free(nivel->torretas); // TENER EN CUENTA
+        figura_destruir(nivel->fig);
         free(nivel);
         return NULL;
     }
