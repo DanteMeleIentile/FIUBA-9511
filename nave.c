@@ -10,7 +10,7 @@
 #define X 0
 #define Y 1
 
-//la variable "estado" determina cual figura utilizar
+
 struct nave {
     figura_t *fig;                  //La figura principal de la nave
     figura_t *fig_chorro;           //La figura del chorro de propulsion
@@ -18,9 +18,9 @@ struct nave {
     figura_t *fig_escudo_nivel;     //La figura secundaria del escudo (el tractor beam para el combustible)
     float pos[2];
     float vel[2];
-    double angulo;
-    double angulo_escudo;
-    uint8_t estado;
+    double angulo;                  //Ángulo de la nave
+    double angulo_escudo;           //Ángulo de la figura secundaria del escudo
+    uint8_t estado;                 //Determina cual figura utilizar
     int cant_combustible;
 };
 
