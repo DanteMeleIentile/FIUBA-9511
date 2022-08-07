@@ -45,6 +45,4 @@
 #define DMIN 7
 #define DMIN_ESCUDO 70
 
-#define CANT_NIVELES 5
-
 #endif // _CONFIG_H_
