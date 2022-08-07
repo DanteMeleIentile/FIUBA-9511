@@ -21,15 +21,20 @@ struct nivel {
 
 nivel_t *nivel_crear(const figura_t *figura, size_t id){
     nivel_t *nivel = malloc(sizeof(nivel_t));
-    if(nivel == NULL) return NULL;
+    if(nivel == NULL) return NULL; 
 
-    nivel->fig = figura_clonar(figura);
-    if(nivel->fig == NULL){
-        free(nivel);
-        return NULL;
-    } 
+    if(figura != NULL){
+        nivel->fig = figura_clonar(figura);
+        if(nivel->fig == NULL){
+            free(nivel);
+            return NULL;
+        } 
 
-    nivel->infinito = figura_get_infinito(figura);
+        nivel->infinito = figura_get_infinito(figura);
+    } else{
+        nivel->fig = NULL;
+        nivel->infinito = false;
+    }
 
     nivel->torretas = lista_crear();
     if(nivel->torretas == NULL){
@@ -40,19 +45,19 @@ nivel_t *nivel_crear(const figura_t *figura, size_t id){
 
     nivel->combustibles = lista_crear();
     if(nivel->combustibles == NULL){
-        free(nivel->torretas); // TENER EN CUENTA
+        free(nivel->torretas);
         figura_destruir(nivel->fig);
         free(nivel);
         return NULL;
     }
 
+    nivel->bonus = 0;
     nivel->id = id;
-
     return nivel;
 }
 
 figura_t *nivel_get_figura(const nivel_t *nivel){
-    return  nivel->fig;
+    return nivel->fig;
 }
 
 lista_t *nivel_get_lista_torretas(const nivel_t *nivel){
@@ -72,10 +77,12 @@ bool nivel_get_infinito(const nivel_t *nivel){
 }
 
 float nivel_get_extremo_x(const nivel_t *nivel, bool mayor){
+    if(nivel->fig == NULL) return 0;
     return figura_get_extremo_x(nivel->fig, mayor);
 }
 
 float nivel_get_extremo_y(const nivel_t *nivel, bool mayor){
+    if(nivel->fig == NULL) return 0;
     return figura_get_extremo_y(nivel->fig, mayor);
 }
 

@@ -13,8 +13,10 @@ typedef struct nivel nivel_t;
 
 
 /*
-** Crea un nivel_t en memoria nueva con sus parametros inicializados. Caso contrario, devuelve NULL.
+** Crea un nivel_t en memoria nueva con sus parametros inicializados. En caso de error de memoria, devuelve NULL. 
+** PRE: id no puede ser menor a 0
 ** Obs: Crea una lista enlazada para los combustibles y las torretas.
+** Es posible crear niveles sin figuras (figura == NULL)
 */
 nivel_t *nivel_crear(const figura_t *figura, size_t id);
 
@@ -26,12 +28,14 @@ figura_t *nivel_get_figura(const nivel_t *nivel);
 /*
 ** Devuelve un extremo en "x" del nivel
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
+** Si el nivel no tiene figura, devuelve 0
 */
 float nivel_get_extremo_x(const nivel_t *nivel, bool mayor);
 
 /*
 ** Devuelve un extremo en "x" del nivel
 ** Si "mayor" es true, devuelve el extremo mayor, sino el menor
+** Si el nivel no tiene figura, devuelve 0
 */
 float nivel_get_extremo_y(const nivel_t *nivel, bool mayor);
 
