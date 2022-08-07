@@ -10,9 +10,9 @@ struct planeta;
 typedef struct planeta planeta_t;
 
 /*
-** Crea en memoria nueva un planeta, setea figura como su figura y sus posiciones en "x" e "y" según las dadas.
+** Crea en memoria nueva un planeta, setea figura como su figura, sus posiciones en "x" e "y" según las dadas y su id.
 */
-planeta_t *planeta_crear(figura_t *figura, float x, float y);
+planeta_t *planeta_crear(figura_t *figura, float x, float y, size_t id);
 
 /*
 ** Devuelve la posición en "x" del planeta dado.

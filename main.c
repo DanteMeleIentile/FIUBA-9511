@@ -56,11 +56,13 @@ const size_t tabla_cant_combustibles[] = {
 const float tabla_ubicacion_torretas[][3] = {
     {916, 75, -0.66},
     {1425, 159, 0.66},
+//Cambio de nivel
 
     {423, 195, -0.66},
     {806, 215, -0.33},
     {1254, 153, 0.66},
     {1587, 223, 2.23},
+//Cambio de nivel
 
     {70, 46, 0},
     {506, 12, 0},
@@ -68,6 +70,7 @@ const float tabla_ubicacion_torretas[][3] = {
     {1385, 12, 0},
     {757, 210, 3.14},
     {1161, 210, 3.14},
+//Cambio de nivel
 
     {257, 440, 0.66},
     {719, 674, 2.23},
@@ -82,18 +85,42 @@ const float tabla_ubicacion_torretas[][3] = {
 const float tabla_ubicacion_combustibles[][3] = {
     {1064, 13, 0},
     {1685, 113, 0},
+//Cambio de nivel
 
     {482, 94, 0},
     {1751, 247, 0},
+//Cambio de nivel
 
     {820, 46, 0},
     {1196, 68, 0},
     {1602, 46, 0},
 
+//Cambio de nivel
     {188, 429, 0},
     {667, 600, 0},
     {1054, 404, 3.14},
     {574, 344, 3.14},
+};
+
+
+typedef enum{
+    BASE1  = NIVEL0,
+    PLANETA1 = NIVEL1,
+    PLANETA2 = NIVEL2,
+    PLANETA3 = NIVEL3,
+    PLANETA4 = NIVEL4,
+    PLANETA5 = NIVEL5,
+    ESTRELLA,
+} tabla_planeta;
+
+const float tabla_ubicacion_planetas[][2] = {
+    [PLANETA1] = {663, 473},
+    [PLANETA2] = {671, 145},
+    [PLANETA3] = {110, 79},
+    [PLANETA4] = {204, 455},
+    [PLANETA5] = {111, 307},
+    [ESTRELLA] = {457, 364},
+    [BASE1] = {388, 218},
 };
 
 //--------------------------------------------------------------------------------------------------------------------------
@@ -263,28 +290,6 @@ int main() {
 //----------------------------------------------------------------------------------------------------------------------
 //CREACION DE ENTIDADES (con referencias a las figuras del vector_figuras para no buscarlas nuevamente por cada dt)
 
-    //Creación de planetas
-    planeta_t *base = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), 388, 218);
-    if(base == NULL) error_memoria = true;
-
-    planeta_t *estrella = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), 457, 364);
-    if(estrella == NULL) error_memoria = true;
-
-    planeta_t *planeta1 = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), 663, 473);
-    if(planeta1 == NULL) error_memoria = true;
-
-    planeta_t *planeta2 = planeta_crear(encontrar_figura("PLANETA2", vector_figuras, cant_figuras), 671, 145);
-    if(planeta2 == NULL) error_memoria = true;
-    
-    planeta_t *planeta3 = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), 110, 79);
-    if(planeta3 == NULL) error_memoria = true;
-
-    planeta_t *planeta4 = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), 204, 455);
-    if(planeta4 == NULL) error_memoria = true;
-
-    planeta_t *planeta5 = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), 111, 307);
-    if(planeta5 == NULL) error_memoria = true;
-
 
 
     //Creación de entidades
@@ -308,12 +313,12 @@ int main() {
     //Creación de niveles
     size_t cant_niveles = 1 + cant_por_tipo(NIVEL, (const figura_t(**)) vector_figuras, cant_figuras); //Se suma 1 por el NIVEL0
     nivel_t *vector_niveles[] = {
-        nivel_crear(NULL, NIVEL0), //Creamos en nivel 0, pantalla de inicio
-        nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), NIVEL1),
-        nivel_crear(encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras), NIVEL2),
-        nivel_crear(encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras), NIVEL3),
-        nivel_crear(encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras), NIVEL4),
-        nivel_crear(encontrar_figura("NIVEL1R", vector_figuras, cant_figuras), NIVEL5),
+        [NIVEL0] = nivel_crear(NULL, NIVEL0), //Creamos en nivel 0, pantalla de inicio
+        [NIVEL1] = nivel_crear(encontrar_figura("NIVEL1NE", vector_figuras, cant_figuras), NIVEL1),
+        [NIVEL2] = nivel_crear(encontrar_figura("NIVEL1SE", vector_figuras, cant_figuras), NIVEL2),
+        [NIVEL3] = nivel_crear(encontrar_figura("NIVEL1SW", vector_figuras, cant_figuras), NIVEL3),
+        [NIVEL4] = nivel_crear(encontrar_figura("NIVEL1NW", vector_figuras, cant_figuras), NIVEL4),
+        [NIVEL5] = nivel_crear(encontrar_figura("NIVEL1R", vector_figuras, cant_figuras), NIVEL5),
     };
 
     for(size_t i = 0; i < cant_niveles; i++){
@@ -323,6 +328,29 @@ int main() {
         }
     }
     if(!inicializar_vector_niveles(vector_niveles, cant_niveles, torreta_fig, torreta_disparo_fig, combustible_fig)) error_memoria = true;
+
+
+
+    //Creación de planetas (consideramos al base como un planeta)
+    size_t cant_planetas = cant_por_tipo(PLANETA, (const figura_t(**)) vector_figuras, cant_figuras) + cant_por_tipo(BASE, (const figura_t(**)) vector_figuras, cant_figuras);
+    planeta_t *vector_planetas[] = {
+        [PLANETA1] = planeta_crear(encontrar_figura("PLANETA1", vector_figuras, cant_figuras), tabla_ubicacion_planetas[PLANETA1][X], tabla_ubicacion_planetas[PLANETA1][Y], PLANETA1),
+        [PLANETA2] = planeta_crear(encontrar_figura("PLANETA2", vector_figuras, cant_figuras), tabla_ubicacion_planetas[PLANETA2][X], tabla_ubicacion_planetas[PLANETA2][Y], PLANETA2),
+        [PLANETA3] = planeta_crear(encontrar_figura("PLANETA3", vector_figuras, cant_figuras), tabla_ubicacion_planetas[PLANETA3][X], tabla_ubicacion_planetas[PLANETA3][Y], PLANETA3),
+        [PLANETA4] = planeta_crear(encontrar_figura("PLANETA4", vector_figuras, cant_figuras), tabla_ubicacion_planetas[PLANETA4][X], tabla_ubicacion_planetas[PLANETA4][Y], PLANETA4),
+        [PLANETA5] = planeta_crear(encontrar_figura("PLANETA5", vector_figuras, cant_figuras), tabla_ubicacion_planetas[PLANETA5][X], tabla_ubicacion_planetas[PLANETA5][Y], PLANETA5),
+        [ESTRELLA] = planeta_crear(encontrar_figura("ESTRELLA", vector_figuras, cant_figuras), tabla_ubicacion_planetas[ESTRELLA][X], tabla_ubicacion_planetas[ESTRELLA][Y], ESTRELLA),
+        [BASE1] = planeta_crear(encontrar_figura("BASE", vector_figuras, cant_figuras), tabla_ubicacion_planetas[BASE1][X], tabla_ubicacion_planetas[BASE1][Y], BASE1),
+    };
+
+    for(size_t i = 0; i < cant_planetas; i++){
+        if(vector_planetas[i] == NULL){
+            error_memoria = true;
+            break;
+        }
+    }
+
+
 
     //Creación de disparos
     lista_t *lista_disparos = lista_crear();
@@ -530,7 +558,7 @@ int main() {
         if(nivel == NIVEL0){
             if(spawn){
                 nave_setear_velocidad(nave, 0, 0);
-                nave_setear_posicion(nave, planeta_get_pos_x(base), planeta_get_pos_y(base), 0);
+                nave_setear_posicion(nave, planeta_get_pos_x(vector_planetas[BASE1]), planeta_get_pos_y(vector_planetas[BASE1]), 0);
                 spawn = false;
                 lista_destruir(lista_disparos, (void (*)(void*))disparo_destruir);
                 lista_disparos = lista_crear();
@@ -540,19 +568,27 @@ int main() {
                 }
             }
 
-            planeta_imprimir(renderer, base, ESCALA_NIVEL_0, planeta_get_pos_x(base), planeta_get_pos_y(base), 0, 0);
-            planeta_imprimir(renderer, estrella, ESCALA_NIVEL_0, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), 0, 0);
-            planeta_imprimir(renderer, planeta1, ESCALA_NIVEL_0, planeta_get_pos_x(planeta1), planeta_get_pos_y(planeta1), 0, 0);
-            planeta_imprimir(renderer, planeta2, ESCALA_NIVEL_0, planeta_get_pos_x(planeta2), planeta_get_pos_y(planeta2), 0, 0);
-            planeta_imprimir(renderer, planeta3, ESCALA_NIVEL_0, planeta_get_pos_x(planeta3), planeta_get_pos_y(planeta3), 0, 0);
-            planeta_imprimir(renderer, planeta4, ESCALA_NIVEL_0, planeta_get_pos_x(planeta4), planeta_get_pos_y(planeta4), 0, 0);
-            planeta_imprimir(renderer, planeta5, ESCALA_NIVEL_0, planeta_get_pos_x(planeta5), planeta_get_pos_y(planeta5), 0, 0);
+            for(size_t i = 0; i < cant_planetas; i++){
+                planeta_imprimir(renderer, vector_planetas[i], ESCALA_NIVEL_0, planeta_get_pos_x(vector_planetas[i]), planeta_get_pos_y(vector_planetas[i]), 0, 0);
+                if(distancia_a_planeta(vector_planetas[i], nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
+                    if(i == ESTRELLA){
+                        vidas--;
+                        spawn = true;
+                        continue;
+                    }
+                    if(i != BASE1){
+                        nivel = i;
+                        spawn = true;
+                        continue;
+                    }
+                }
+            }
             
-            cadena_imprimir_centrado(renderer, "2000", 663 + 40, 473 + 20, 1.5, color_crear(false, true, true));
-            cadena_imprimir_centrado(renderer, "4000", 671 + 40, 145 - 30, 1.5, color_crear(false, true, true));
-            cadena_imprimir_centrado(renderer, "6000", 110 - 0, 79 - 30, 1.5, color_crear(false, true, true));
-            cadena_imprimir_centrado(renderer, "8000", 204 - 40, 455 + 20, 1.5, color_crear(false, true, true));
-            cadena_imprimir_centrado(renderer, "9000", 111 - 40, 307 - 15, 1.5, color_crear(false, true, true));
+            entero_imprimir_centrado(renderer, tabla_bonus[NIVEL1], 663 + 40, 473 + 20, 1.5, color_crear(false, true, true));
+            entero_imprimir_centrado(renderer, tabla_bonus[NIVEL2], 671 + 40, 145 - 30, 1.5, color_crear(false, true, true));
+            entero_imprimir_centrado(renderer, tabla_bonus[NIVEL3], 110 - 0, 79 - 30, 1.5, color_crear(false, true, true));
+            entero_imprimir_centrado(renderer, tabla_bonus[NIVEL4], 204 - 40, 455 + 20, 1.5, color_crear(false, true, true));
+            entero_imprimir_centrado(renderer, tabla_bonus[NIVEL5], 111 - 40, 307 - 15, 1.5, color_crear(false, true, true));
 
             if(nave_get_pos_x(nave) < 0 || nave_get_pos_x(nave) > VENTANA_ANCHO){
                 nave_invertir_vel_x(nave);
@@ -561,38 +597,8 @@ int main() {
                 nave_invertir_vel_y(nave);
             }
 
-            nave_acercar(nave, G, planeta_get_pos_x(estrella), planeta_get_pos_y(estrella), DT);
+            nave_acercar(nave, G, planeta_get_pos_x(vector_planetas[ESTRELLA]), planeta_get_pos_y(vector_planetas[ESTRELLA]), DT);
 
-            if(distancia_a_planeta(estrella, nave_get_pos_x(nave), nave_get_pos_y(nave)) < 5){
-                vidas--;
-                spawn = true;
-                continue;
-            }
-            if(distancia_a_planeta(planeta1, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
-                spawn = true;
-                nivel = NIVEL1;
-                continue;
-            }
-            if(distancia_a_planeta(planeta2, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
-                spawn = true;
-                nivel = NIVEL2;
-                continue;
-            }
-            if(distancia_a_planeta(planeta3, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
-                spawn = true;
-                nivel = NIVEL3;
-                continue;
-            }
-            if(distancia_a_planeta(planeta4, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
-                spawn = true;
-                nivel = NIVEL4;
-                continue;
-            }
-            if(distancia_a_planeta(planeta5, nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
-                spawn = true;
-                nivel = NIVEL5;
-                continue;
-            }
             if(!disparo_en_pantalla(renderer, lista_disparos, disparo_fig, ESCALA_NIVEL_0, nave_get_pos_x(nave), nave_get_pos_y(nave), 0, 0)){
                 error_memoria = true;
                 break;
@@ -797,24 +803,22 @@ int main() {
 
 //--------------------------------------------------------------------------------------------------------------------------
 //DESTRUCCION DE ENTIDADES
-    nave_destruir(nave);
-
-    lista_destruir(lista_disparos, (void (*)(void*))combustible_destruir);
-
-    planeta_destruir(base);
-    planeta_destruir(estrella);
-    planeta_destruir(planeta1);
-    planeta_destruir(planeta2);
-    planeta_destruir(planeta3);
-    planeta_destruir(planeta4);
-    planeta_destruir(planeta5);
-
-    reactor_destruir(reactor);
-
     for(size_t i = 0; i < cant_figuras; i++){
         figura_destruir(vector_figuras[i]);
     }
     free(vector_figuras);
+
+    for(size_t i = 0; i < cant_niveles; i++){
+        nivel_destruir(vector_niveles[i]);
+    }
+    for(size_t i = 0; i < cant_planetas; i++){
+        planeta_destruir(vector_planetas[i]);
+    }
+
+    nave_destruir(nave);
+    reactor_destruir(reactor);
+
+    lista_destruir(lista_disparos, (void (*)(void*))combustible_destruir);
 
     if(error_memoria){
         fprintf(stderr, "Error de memoria\n");

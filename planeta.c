@@ -9,9 +9,10 @@
 struct planeta {
     figura_t *fig;
     float pos[2];
+    size_t id;
 };
 
-planeta_t *planeta_crear(figura_t *figura, float x, float y){
+planeta_t *planeta_crear(figura_t *figura, float x, float y, size_t id){
     planeta_t *planeta = malloc(sizeof(planeta_t));
     if(planeta == NULL) return NULL;
     planeta->fig = figura_clonar(figura);
@@ -20,8 +21,10 @@ planeta_t *planeta_crear(figura_t *figura, float x, float y){
         return NULL;
     }
     planeta_set_pos(planeta, x, y);
-
     figura_trasladar(planeta->fig, planeta->pos[X], planeta->pos[Y]);
+
+    planeta->id = id;
+
     return planeta;
 }
 
