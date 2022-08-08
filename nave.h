@@ -53,6 +53,11 @@ figura_t *nave_get_figura_principal(nave_t *nave);
 int nave_get_combustible(nave_t *nave);
 
 /*
+** Devuelve la cantidad de vidas de la nave.
+*/
+int nave_get_vidas(nave_t *nave);
+
+/*
 ** Devuelve el estado del escudo.
 */
 bool nave_estado_escudo(nave_t *nave);
@@ -71,6 +76,21 @@ void nave_setear_posicion(nave_t *nave, float x, float y, double angulo);
 ** Setea los parametros de velocidad de la nave a los pedidos.
 */
 void nave_setear_velocidad(nave_t *nave, float vel_x, float vel_y);
+
+/*
+** Setea las vidas de la nave.
+*/
+void nave_set_vidas(nave_t *nave, int set);
+
+/*
+** Agrega UNA vida a la nave.
+*/
+void nave_agregar_vida(nave_t *nave);
+
+/*
+** Quita UNA vida a la nave.
+*/
+void nave_quitar_vida(nave_t *nave);
 
 /*
 ** Enciende su respectivo estado.

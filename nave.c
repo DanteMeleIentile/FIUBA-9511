@@ -22,6 +22,7 @@ struct nave {
     double angulo_escudo;           //Ángulo de la figura secundaria del escudo
     uint8_t estado;                 //Determina cual figura utilizar
     int cant_combustible;
+    int cant_vidas;
 };
 
 
@@ -81,12 +82,18 @@ int nave_get_combustible(nave_t *nave){
     return nave->cant_combustible;
 }
 
+int nave_get_vidas(nave_t *nave){
+    return nave->cant_vidas;
+}
+
+
 bool nave_estado_escudo(nave_t *nave){
     if(((nave->estado >> 2) % 2) || ((nave->estado >> 1) % 2)){
         return true;
     }
     return false;
 }
+
 
 bool nave_estado_escudo_nivel(nave_t *nave){
     if((nave->estado >> 2) % 2){
@@ -104,6 +111,18 @@ void nave_setear_posicion(nave_t *nave, float x, float y, double angulo){
 void nave_setear_velocidad(nave_t *nave, float vel_x, float vel_y){
     nave->vel[X] = vel_x;
     nave->vel[Y] = vel_y;
+}
+
+void nave_set_vidas(nave_t *nave, int set){
+    nave->cant_vidas = set;
+}
+
+void nave_agregar_vida(nave_t *nave){
+    nave->cant_vidas ++;
+}
+
+void nave_quitar_vida(nave_t *nave){
+    nave->cant_vidas --;
 }
 
 void nave_prender(nave_t *nave, bool chorro, bool escudo, bool escudo_nivel){

@@ -376,7 +376,7 @@ int main() {
     bool rotacion_antihoraria = false;
     bool avanzar = false;
 
-    int vidas = JUEGO_VIDAS;
+    nave_set_vidas(nave, JUEGO_VIDAS);
     int score[2] = {0, SCORE_NEXT_SHIP};
     
     double tiempo_reactor = TIEMPO_REACTOR;
@@ -479,7 +479,7 @@ int main() {
         cadena_imprimir_centrado(renderer, next_c, 3*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
         cadena_imprimir_centrado(renderer, cadena, 4*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
 
-        for(size_t i = 0; i < vidas; i++){
+        for(size_t i = 0; i < nave_get_vidas(nave); i++){
             cadena_imprimir(renderer, "n", VENTANA_ANCHO/20 + 20*i, 38*VENTANA_ALTO/40, 1.40, color_crear(true, false, false));
         }
 
@@ -520,7 +520,7 @@ int main() {
         //Gestión de cantidad de vidas
         if(!nave_estado_escudo(nave)){
             if(disparo_pego(lista_disparos, nave_get_figura_principal(nave), true)){
-                vidas--;
+                nave_quitar_vida(nave);
                 spawn = true;
                 continue;
             }
@@ -528,7 +528,7 @@ int main() {
         
         if(score[1] <= 0){
             score[1] = SCORE_NEXT_SHIP;
-            vidas++;
+            nave_agregar_vida(nave);
         }
 
 
@@ -572,7 +572,7 @@ int main() {
                 planeta_imprimir(renderer, vector_planetas[i], ESCALA_NIVEL_0, planeta_get_pos_x(vector_planetas[i]), planeta_get_pos_y(vector_planetas[i]), 0, 0);
                 if(distancia_a_planeta(vector_planetas[i], nave_get_pos_x(nave), nave_get_pos_y(nave)) < DMIN){
                     if(i == ESTRELLA){
-                        vidas--;
+                        nave_quitar_vida(nave);
                         spawn = true;
                         continue;
                     }
@@ -687,7 +687,7 @@ int main() {
                     if(nivel_get_bonus(nivel_actual) != 0){
                         entero_imprimir_centrado(renderer, (int)tiempo_reactor + 1, VENTANA_ANCHO/2, 32*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
                         if((tiempo_reactor-= DT) <= 0){
-                            vidas--;
+                            nave_quitar_vida(nave);
                             tiempo_reactor = TIEMPO_REACTOR;
                             spawn = true;
                             reactor_destruido = false;
@@ -710,7 +710,7 @@ int main() {
                     nave_setear_posicion(nave, 0, nave_get_pos_y(nave), nave_get_angulo(nave));
                 }
                 if(nave_get_pos_y(nave) <= -margen_nivel_y*escala_nivel){
-                    vidas--;
+                    nave_quitar_vida(nave);
                     spawn = true;
                     continue;
                 }
@@ -729,7 +729,7 @@ int main() {
 
             //Colisión contra figura de nivel
             if(distancia_punto_a_figura(nivel_get_figura(nivel_actual), nave_get_pos_x(nave), nave_get_pos_y(nave)) < 7){
-                vidas--;
+                nave_quitar_vida(nave);
                 spawn = true;
                 if(nivel == NIVEL5 && nivel_get_bonus(nivel_actual) != 0){
                     reactor_destruido = false;
@@ -757,7 +757,7 @@ int main() {
 
         //-------------------------------------------------------------------------------
         //JUEGO PERDIDO
-        if(vidas == 0){
+        if(nave_get_vidas(nave) == 0){
             printf("GAME OVER.\n");
             break;
         }
