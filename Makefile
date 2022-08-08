@@ -8,13 +8,13 @@ all: $(PROGRAM)
 $(PROGRAM): main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o
 	$(CC) $(CFLAGS) main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o $(SDLFLAGS) -o $(PROGRAM)
 
-main.o: main.c color.h figura.h polilinea.h lectura.h config.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
+main.o: main.c config.h parametros.h color.h figura.h polilinea.h lectura.h lista.h fisicas.h planeta.h nave.h disparo.h nivel.h torreta.h combustible.h caracteres.h
 	$(CC) $(CFLAGS) -c main.c
 	
 color.o: color.c color.h 
 	$(CC) $(CFLAGS) -c color.c
 
-polilinea.o: polilinea.c color.h fisicas.h
+polilinea.o: polilinea.c color.h fisicas.h config.h
 	$(CC) $(CFLAGS) -c polilinea.c
 
 lectura.o: lectura.c polilinea.h
@@ -41,7 +41,7 @@ disparo.o: disparo.c disparo.h figura.h fisicas.h
 nivel.o: nivel.c nivel.h lista.h figura.h torreta.h combustible.h
 	$(CC) $(CFLAGS) -c nivel.c
 
-torreta.o: torreta.c torreta.h figura.h fisicas.h
+torreta.o: torreta.c torreta.h figura.h fisicas.h config.h
 	$(CC) $(CFLAGS) -c torreta.c
 
 caracteres.o: caracteres.c caracteres.h color.h

@@ -1,7 +1,3 @@
-#include "polilinea.h"
-#include "color.h"
-#include "config.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -10,13 +6,15 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 
+#include "polilinea.h"
+#include "color.h"
+#include "fisicas.h"
+#include "config.h"
+
 #define DIMENSION 2
 #define X 0
 #define Y 1
 
-#include "polilinea.h"
-#include "color.h"
-#include "fisicas.h"
 
 
 /* Estructura de las polilineas */

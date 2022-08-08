@@ -1,20 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
-gcc -Wall -Werror -std=c99 -pedantic -c main.c
-gcc -Wall -Werror -std=c99 -pedantic -c color.c
-gcc -Wall -Werror -std=c99 -pedantic -c figura.c
-gcc -Wall -Werror -std=c99 -pedantic -c lectura.c
-gcc -Wall -Werror -std=c99 -pedantic -c polilinea.c
-gcc -Wall -Werror -std=c99 -pedantic -c lista.c
-gcc -Wall -Werror -std=c99 -pedantic -c fisicas.c
-gcc -Wall -Werror -std=c99 -pedantic -c planeta.c
-gcc -Wall -Werror -std=c99 -pedantic -c nave.c
-gcc -Wall -Werror -std=c99 -pedantic -c disparo.c
-gcc -Wall -Werror -std=c99 -pedantic -c nivel.c
-gcc -Wall -Werror -std=c99 -pedantic -c torreta.c
-gcc -Wall -Werror -std=c99 -pedantic -c combustible.c
-gcc -Wall -Werror -std=c99 -pedantic -c reactor.c
-gcc -Wall -Werror -std=c99 -pedantic -c caracteres.c
 gcc -Wall -Werror -std=c99 -pedantic main.o color.o figura.o lectura.o polilinea.o lista.o fisicas.o planeta.o nave.o disparo.o nivel.o torreta.o combustible.o reactor.o caracteres.o -lSDL2 -lSDL2main -lm -o Gravitar
 make: Leaving directory '/home/dmeleientile/Desktop/FIUBA/9511/TP Gravitar'
  
