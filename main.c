@@ -362,19 +362,15 @@ int main() {
         // BEGIN código del alumno en while
 
         //-------------------------------------------------------------------------------
-        // CREAMOS Y UBICAMOS CARACTERES
-        char cadena[15];
-        sprintf(cadena, "%d", nave_get_combustible(nave));
-        cadena_imprimir_centrado(renderer, cadena, VENTANA_ANCHO/4, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
+        // CREAMOS Y UBICAMOS CARACTERES DE LA INTERFAZ
         cadena_imprimir_centrado(renderer, "FUEL", VENTANA_ANCHO/2, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
-        sprintf(cadena, "%d", score[0]);
-        cadena_imprimir_centrado(renderer, cadena, 3*VENTANA_ANCHO/4, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
-        cadena_imprimir_centrado(renderer, "SCORE", VENTANA_ANCHO/2, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+        entero_imprimir_centrado(renderer, nave_get_combustible(nave), VENTANA_ANCHO/4, 36*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
 
-        char next_c[15] = "NEXT SHIP";
-        sprintf(cadena, "%d", score[1]);
-        cadena_imprimir_centrado(renderer, next_c, 3*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
-        cadena_imprimir_centrado(renderer, cadena, 4*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
+        cadena_imprimir_centrado(renderer, "SCORE", VENTANA_ANCHO/2, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+        entero_imprimir_centrado(renderer, score[0], 3*VENTANA_ANCHO/4, 38*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
+
+        cadena_imprimir_centrado(renderer, "NEXT SHIP", 3*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, true));
+        entero_imprimir_centrado(renderer, score[1], 4*VENTANA_ANCHO/7, 34*VENTANA_ALTO/40, 2.5, color_crear(false, true, false));
 
         for(size_t i = 0; i < nave_get_vidas(nave); i++){
             cadena_imprimir(renderer, "n", VENTANA_ANCHO/20 + 20*i, 38*VENTANA_ALTO/40, 1.40, color_crear(true, false, false));

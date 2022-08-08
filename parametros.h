@@ -38,24 +38,25 @@ const size_t tabla_cant_combustibles[] = {
 };
 
 const float tabla_ubicacion_torretas[][3] = {
+//NIVEL1
     {916, 75, -0.66},
     {1425, 159, 0.66},
-//Cambio de nivel
 
+//NIVEL2
     {423, 195, -0.66},
     {806, 215, -0.33},
     {1254, 153, 0.66},
     {1587, 223, 2.23},
-//Cambio de nivel
 
+//NIVEL3
     {70, 46, 0},
     {506, 12, 0},
     {952, 12, 0},
     {1385, 12, 0},
     {757, 210, 3.14},
     {1161, 210, 3.14},
-//Cambio de nivel
 
+//NIVEL4
     {257, 440, 0.66},
     {719, 674, 2.23},
     {985, 565, 0},
@@ -67,19 +68,20 @@ const float tabla_ubicacion_torretas[][3] = {
 };
 
 const float tabla_ubicacion_combustibles[][3] = {
+//NIVEL1
     {1064, 13, 0},
     {1685, 113, 0},
-//Cambio de nivel
 
+//NIVEL2
     {482, 94, 0},
     {1751, 247, 0},
-//Cambio de nivel
 
+//NIVEL3
     {820, 46, 0},
     {1196, 68, 0},
     {1602, 46, 0},
 
-//Cambio de nivel
+//NIVEL4
     {188, 429, 0},
     {667, 600, 0},
     {1054, 404, 3.14},
@@ -107,4 +109,4 @@ const float tabla_ubicacion_planetas[][2] = {
     [BASE1] = {388, 218},
 };
 
-#endif // _CONFIG_H_
+#endif // _PARAMETROS_H_
